@@ -8,21 +8,38 @@
     android:background="#17282D"
     tools:context=".MainActivity">
 
-    <!-- TextView 1 -->
+    <ImageView
+        android:id="@+id/england"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="352dp"
+        android:src="@drawable/GreatBritain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- TextView 2 -->
+    <ImageView
+        android:id="@+id/inspire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="140dp"
+        android:src="@drawable/inspire"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/se_connecte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="144dp"
         android:layout_marginEnd="112dp"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="9sp"
         android:text="@string/se_connecte"
         android:textAppearance="@style/se_connecte"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="70dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/connectez_v"
@@ -38,39 +55,101 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/se_connecte" />
 
-    <TextView
-        android:id="@+id/adresse_mai"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="88dp"
-        android:gravity="top"
-        android:lineSpacingExtra="3sp"
-        android:text="@string/adresse_mai"
-        android:textAppearance="@style/adresse_mai"
-        android:translationY="-1.74sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/connectez_v" />
 
-    <View
-        android:id="@+id/rectangle_2"
-        android:layout_width="310dp"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="4dp"
-        android:background="#D9D9D9"
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="44dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adresse_mai" />
+        app:layout_constraintTop_toBottomOf="@+id/connectez_v">
+
+        <TextView
+            android:id="@+id/adresse_mai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="5dp"
+            android:gravity="top"
+            android:text="@string/adresse_mai"
+            android:textAppearance="@style/adresse_mai" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            style="@style/CustomEditTextStyle"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="60dp"
+            android:hint="  Adresse e-mail"
+            android:inputType="textEmailAddress" />
+
+
+        <!-- TextView pour "Mot de passe" -->
+
+        <TextView
+            android:id="@+id/mot_de_pass"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="180dp"
+            android:lineSpacingExtra="3sp"
+            android:text="@string/mot_de_pass"
+            android:textAppearance="@style/mot_de_pass" />
+
+        <TextView
+            android:id="@+id/mdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:layout_marginBottom="5dp"
+            android:text="@string/mdp"
+            android:textAppearance="@style/adresse_mai"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            style="@style/CustomEditTextStyle"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp"
+            android:hint="  Mot de passe"
+            android:inputType="textPassword" />
+
+
+        <Button
+            style="@style/CustomButtonStyle"
+            android:layout_width="153dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_button_background"
+            android:gravity="center_vertical|center_horizontal"
+            android:onClick="onLoginClick"
+            android:text="Se connecter"
+            android:textAlignment="center"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/nouveau"
+        android:layout_width="180dp"
+        android:layout_height="20dp"
+        android:gravity="top"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/nouveau"
+        android:textAppearance="@style/nouveau"
+        android:translationY="-1.74sp"
+        app:layout_constraintBottom_toBottomOf="@+id/rectangle_"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="180dp"
+        android:layout_marginBottom="5dp"
+
+        tools:layout_editor_absoluteX="180dp" />
 
     <View
         android:id="@+id/rectangle_3"
@@ -80,45 +159,27 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="64dp"
         android:background="#D9D9D9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.445"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/se_connecte" />
 
     <View
         android:id="@+id/rectangle_"
         android:layout_width="310dp"
-        android:layout_height="30dp"
+        android:layout_height="2dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="484dp"
         android:background="#D9D9D9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adresse_mai" />
+        app:layout_constraintTop_toBottomOf="@+id/se_connecte" />
 
-    <TextView
-        android:id="@+id/adresse_mai2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="208dp"
-        android:gravity="top"
-        android:lineSpacingExtra="3sp"
-        android:text="@string/mdp"
-        android:textAppearance="@style/adresse_mai"
-        android:translationY="-1.74sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.149"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/connectez_v" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

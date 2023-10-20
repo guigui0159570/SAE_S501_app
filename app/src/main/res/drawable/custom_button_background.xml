@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#FFFFFF" /> <!-- Couleur blanche en état appuyé -->
+            <corners android:radius="4dp" />
+        </shape>
+        <color android:color="#00BA8D" /> <!-- Couleur du texte en état appuyé (vert) -->
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#00BA8D" /> <!-- Couleur verte en état normal -->
+            <corners android:radius="4dp" />
+        </shape>
+        <color android:color="#FFFFFF" /> <!-- Couleur du texte en état normal (blanc) -->
+    </item>
+</selector>
+
