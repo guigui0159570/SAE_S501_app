@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#17282D"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/adresse_mai3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="top"
+        android:text="Retour"
+        android:textAppearance="@style/adresse_mai"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="187dp"
+        tools:layout_editor_absoluteY="699dp" />
+
+    <TextView
+        android:id="@+id/adresse_mai2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="top"
+        android:text="Veuillez décrire votre problème"
+        android:textAppearance="@style/adresse_mai"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="442dp" />
+
+    <EditText
+        android:id="@+id/editTextPassword2"
+        style="@style/CustomEditTextStyle"
+        android:layout_width="300dp"
+        android:layout_height="136dp"
+        android:layout_gravity="center"
+        android:hint="  Mot de passe"
+        android:inputType="textPassword"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="474dp" />
+
+    <ImageView
+        android:id="@+id/england"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="360dp"
+        android:src="@drawable/GreatBritain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/inspire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="140dp"
+        android:src="@drawable/inspire"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/Inscription"
+        android:layout_width="250dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="80dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="12sp"
+        android:text="Aide"
+        android:textAppearance="@style/se_connecte"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/rectangle_3"
+        android:layout_width="310dp"
+        android:layout_height="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="44dp"
+        android:background="#D9D9D9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Inscription" />
+
+    <View
+        android:id="@+id/rectangle_"
+        android:layout_width="310dp"
+        android:layout_height="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="420dp"
+        android:background="#D9D9D9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Inscription" />
+
+    <TextView
+        android:id="@+id/adresse_mai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="top"
+        android:text="Veuillez saisir votre adresse mail"
+        android:textAppearance="@style/adresse_mai"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="344dp" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        style="@style/CustomEditTextStyle"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:hint="  Adresse e-mail"
+        android:inputType="textEmailAddress"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="381dp" />
+
+    <Button
+        style="@style/CustomButtonStyle"
+        android:layout_width="193dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_button_background"
+        android:gravity="center_vertical|center_horizontal"
+        android:onClick="onLoginClick"
+        android:text="Valider"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="637dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
