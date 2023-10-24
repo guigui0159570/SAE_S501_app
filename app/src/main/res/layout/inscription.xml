@@ -17,7 +17,8 @@
         android:hint="  Mot de passe"
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="49dp"
-        tools:layout_editor_absoluteY="575dp" />
+        tools:layout_editor_absoluteY="575dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/mdp2"
@@ -40,7 +41,8 @@
         android:hint="  Adresse e-mail"
         android:inputType="textEmailAddress"
         tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="327dp" />
+        tools:layout_editor_absoluteY="327dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/pseudo"
@@ -51,7 +53,8 @@
         android:text="Pseudo"
         android:textAppearance="@style/adresse_mai"
         tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="299dp" />
+        tools:layout_editor_absoluteY="299dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/england"
@@ -155,7 +158,8 @@
         android:text="@string/adresse_mai"
         android:textAppearance="@style/adresse_mai"
         tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="377dp" />
+        tools:layout_editor_absoluteY="377dp"
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -166,7 +170,8 @@
         android:hint="  Adresse e-mail"
         android:inputType="textEmailAddress"
         tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="406dp" />
+        tools:layout_editor_absoluteY="406dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/mdp"
@@ -189,7 +194,8 @@
         android:hint="  Mot de passe"
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="49dp"
-        tools:layout_editor_absoluteY="489dp" />
+        tools:layout_editor_absoluteY="489dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         style="@style/CustomButtonStyle"
@@ -203,7 +209,8 @@
         android:textAlignment="center"
         android:textSize="12sp"
         tools:layout_editor_absoluteX="126dp"
-        tools:layout_editor_absoluteY="625dp" />
+        tools:layout_editor_absoluteY="625dp"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
