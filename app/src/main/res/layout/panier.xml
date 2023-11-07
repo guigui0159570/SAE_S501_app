@@ -67,6 +67,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/button_panier"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_button_background"

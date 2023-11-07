@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#17282D"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/ajout_pub_titre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40sp"
+            android:text="@string/ajout_pub_titre"
+            android:textAppearance="@style/se_connecte"></TextView>
+
+        <!--Contient attributs (avant description) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="225sp"
+            android:orientation="horizontal">
+
+            <!-- Image et lien pour changer image-->
+            <LinearLayout
+                android:layout_width="210sp"
+                android:layout_height="200sp"
+                android:orientation="vertical"
+                tools:ignore="ExtraText">
+
+                <ImageView
+                    android:layout_width="150sp"
+                    android:layout_height="150sp"
+                    android:layout_marginTop="25sp"
+                    android:layout_marginLeft="25sp"
+                    android:background="@color/white"/>
+
+                <TextView
+                    android:id="@+id/charger_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/charger_img"
+                    android:textColor="#0000FF"
+                    android:clickable="true"
+                    android:layout_marginLeft="35sp"
+                />
+            </LinearLayout>
+
+            <!-- Titre, copyright et valeur monétaire-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/editTextEmail"
+                    style="@style/CustomEditTextStyle"
+                    android:layout_width="150sp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="25sp"
+                    android:hint="@string/ajouter_titre_pub"
+                    android:textColorHint="#00BA8D"
+                    android:gravity="center"
+                    android:inputType="text" />
+
+                <ImageView
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    android:src="@drawable/copyright"
+                    android:layout_marginTop="25sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp">
+
+                    <CheckBox
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/checkbox_gratuit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_gratuit"
+                        android:background="@color/white"
+                        android:paddingRight="5sp"
+                        android:layout_gravity="center"
+                        />
+
+                    <EditText
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        style="@style/CustomEditTextStyle"
+                        android:id="@+id/checkbox_payant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/checkbox_payant"
+                        android:background="@color/white"
+                        android:textColorHint="#00BA8D"
+                        android:layout_marginLeft="10sp"
+                        android:paddingRight="5sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="250sp"
+                style="@style/CustomEditTextStyle"
+                android:background="@color/white"
+                android:layout_marginLeft="25sp"
+                android:layout_marginRight="25sp"
+                android:hint="@string/description_pub"
+                android:gravity="left"
+                />
+
+            <Button
+                android:id="@+id/bouton_publier"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_button_background"
+                android:layout_margin="50sp"
+                android:text="@string/button_publier"
+                android:textAppearance="@style/se_connecte">
+            </Button>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

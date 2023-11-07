@@ -10,4 +10,11 @@
     <string name="cout_total_text"> Coût total : </string>
     <string name="cout_total">00.00 €</string>
     <string name="button_panier">Acheter</string>
+    <string name="ajout_pub_titre">Ajouter publication</string>
+    <string name="charger_img"><u>Charger une image</u></string>
+    <string name="ajouter_titre_pub">Titre de l\'oeuvre</string>
+    <string name="checkbox_gratuit">Gratuit</string>
+    <string name="checkbox_payant">Entrez le prix</string>
+    <string name="button_publier">Publier</string>
+    <string name="description_pub">Description</string>
 </resources>
