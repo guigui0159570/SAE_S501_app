@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SAE_S501</string>
+    <string name="se_connecte">Log in</string>
+    <string name="connectez_v">Log in with your mail address</string>
+    <string name="adresse_mai">Mail address</string>
+    <string name="mdp">Password</string>
+    <string name="mot_de_pass"><u>Forgot password ? </u></string>
+    <string name="nouveau">" Are you new? : <u> Register </u>"</string>
+</resources>
