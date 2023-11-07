@@ -13,7 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="352dp"
+        android:layout_marginEnd="360dp"
+        android:src="@drawable/GreatBritain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,8 +22,8 @@
         android:id="@+id/inspire"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="140dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="152dp"
         android:src="@drawable/inspire"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="144dp"
-        android:layout_marginEnd="112dp"
+        android:layout_marginEnd="124dp"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="9sp"
         android:text="@string/se_connecte"
