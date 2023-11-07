@@ -7,4 +7,6 @@
     <string name="mdp">Password</string>
     <string name="mot_de_pass"><u>Forgot password ? </u></string>
     <string name="nouveau">" Are you new? : <u> Register </u>"</string>
+    <string name="panier">Basket</string>
+    <string name="cout_total">Total cost :</string>
 </resources>
