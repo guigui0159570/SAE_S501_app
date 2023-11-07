@@ -7,5 +7,7 @@
     <string name="mot_de_pass"><u>Mot de passe oublié ? </u></string>
     <string name="nouveau"> Vous êtes nouveau ? : <u> S’inscrire </u></string>
     <string name="panier">Panier</string>
-    <string name="cout_total"> Coût total : </string>
+    <string name="cout_total_text"> Coût total : </string>
+    <string name="cout_total">00.00 €</string>
+    <string name="button_panier">Acheter</string>
 </resources>

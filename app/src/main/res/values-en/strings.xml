@@ -8,5 +8,7 @@
     <string name="mot_de_pass"><u>Forgot password ? </u></string>
     <string name="nouveau">" Are you new? : <u> Register </u>"</string>
     <string name="panier">Basket</string>
-    <string name="cout_total">Total cost :</string>
+    <string name="cout_total_text">Total cost :</string>
+    <string name="cout_total">00.00 €</string>
+    <string name="button_panier">Buy</string>
 </resources>
