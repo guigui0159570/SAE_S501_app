@@ -8,56 +8,34 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="68dp"
-        android:layout_height="23dp"
-        android:text="     Ikonyk"
-        android:textColor="#B12222"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="248dp"
-        tools:ignore="MissingConstraints" />
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/nomutilisateur"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="403dp" />
 
-    <EditText
-        android:id="@+id/editTextEmail5"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="308dp"
-        android:layout_height="67dp"
-        android:layout_gravity="center"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="474dp"
-        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/nomutilisateur2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/nomutilisateur2"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="479dp" />
 
-    <EditText
-        android:id="@+id/editTextEmail3"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="308dp"
-        android:layout_height="67dp"
-        android:layout_gravity="center"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="399dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="98dp"
-        android:layout_height="67dp"
-        app:srcCompat="@drawable/istockphoto_1300845620_612x612"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="248dp"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/editTextEmail4"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="308dp"
-        android:layout_height="67dp"
-        android:layout_gravity="center"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="323dp"
-        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/nomutilisateur"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="329dp" />
 
     <TextView
         android:id="@+id/se_connecte"
@@ -82,168 +60,124 @@
         tools:layout_editor_absoluteY="16dp"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="308dp"
-        android:layout_height="67dp"
-        android:layout_gravity="center"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="248dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView"
+    <LinearLayout
         android:layout_width="98dp"
         android:layout_height="67dp"
-        app:srcCompat="@drawable/istockphoto_1300845620_612x612"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="248dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="247dp"></LinearLayout>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nouvelle publication"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="287dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="99dp"
+    <LinearLayout
+        android:layout_width="98dp"
         android:layout_height="67dp"
-        app:srcCompat="@drawable/istockphoto_1300845620_612x612"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="323dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="321dp"></LinearLayout>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nouvelle publication"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="356dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="100dp"
-        android:layout_height="66dp"
-        app:srcCompat="@drawable/istockphoto_1300845620_612x612"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="399dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nouvelle publication"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="434dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="99dp"
+    <LinearLayout
+        android:layout_width="98dp"
         android:layout_height="67dp"
-        app:srcCompat="@drawable/istockphoto_1300845620_612x612"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="474dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="396dp"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="98dp"
+        android:layout_height="67dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="70dp"
+        tools:layout_editor_absoluteY="472dp"></LinearLayout>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/nomutilisateur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nouvelle publication"
+        android:hint="@string/nomutilisateur"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="179dp"
-        tools:layout_editor_absoluteY="510dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="256dp" />
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="68dp"
-        android:layout_height="23dp"
-        android:text="     Ikonyk"
-        android:textColor="#B12222"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="248dp"
-        tools:ignore="MissingConstraints" />
+        android:id="@+id/notification0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/notification0"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="285dp" />
 
     <TextView
-        android:id="@+id/textView7"
-        android:layout_width="70dp"
+        android:id="@+id/notification1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/notification1"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="356dp" />
+
+
+    <TextView
+        android:id="@+id/notification2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/notification2"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="436dp" />
+
+    <TextView
+        android:id="@+id/notification3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/notification3"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="510dp" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="41dp"
         android:layout_height="19dp"
-        android:text="     Ikonyk"
-        android:textColor="#B12222"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="323dp"
-        tools:ignore="MissingConstraints" />
+        android:hint="@string/date"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="306dp"
+        tools:layout_editor_absoluteY="256dp" />
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="75dp"
-        android:layout_height="20dp"
-        android:text="     Ikonyk"
-        android:textColor="#B12222"
-        tools:layout_editor_absoluteX="179dp"
-        tools:layout_editor_absoluteY="399dp"
-        tools:ignore="MissingConstraints" />
+        android:id="@+id/date1"
+        android:layout_width="42dp"
+        android:layout_height="18dp"
+        android:hint="@string/date1"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="306dp"
+        tools:layout_editor_absoluteY="329dp" />
 
     <TextView
-        android:id="@+id/textView9"
-        android:layout_width="75dp"
-        android:layout_height="20dp"
-        android:text="     Ikonyk"
-        android:textColor="#B12222"
-        tools:layout_editor_absoluteX="179dp"
-        tools:layout_editor_absoluteY="474dp"
-        tools:ignore="MissingConstraints" />
+        android:id="@+id/date2"
+        android:layout_width="43dp"
+        android:layout_height="23dp"
+        android:hint="@string/date2"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="306dp"
+        tools:layout_editor_absoluteY="403dp" />
 
     <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Il y a 2 jours"
-        android:textColor="@color/black"
-        tools:layout_editor_absoluteX="295dp"
-        tools:layout_editor_absoluteY="252dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Il y a 5 jours"
-        android:textColor="@color/black"
-        tools:layout_editor_absoluteX="295dp"
-        tools:layout_editor_absoluteY="327dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Il y a 5 jours"
-        android:textColor="@color/black"
-        tools:layout_editor_absoluteX="296dp"
-        tools:layout_editor_absoluteY="405dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Il y a 12 jours"
-        android:textColor="@color/black"
-        tools:layout_editor_absoluteX="295dp"
-        tools:layout_editor_absoluteY="476dp"
-        tools:ignore="MissingConstraints" />
+        android:id="@+id/date3"
+        android:layout_width="42dp"
+        android:layout_height="22dp"
+        android:hint="@string/date3"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="306dp"
+        tools:layout_editor_absoluteY="479dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

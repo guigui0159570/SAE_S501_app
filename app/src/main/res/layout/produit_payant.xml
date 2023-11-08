@@ -8,17 +8,6 @@
     tools:context=".MainActivity">
 
 
-    <EditText
-        android:id="@+id/editTextEmail6"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="294dp"
-        android:layout_height="34dp"
-        android:layout_gravity="center"
-        android:inputType="textEmailAddress"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="655dp" />
-
     <ImageView
         android:id="@+id/imageView20"
         android:layout_width="wrap_content"
@@ -113,15 +102,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="98dp"
-        android:layout_height="67dp"
-        app:srcCompat="@drawable/istockphoto_1300845620_612x612"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="204dp"
-        tools:layout_editor_absoluteY="124dp" />
-
     <TextView
         android:id="@+id/se_connecte"
         android:layout_width="wrap_content"
@@ -136,23 +116,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="177dp"
-        android:layout_height="139dp"
-        app:srcCompat="@drawable/rectangle_33"
-        tools:layout_editor_absoluteX="27dp"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:background="@color/white"
+        tools:layout_editor_absoluteX="22dp"
         tools:layout_editor_absoluteY="124dp"
         tools:ignore="MissingConstraints" />
 
+    <ImageView
+        android:layout_width="65dp"
+        android:layout_height="53dp"
+        android:background="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="222dp"
+        tools:layout_editor_absoluteY="135dp" />
+
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="73dp"
-        android:layout_height="25dp"
-        android:text="     Ikonyk"
+        android:layout_width="96dp"
+        android:layout_height="45dp"
+        android:hint="@string/nom"
         android:textColor="@color/white"
-        tools:layout_editor_absoluteX="286dp"
-        tools:layout_editor_absoluteY="139dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="304dp"
+        tools:layout_editor_absoluteY="143dp" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -172,21 +159,26 @@
         tools:layout_editor_absoluteY="210dp"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/textView15"
+    <EditText
+        android:id="@+id/prix_payant"
+        style="@style/CustomEditTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10,99 €"
-        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:gravity="center"
+        android:hint="@string/prix_payant"
+        android:paddingRight="5sp"
+        android:textColorHint="#00BA8D"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="217dp"
-        tools:layout_editor_absoluteY="256dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="258dp" />
 
     <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ceci est la description du produit de Ikonyk"
+        android:hint="@string/descriptionproduitgratuit"
         android:textColor="@color/white"
         tools:layout_editor_absoluteX="51dp"
         tools:layout_editor_absoluteY="292dp"
@@ -201,15 +193,28 @@
         tools:layout_editor_absoluteY="350dp"
         tools:ignore="MissingConstraints" />
 
+
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/charger_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Visualiser"
-        android:textColor="@color/design_default_color_primary_dark"
+        android:clickable="true"
+        android:text="@string/visualiser_img"
+        android:textColor="#0000FF"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="95dp"
-        tools:layout_editor_absoluteY="356dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="361dp" />
+
+    <TextView
+        android:id="@+id/ajouter_panier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="@string/ajouter_panier"
+        android:textColor="#0000FF"
+        tools:ignore="DuplicateIds,MissingConstraints"
+        tools:layout_editor_absoluteX="95dp"
+        tools:layout_editor_absoluteY="414dp" />
 
     <ImageView
         android:id="@+id/imageView13"
@@ -218,16 +223,6 @@
         app:srcCompat="@drawable/euro_1"
         tools:layout_editor_absoluteX="52dp"
         tools:layout_editor_absoluteY="403dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ajouter au panier"
-        android:textColor="@color/design_default_color_primary_dark"
-        tools:layout_editor_absoluteX="95dp"
-        tools:layout_editor_absoluteY="414dp"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -260,30 +255,32 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView21"
-        android:layout_width="256dp"
-        android:layout_height="53dp"
-        android:text="Ben : Très belle réalisation, malheureusement le prix n'est pas abordable pour moi."
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="576dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ajout commentaire"
-        android:textColor="@color/black"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="660dp"
-        tools:ignore="MissingConstraints" />
+        android:id="@+id/commentaire_personne"
+        android:layout_width="262dp"
+        android:layout_height="55dp"
+        android:hint="@string/commentaire_personne"
+        android:textColor="@color/white"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="576dp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="19dp"
         android:layout_height="20dp"
         android:background="@drawable/sent_1"
-        tools:layout_editor_absoluteX="318dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="359dp"
+        tools:layout_editor_absoluteY="667dp" />
+
+    <EditText
+        style="@style/CustomEditTextStyle"
+        android:layout_width="331dp"
+        android:layout_height="34dp"
+        android:background="@color/white"
+        android:gravity="left"
+        android:hint="@string/ajouter_commentaire"
+        tools:layout_editor_absoluteX="51dp"
         tools:layout_editor_absoluteY="660dp"
         tools:ignore="MissingConstraints" />
 
