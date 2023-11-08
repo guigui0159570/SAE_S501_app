@@ -39,6 +39,11 @@
     <string name="notification2">notification</string>
     <string name="notification3">notification</string>
     <string name="publications">Mes publications</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="adresse_mail">Adresse mail</string>
+    <string name="editpseudo">Pseudo</string>
+
+
 
 
 
