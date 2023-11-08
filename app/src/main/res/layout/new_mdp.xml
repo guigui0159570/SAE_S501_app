@@ -14,11 +14,13 @@
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_marginTop="544dp"
+        android:layout_marginEnd="60dp"
         android:hint="  Mot de passe"
         android:inputType="textPassword"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="546dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/mdp2"
@@ -130,26 +132,30 @@
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_marginTop="440dp"
+        android:layout_marginEnd="60dp"
         android:hint="  Mot de passe"
         android:inputType="textPassword"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="438dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <Button
         style="@style/CustomButtonStyle"
         android:layout_width="153dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_marginTop="616dp"
         android:background="@drawable/custom_button_background"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="onLoginClick"
         android:text="Valider"
         android:textAlignment="center"
         android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="126dp"
-        tools:layout_editor_absoluteY="625dp" />
+        tools:layout_editor_absoluteX="118dp" />
+    />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
