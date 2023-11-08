@@ -18,6 +18,29 @@
     <string name="checkbox_payant">enter price</string>
     <string name="button_publier">Publish</string>
     <string name="description_pub">Description</string>
+
     <string name="fil_actu_titre">News feed</string>
     <string name="edit_fil_actu">Search for</string>
+
+    <string name="nom">Name</string>
+    <string name="descriptionproduitgratuit">Product description</string>
+    <string name="visualiser_img">View image</string>
+    <string name="ajouter_panier">Add to Cart</string>
+    <string name="ajouter_commentaire">add a comment</string>
+    <string name="commentaire_personne">Person\'s comment</string>
+    <string name="prix_payant">Item price</string>
+    <string name="telecharger">Download article</string>
+    <string name="nomutilisateur">Name</string>
+    <string name="nomUtilisateur">Name</string>
+    <string name="notification">Notification</string>
+    <string name="date">Date</string>
+    <string name="nomutilisateur2">Name</string>
+    <string name="date1">Date</string>
+    <string name="date2">Date</string>
+    <string name="date3">Date</string>
+    <string name="notification1">Notification</string>
+    <string name="notification2">Notification</string>
+    <string name="notification3">Notification</string>
+    <string name="notification0">Notification</string>
+    <string name="publications">My publications</string>
 </resources>
