@@ -18,4 +18,6 @@
     <string name="checkbox_payant">enter price</string>
     <string name="button_publier">Publish</string>
     <string name="description_pub">Description</string>
+    <string name="fil_actu_titre">News feed</string>
+    <string name="edit_fil_actu">Search for</string>
 </resources>

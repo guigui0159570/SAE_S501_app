@@ -17,4 +17,6 @@
     <string name="checkbox_payant">Entrez le prix</string>
     <string name="button_publier">Publier</string>
     <string name="description_pub">Description</string>
+    <string name="fil_actu_titre">Fil d\'actualité</string>
+    <string name="edit_fil_actu">Rechercher</string>
 </resources>
