@@ -83,8 +83,10 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginBottom="60dp"
-            android:hint="  Adresse e-mail"
-            android:inputType="textEmailAddress" />
+            android:hint="Adresse e-mail"
+            android:paddingLeft="10dp"
+            android:inputType="textEmailAddress"
+            android:textColor="#00BA8D"/>
 
 
         <!-- TextView pour "Mot de passe" -->
@@ -117,8 +119,10 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginBottom="25dp"
-            android:hint="  Mot de passe"
-            android:inputType="textPassword" />
+            android:hint="Mot de passe"
+            android:paddingLeft="10dp"
+            android:inputType="textPassword"
+            android:textColor="#00BA8D"/>
 
 
         <Button
