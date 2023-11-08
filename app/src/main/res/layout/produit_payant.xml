@@ -8,87 +8,6 @@
     tools:context=".MainActivity">
 
 
-    <ImageView
-        android:id="@+id/imageView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="139dp"
-        tools:layout_editor_absoluteY="495dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="495dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="110dp"
-        tools:layout_editor_absoluteY="495dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="495dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="495dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="304dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="333dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_13"
-        tools:layout_editor_absoluteX="275dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_13"
-        tools:layout_editor_absoluteX="246dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
     <TextView
         android:id="@+id/se_connecte2"
         android:layout_width="wrap_content"
@@ -140,24 +59,6 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="304dp"
         tools:layout_editor_absoluteY="143dp" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_13"
-        tools:layout_editor_absoluteX="217dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="304dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/prix_payant"
@@ -283,6 +184,20 @@
         tools:layout_editor_absoluteX="51dp"
         tools:layout_editor_absoluteY="660dp"
         tools:ignore="MissingConstraints" />
+
+    <RatingBar
+        android:id="@+id/ratingBar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="172dp"
+        tools:layout_editor_absoluteY="196dp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="53dp"
+        tools:layout_editor_absoluteY="485dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

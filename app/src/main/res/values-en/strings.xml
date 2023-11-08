@@ -42,4 +42,11 @@
     <string name="pseudo">Pseudo</string>
     <string name="adresse_mail">email</string>
     <string name="editpseudo">Pseudo</string>
+    <string name="faire_recherche">To research</string>
+    <string name="description_rea">Description Achievement</string>
+    <string name="numero_rea">Production number</string>
+    <string name="numero_rea2">Production number</string>
+    <string name="description_rea2">Description Achievement</string>
+    <string name="numero_rea3">Production number</string>
+    <string name="description_rea3">Description Achievement</string>
 </resources>
