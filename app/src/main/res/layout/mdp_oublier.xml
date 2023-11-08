@@ -8,53 +8,29 @@
     android:background="#17282D"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/adresse_mai2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="top"
+        android:text="Confirmer adresse mail"
+        android:textAppearance="@style/adresse_mai"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="442dp" />
+
     <EditText
         android:id="@+id/editTextPassword2"
         style="@style/CustomEditTextStyle"
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:hint="Mot de passe"
+        android:hint="  Mot de passe"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteX="49dp"
-        tools:layout_editor_absoluteY="575dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/mdp2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="544dp"
-        android:gravity="top"
-        android:text="Confirmer mot de passe"
-        android:textAppearance="@style/adresse_mai"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextEmail2"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="300dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:hint="  Adresse e-mail"
-        android:inputType="textEmailAddress"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="327dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/pseudo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:gravity="top"
-        android:text="Pseudo"
-        android:textAppearance="@style/adresse_mai"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="299dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="474dp" />
 
     <ImageView
         android:id="@+id/england"
@@ -62,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="360dp"
+        android:src="@drawable/greatbritain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,38 +52,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/Inscription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="164dp"
-        android:layout_marginEnd="132dp"
+        android:layout_width="250dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="80dp"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="9sp"
-        android:text="Inscription"
+        android:text="Mot de passe Oublié"
         android:textAppearance="@style/se_connecte"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/connectez_v"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:gravity="center_horizontal|top"
-        android:lineSpacingExtra="3sp"
-        android:text="Inscrivez-vous !"
-        android:textAppearance="@style/connectez_v"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Inscription" />
 
     <TextView
         android:id="@+id/nouveau"
         android:layout_width="245dp"
         android:layout_height="18dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
         android:gravity="top"
         android:lineSpacingExtra="3sp"
         android:text="Vous avez déjà un compte ? : Se connecter"
@@ -115,7 +79,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/rectangle_"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.981"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
@@ -141,10 +105,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="496dp"
+        android:layout_marginTop="432dp"
         android:background="#D9D9D9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.376"
+        app:layout_constraintHorizontal_bias="0.603"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Inscription" />
 
@@ -156,9 +120,9 @@
         android:gravity="top"
         android:text="@string/adresse_mai"
         android:textAppearance="@style/adresse_mai"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="377dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="344dp" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -168,48 +132,24 @@
         android:layout_gravity="center"
         android:hint="  Adresse e-mail"
         android:inputType="textEmailAddress"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="406dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/mdp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="460dp"
-        android:gravity="top"
-        android:text="@string/mdp"
-        android:textAppearance="@style/adresse_mai"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="300dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:hint="  Mot de passe"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="49dp"
-        tools:layout_editor_absoluteY="489dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="381dp" />
 
     <Button
         style="@style/CustomButtonStyle"
-        android:layout_width="153dp"
-        android:layout_height="30dp"
+        android:layout_width="193dp"
+        android:layout_height="28dp"
         android:layout_gravity="center"
         android:background="@drawable/custom_button_background"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="onLoginClick"
-        android:text="S'inscrire"
+        android:text="Valider"
         android:textAlignment="center"
-        android:textSize="12sp"
-        tools:layout_editor_absoluteX="126dp"
-        tools:layout_editor_absoluteY="625dp"
-        tools:ignore="MissingConstraints" />
+        android:textSize="14sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="554dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
