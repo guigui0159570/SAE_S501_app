@@ -44,6 +44,7 @@
     <string name="notification3">Notification</string>
     <string name="notification0">Notification</string>
     <string name="publications">My publications</string>
+
     <string name="text_connexion_mail">Mail address :</string>
     <string name="edit_connexion_mail">Mail address</string>
     <string name="text_connexion_mdp">Password :</string>
@@ -52,4 +53,9 @@
     <string name="btn_connexion">Log in</string>
     <string name="text_nouveau_venu">Are You New ?</string>
     <string name="text_vers_inscription"><u>Sign up</u></string>
+
+    <string name="pseudo">Pseudo</string>
+    <string name="adresse_mail">email</string>
+    <string name="editpseudo">Pseudo</string>
+
 </resources>

@@ -14,13 +14,14 @@
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_marginTop="572dp"
+        android:layout_marginEnd="60dp"
         android:hint="Mot de passe"
-        android:textColor="#00BA8D"
-        android:paddingLeft="10dp"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteX="49dp"
-        tools:layout_editor_absoluteY="575dp"
-        tools:ignore="MissingConstraints" />
+        android:paddingLeft="10dp"
+        android:textColor="#00BA8D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/mdp2"
@@ -35,37 +36,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextEmail2"
+        android:id="@+id/editpseudo"
         style="@style/CustomEditTextStyle"
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_marginTop="324dp"
+        android:layout_marginEnd="60dp"
         android:hint="Pseudo"
-        android:paddingLeft="10dp"
         android:textColor="#00BA8D"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="327dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/pseudo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:gravity="top"
-        android:text="Pseudo"
+        android:layout_marginTop="296dp"
+        android:layout_marginEnd="320dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="9sp"
+        android:text="@string/pseudo"
         android:textAppearance="@style/adresse_mai"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="299dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/england"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="360dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -153,16 +145,17 @@
         app:layout_constraintTop_toBottomOf="@+id/Inscription" />
 
     <TextView
-        android:id="@+id/adresse_mai"
+        android:id="@+id/adresse_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:gravity="top"
-        android:text="@string/adresse_mai"
+        android:layout_marginTop="380dp"
+        android:layout_marginEnd="292dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="9sp"
+        android:text="@string/adresse_mail"
         android:textAppearance="@style/adresse_mai"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="377dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -170,13 +163,14 @@
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_marginTop="412dp"
+        android:layout_marginEnd="60dp"
         android:hint="Adresse e-mail"
+        android:inputType="textEmailAddress"
         android:paddingLeft="10dp"
         android:textColor="#00BA8D"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="406dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/mdp"
@@ -196,28 +190,31 @@
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_marginTop="492dp"
+        android:layout_marginEnd="60dp"
         android:hint="Mot de passe"
+        android:inputType="textPassword"
         android:paddingLeft="10dp"
         android:textColor="#00BA8D"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="49dp"
-        tools:layout_editor_absoluteY="489dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/btnConnexion"
         style="@style/CustomButtonStyle"
         android:layout_width="153dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_marginTop="624dp"
+        android:layout_marginEnd="128dp"
         android:background="@drawable/custom_button_background"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="onLoginClick"
-        android:text="S'inscrire"
+        android:text="S'inscrire'"
         android:textAlignment="center"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="126dp"
-        tools:layout_editor_absoluteY="625dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

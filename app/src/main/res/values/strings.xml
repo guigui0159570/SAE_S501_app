@@ -43,6 +43,7 @@
     <string name="notification2">notification</string>
     <string name="notification3">notification</string>
     <string name="publications">Mes publications</string>
+
     <string name="text_connexion_mail">Adresse mail :</string>
     <string name="edit_connexion_mail">Adresse mail</string>
     <string name="text_connexion_mdp">Mot de passe :</string>
@@ -51,5 +52,9 @@
     <string name="btn_connexion">Se connecter</string>
     <string name="text_nouveau_venu">Êtes-vous nouveau ?</string>
     <string name="text_vers_inscription"><u>S\'inscrire</u></string>
+
+    <string name="pseudo">Pseudo</string>
+    <string name="adresse_mail">Adresse mail</string>
+    <string name="editpseudo">Pseudo</string>
 
 </resources>
