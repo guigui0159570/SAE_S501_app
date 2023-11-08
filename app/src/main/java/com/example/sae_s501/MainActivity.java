@@ -21,4 +21,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setContentView(R.layout.connexion);
     }
+
+    public void onNouveauInscriptionClick(View view) {
+        Intent intent = new Intent(this, Inscription.class);
+        startActivity(intent);
+    }
 }
