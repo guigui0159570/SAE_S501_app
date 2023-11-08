@@ -29,8 +29,8 @@
 
             <!-- Image et lien pour changer image-->
             <LinearLayout
-                android:layout_width="210sp"
-                android:layout_height="200sp"
+                android:layout_width="180sp"
+                android:layout_height="220sp"
                 android:orientation="vertical"
                 tools:ignore="ExtraText">
 
@@ -44,11 +44,13 @@
                 <TextView
                     android:id="@+id/charger_img"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35sp"
                     android:text="@string/charger_img"
+                    android:textSize="17sp"
                     android:textColor="#0000FF"
                     android:clickable="true"
-                    android:layout_marginLeft="35sp"
+                    android:layout_marginLeft="25sp"
+                    android:gravity="center"
                 />
             </LinearLayout>
 
@@ -83,8 +85,8 @@
                     <CheckBox
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/checkbox_gratuit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100sp"
+                        android:layout_height="50sp"
                         android:text="@string/checkbox_gratuit"
                         android:background="@color/white"
                         android:paddingRight="5sp"
@@ -95,7 +97,7 @@
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         style="@style/CustomEditTextStyle"
                         android:id="@+id/checkbox_payant"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100sp"
                         android:layout_height="wrap_content"
                         android:hint="@string/checkbox_payant"
                         android:background="@color/white"
@@ -130,7 +132,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_button_background"
-                android:layout_margin="50sp"
+                android:layout_marginTop="120sp"
+                android:layout_marginBottom="120sp"
+                android:layout_marginRight="50sp"
+                android:layout_marginLeft="50sp"
                 android:text="@string/button_publier"
                 android:textAppearance="@style/se_connecte">
             </Button>

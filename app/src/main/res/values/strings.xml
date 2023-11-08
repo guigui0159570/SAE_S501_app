@@ -5,7 +5,7 @@
     <string name="connectez_v">Connectez-vous avec votre adresse e-mail</string>
     <string name="adresse_mai">Adresse Mail</string>
     <string name="mdp" >Mot de passe</string>
-    <string name="mot_de_pass"><u>Mot de passe oublié ? </u></string>
+    <string name="mot_de_pass"><u> Mot de passe oublié ? </u></string>
     <string name="nouveau"> Vous êtes nouveau ? : <u> S’inscrire </u></string>
     <string name="panier">Panier</string>
     <string name="cout_total_text"> Coût total : </string>
@@ -43,5 +43,13 @@
     <string name="notification2">notification</string>
     <string name="notification3">notification</string>
     <string name="publications">Mes publications</string>
+    <string name="text_connexion_mail">Adresse mail :</string>
+    <string name="edit_connexion_mail">Adresse mail</string>
+    <string name="text_connexion_mdp">Mot de passe :</string>
+    <string name="edit_connexion_mdp">Mot de passe</string>
+    <string name="mdp_oublie"><u>mot de passe oublié ?</u></string>
+    <string name="btn_connexion">Se connecter</string>
+    <string name="text_nouveau_venu">Êtes-vous nouveau ?</string>
+    <string name="text_vers_inscription"><u>S\'inscrire</u></string>
 
 </resources>
