@@ -27,8 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Inscription" />
-        <activity android:name=".Connexion" />
+        <activity android:name=".Inscription" android:exported="true" />
+        <activity android:name=".Connexion" android:exported="true"/>
 
 
     </application>

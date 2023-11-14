@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#17282D"
-    tools:context=".MainActivity">
+    tools:context=".Inscription">
 
     <EditText
-        android:id="@+id/editTextPassword2"
+        android:id="@+id/editTextPasswordConfirm"
         style="@style/CustomEditTextStyle"
         android:layout_width="300dp"
         android:layout_height="30dp"
@@ -44,6 +44,7 @@
         android:layout_marginTop="324dp"
         android:layout_marginEnd="60dp"
         android:hint="Pseudo"
+        android:paddingLeft="10dp"
         android:textColor="#00BA8D"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="296dp"
-        android:layout_marginEnd="320dp"
+        android:layout_marginEnd="312dp"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="9sp"
         android:text="@string/pseudo"
@@ -109,7 +110,8 @@
         android:textAppearance="@style/nouveau"
         android:translationY="-1.74sp"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle_"
-
+        android:clickable="true"
+        android:onClick="onInscriptionClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.903"
         app:layout_constraintStart_toStartOf="parent" />
@@ -148,8 +150,8 @@
         android:id="@+id/adresse_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="380dp"
-        android:layout_marginEnd="292dp"
+        android:layout_marginTop="384dp"
+        android:layout_marginEnd="280dp"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="9sp"
         android:text="@string/adresse_mail"
@@ -200,7 +202,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnConnexion"
+        android:id="@+id/btnInscription"
         style="@style/CustomButtonStyle"
         android:layout_width="153dp"
         android:layout_height="30dp"
@@ -209,7 +211,7 @@
         android:layout_marginEnd="128dp"
         android:background="@drawable/custom_button_background"
         android:gravity="center_vertical|center_horizontal"
-        android:onClick="onLoginClick"
+        android:onClick="onInscriptionClick"
         android:text="S'inscrire'"
         android:textAlignment="center"
         android:textSize="12sp"
