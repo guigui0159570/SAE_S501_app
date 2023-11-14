@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -68,6 +69,13 @@ public class Inscription extends AppCompatActivity {
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
                 String confirmationPassword = editTextConfirmationPassword.getText().toString();
+
+                // Encodez les valeurs des paramètres
+                pseudo = Uri.encode(pseudo);
+                email = Uri.encode(email);
+                password = Uri.encode(password);
+                confirmationPassword = Uri.encode(confirmationPassword);
+
 
 
                 if (password.equals(confirmationPassword)) {
