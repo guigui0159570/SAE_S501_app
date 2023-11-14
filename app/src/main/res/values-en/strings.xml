@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">SAE_S501</string>
     <string name="se_connecte">Log in</string>
-    <string name="mon_compte">My account</string>
     <string name="connectez_v">Log in with your mail address</string>
     <string name="adresse_mai">Mail address</string>
     <string name="mdp">Password</string>
@@ -19,10 +18,6 @@
     <string name="checkbox_payant">enter price</string>
     <string name="button_publier">Publish</string>
     <string name="description_pub">Description</string>
-
-    <string name="fil_actu_titre">News feed</string>
-    <string name="edit_fil_actu">Search for</string>
-
     <string name="nom">Name</string>
     <string name="descriptionproduitgratuit">Product description</string>
     <string name="visualiser_img">View image</string>
@@ -44,18 +39,14 @@
     <string name="notification3">Notification</string>
     <string name="notification0">Notification</string>
     <string name="publications">My publications</string>
-
-    <string name="text_connexion_mail">Mail address :</string>
-    <string name="edit_connexion_mail">Mail address</string>
-    <string name="text_connexion_mdp">Password :</string>
-    <string name="edit_connexion_mdp">Password</string>
-    <string name="mdp_oublie"><u>Forgot your password? </u></string>
-    <string name="btn_connexion">Log in</string>
-    <string name="text_nouveau_venu">Are You New ?</string>
-    <string name="text_vers_inscription"><u>Sign up</u></string>
-
     <string name="pseudo">Pseudo</string>
     <string name="adresse_mail">email</string>
     <string name="editpseudo">Pseudo</string>
-
+    <string name="faire_recherche">To research</string>
+    <string name="description_rea">Description Achievement</string>
+    <string name="numero_rea">Production number</string>
+    <string name="numero_rea2">Production number</string>
+    <string name="description_rea2">Description Achievement</string>
+    <string name="numero_rea3">Production number</string>
+    <string name="description_rea3">Description Achievement</string>
 </resources>

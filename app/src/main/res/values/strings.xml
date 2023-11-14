@@ -56,5 +56,18 @@
     <string name="pseudo">Pseudo</string>
     <string name="adresse_mail">Adresse mail</string>
     <string name="editpseudo">Pseudo</string>
+    <string name="faire_recherche">Rechercher</string>
+    <string name="description_rea">Description Réalisation</string>
+    <string name="numero_rea">Numéro réalisation</string>
+    <string name="numero_rea2">Numéro réalisation</string>
+    <string name="description_rea2">Description Réalisation</string>
+    <string name="numero_rea3">Numéro réalisation</string>
+    <string name="description_rea3">Description Réalisation</string>
+
+
+
+
+
+
 
 </resources>
