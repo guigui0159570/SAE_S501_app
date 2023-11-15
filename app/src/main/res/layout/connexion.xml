@@ -72,14 +72,6 @@
             android:hint="@string/edit_connexion_mail"
             android:layout_marginBottom="50sp"/>
 
-        <TextView
-            android:id="@+id/mdp_oublie"
-            android:layout_width="250sp"
-            android:layout_height="18sp"
-            android:clickable="true"
-            android:gravity="right"
-            android:text="@string/mdp_oublie"
-            android:textColor="#0000FF" />
 
         <TextView
             android:layout_width="250sp"
@@ -143,21 +135,12 @@
                 android:id="@+id/text_vers_inscription"
                 android:layout_width="125sp"
                 android:layout_height="50sp"
-
-                android:layout_height="25sp"
                 android:clickable="true"
                 android:gravity="center_vertical"
                 android:text="@string/text_vers_inscription"
                 android:textColor="#0000FF"
                 android:onClick="onNouveauInscriptionClick"/>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1sp"
-            android:layout_margin="35sp"
-            android:background="#FFF" />
-
 
     </LinearLayout>
 
