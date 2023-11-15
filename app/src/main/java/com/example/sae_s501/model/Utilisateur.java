@@ -1,6 +1,8 @@
 package com.example.sae_s501.model;
 
-public class Utilisateur {
+import java.io.Serializable;
+
+public class Utilisateur implements Serializable {
     private String pseudo;
     private String email;
     private String password;

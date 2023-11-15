@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 
 public interface UserService {
     @POST("/register")
-    Call<UserRegistrationResponse> registerUser(@Body Utilisateur utilisateur);
+    Call<Utilisateur> registerUser(@Body Utilisateur utilisateur);
 
     }
 
