@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#17282D"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/adresse_mai2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="444dp"
+        android:layout_marginEnd="236dp"
+        android:gravity="top"
+        android:text="Confirmer adresse mail"
+        android:textAppearance="@style/adresse_mai"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextPassword2"
+        style="@style/CustomEditTextStyle"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="472dp"
+        android:layout_marginEnd="60dp"
+        android:hint="  Mot de passe"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/england"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="360dp"
+        android:src="@drawable/greatbritain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/inspire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="140dp"
+        android:src="@drawable/inspire"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/Inscription"
+        android:layout_width="250dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="80dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="9sp"
+        android:text="Mot de passe Oublié"
+        android:textAppearance="@style/se_connecte"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nouveau"
+        android:layout_width="245dp"
+        android:layout_height="18dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="top"
+        android:lineSpacingExtra="3sp"
+        android:text="Vous avez déjà un compte ? : Se connecter"
+        android:textAppearance="@style/nouveau"
+        android:translationY="-1.74sp"
+        app:layout_constraintBottom_toBottomOf="@+id/rectangle_"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/rectangle_3"
+        android:layout_width="310dp"
+        android:layout_height="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="44dp"
+        android:background="#D9D9D9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Inscription" />
+
+    <View
+        android:id="@+id/rectangle_"
+        android:layout_width="310dp"
+        android:layout_height="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="432dp"
+        android:background="#D9D9D9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.603"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Inscription" />
+
+    <TextView
+        android:id="@+id/adresse_mai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="336dp"
+        android:layout_marginEnd="292dp"
+        android:gravity="top"
+        android:text="@string/adresse_mai"
+        android:textAppearance="@style/adresse_mai"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        style="@style/CustomEditTextStyle"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="368dp"
+        android:layout_marginEnd="60dp"
+        android:hint="  Adresse e-mail"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        style="@style/CustomButtonStyle"
+        android:layout_width="193dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="560dp"
+        android:layout_marginEnd="108dp"
+        android:background="@drawable/custom_button_background"
+        android:gravity="center_vertical|center_horizontal"
+        android:onClick="onLoginClick"
+        android:text="Valider"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
