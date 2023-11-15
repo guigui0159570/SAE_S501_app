@@ -14,13 +14,15 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <ImageView
+        <Button
+            android:id="@+id/btn_retour_panier"
+            android:background="@drawable/custom_button_return"
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:layout_marginRight="150sp"
             android:layout_marginTop="35sp"
             android:src="@drawable/custom_button_return"
-            android:clickable="true"></ImageView>
+            android:clickable="true"></Button>
 
         <TextView
             android:id="@+id/panier"
