@@ -54,7 +54,6 @@ public class Inscription extends AppCompatActivity {
         editTextConfirmationPassword = findViewById(R.id.editTextPasswordConfirm);
         buttonEnvoyer = findViewById(R.id.btnInscription);
 
-        // Create a Retrofit client instance
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.6.2.252:8080")
                 .addConverterFactory(GsonConverterFactory.create())
