@@ -7,5 +7,5 @@
             <size android:width="500dp"></size>
         </shape>
     </item>
-    <item android:drawable="@drawable/croix_cercle" />
+    <item android:drawable="@drawable/croix_cercle_new" />
 </layer-list>

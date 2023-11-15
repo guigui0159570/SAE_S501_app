@@ -150,11 +150,14 @@
         android:id="@+id/adresse_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="376dp"
+
         android:layout_marginTop="384dp"
         android:layout_marginEnd="280dp"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="9sp"
         android:text="@string/adresse_mail"
+        android:textColor="@color/white"
         android:textAppearance="@style/adresse_mai"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

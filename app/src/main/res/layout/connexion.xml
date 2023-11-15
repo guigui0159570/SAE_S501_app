@@ -17,7 +17,7 @@
             android:id="@+id/inspire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
+            android:layout_marginTop="10sp"
             android:src="@drawable/inspire"
             />
     </LinearLayout>
@@ -26,7 +26,7 @@
         android:id="@+id/linearLayout_titre_connecter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="130sp"
+        android:layout_marginTop="150sp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -51,7 +51,10 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1sp"
-            android:layout_margin="35sp"
+            android:layout_marginTop="25sp"
+            android:layout_marginBottom="10sp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
             android:background="#FFF"/>
 
         <TextView
@@ -63,20 +66,12 @@
         <EditText
             android:id="@+id/edit_connexion_mail"
             android:layout_width="250sp"
-            android:layout_height="25sp"
+            android:layout_height="50sp"
             android:paddingLeft="5sp"
             android:background="@color/white"
             android:hint="@string/edit_connexion_mail"
             android:layout_marginBottom="50sp"/>
 
-        <TextView
-            android:id="@+id/mdp_oublie"
-            android:layout_width="250sp"
-            android:layout_height="18sp"
-            android:clickable="true"
-            android:gravity="right"
-            android:text="@string/mdp_oublie"
-            android:textColor="#0000FF" />
 
         <TextView
             android:layout_width="250sp"
@@ -87,10 +82,20 @@
         <EditText
             android:id="@+id/edit_connexion_mdp"
             android:layout_width="250sp"
-            android:layout_height="25sp"
+            android:layout_height="50sp"
             android:paddingLeft="5sp"
             android:background="@color/white"
             android:hint="@string/edit_connexion_mdp"/>
+
+        <TextView
+            android:id="@+id/mdp_oublie"
+            android:layout_width="250sp"
+            android:layout_height="50sp"
+            android:gravity="right"
+            android:text="@string/mdp_oublie"
+            android:textColor="#0000FF"
+            android:clickable="true"/>
+
 
         <Button
             android:id="@+id/btn_connexion"
@@ -101,6 +106,16 @@
             android:textSize="16sp"
             android:textColor="@color/white"
             android:layout_margin="35sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            android:background="#FFF"/>
+
         <LinearLayout
             android:layout_width="250sp"
             android:layout_height="20sp"
@@ -119,20 +134,13 @@
             <TextView
                 android:id="@+id/text_vers_inscription"
                 android:layout_width="125sp"
-                android:layout_height="25sp"
+                android:layout_height="50sp"
                 android:clickable="true"
                 android:gravity="center_vertical"
                 android:text="@string/text_vers_inscription"
                 android:textColor="#0000FF"
                 android:onClick="onNouveauInscriptionClick"/>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1sp"
-            android:layout_margin="35sp"
-            android:background="#FFF" />
-
 
     </LinearLayout>
 
