@@ -8,42 +8,6 @@
     tools:context=".MainActivity">
 
 
-    <ImageView
-        android:id="@+id/imageView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="304dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="333dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_13"
-        tools:layout_editor_absoluteX="275dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_13"
-        tools:layout_editor_absoluteX="246dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
     <TextView
         android:id="@+id/se_connecte2"
         android:layout_width="wrap_content"
@@ -82,9 +46,9 @@
         android:layout_width="145dp"
         android:layout_height="122dp"
         android:background="@color/white"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="124dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="124dp" />
 
     <TextView
         android:id="@+id/textView14"
@@ -96,24 +60,6 @@
         tools:layout_editor_absoluteX="304dp"
         tools:layout_editor_absoluteY="143dp" />
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_13"
-        tools:layout_editor_absoluteX="217dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/star_14"
-        tools:layout_editor_absoluteX="304dp"
-        tools:layout_editor_absoluteY="210dp"
-        tools:ignore="MissingConstraints" />
-
     <CheckBox
         android:id="@+id/checkbox_gratuit"
         android:layout_width="wrap_content"
@@ -122,9 +68,9 @@
         android:background="@color/white"
         android:paddingRight="5sp"
         android:text="@string/checkbox_gratuit"
-        tools:layout_editor_absoluteX="217dp"
-        tools:layout_editor_absoluteY="246dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="222dp"
+        tools:layout_editor_absoluteY="256dp" />
 
     <TextView
         android:id="@+id/textView16"
@@ -132,18 +78,18 @@
         android:layout_height="wrap_content"
         android:hint="@string/descriptionproduitgratuit"
         android:textColor="@color/white"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="292dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="288dp" />
 
     <ImageView
         android:id="@+id/imageView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/eye_1"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="350dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="350dp" />
 
     <TextView
         android:id="@+id/charger_img"
@@ -153,7 +99,7 @@
         android:text="@string/visualiser_img"
         android:textColor="#0000FF"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="95dp"
+        tools:layout_editor_absoluteX="65dp"
         tools:layout_editor_absoluteY="361dp" />
 
     <TextView
@@ -163,7 +109,7 @@
         android:text="Commentaires : "
         android:textColor="@color/white"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="472dp" />
 
     <ImageView
@@ -171,7 +117,7 @@
         android:layout_height="35dp"
         android:background="@color/white"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="512dp" />
 
     <TextView
@@ -181,7 +127,7 @@
         android:hint="@string/commentaire_personne"
         android:textColor="@color/white"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="95dp"
+        tools:layout_editor_absoluteX="74dp"
         tools:layout_editor_absoluteY="512dp" />
 
     <Button
@@ -190,7 +136,7 @@
         android:layout_height="20dp"
         android:background="@drawable/sent_1"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="352dp"
+        tools:layout_editor_absoluteX="325dp"
         tools:layout_editor_absoluteY="667dp" />
 
     <ImageView
@@ -198,9 +144,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/free_shipping_1"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="404dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="403dp" />
 
     <TextView
         android:id="@+id/telecharger"
@@ -210,7 +156,7 @@
         android:text="@string/telecharger"
         android:textColor="#0000FF"
         tools:ignore="DuplicateIds,MissingConstraints"
-        tools:layout_editor_absoluteX="95dp"
+        tools:layout_editor_absoluteX="65dp"
         tools:layout_editor_absoluteY="414dp" />
 
     <EditText
@@ -221,8 +167,15 @@
         android:gravity="left"
         android:hint="@string/ajouter_commentaire"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteX="21dp"
         tools:layout_editor_absoluteY="660dp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="242dp"
+        android:layout_height="45dp"
+        tools:layout_editor_absoluteX="169dp"
+        tools:layout_editor_absoluteY="201dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

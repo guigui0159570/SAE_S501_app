@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#17282D"
+    android:background="#17282D">
     >
 
     <LinearLayout
@@ -73,6 +73,15 @@
             android:layout_marginBottom="50sp"/>
 
         <TextView
+            android:id="@+id/mdp_oublie"
+            android:layout_width="250sp"
+            android:layout_height="18sp"
+            android:clickable="true"
+            android:gravity="right"
+            android:text="@string/mdp_oublie"
+            android:textColor="#0000FF" />
+
+        <TextView
             android:layout_width="250sp"
             android:layout_height="25sp"
             android:text="@string/text_connexion_mdp"
@@ -95,6 +104,7 @@
             android:textColor="#0000FF"
             android:clickable="true"/>
 
+
         <Button
             android:id="@+id/btn_connexion"
             android:layout_width="200sp"
@@ -115,9 +125,11 @@
             android:background="#FFF"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60sp"
-            android:gravity="center">
+            android:layout_width="250sp"
+            android:layout_height="20sp"
+            android:layout_marginStart="30sp"
+            android:gravity="center"
+            >
 
             <TextView
                 android:layout_width="135sp"
@@ -125,17 +137,28 @@
                 android:layout_marginLeft="100sp"
                 android:gravity="center"
                 android:text="@string/text_nouveau_venu"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/text_vers_inscription"
                 android:layout_width="125sp"
                 android:layout_height="50sp"
+
+                android:layout_height="25sp"
+                android:clickable="true"
                 android:gravity="center_vertical"
                 android:text="@string/text_vers_inscription"
                 android:textColor="#0000FF"
-                android:clickable="true"/>
+                android:onClick="onNouveauInscriptionClick"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:layout_margin="35sp"
+            android:background="#FFF" />
+
+
     </LinearLayout>
 
 
