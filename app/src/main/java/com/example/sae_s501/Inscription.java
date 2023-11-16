@@ -2,14 +2,12 @@ package com.example.sae_s501;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
-import com.example.sae_s501.model.UserRegistrationResponse;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.UserService;
@@ -67,10 +65,11 @@ public class Inscription extends AppCompatActivity {
 
 
                 if (password.equals(confirmationPassword)) {
-                    Utilisateur user = new Utilisateur(pseudo, email, password);
+                    /*Utilisateur user = new Utilisateur(pseudo, email, password);
+                    Call<Utilisateur> call = userService.registerUser(user);*/
 
 
-                    Call<Utilisateur> call = userService.registerUser(user);
+                    Call<Utilisateur> call = userService.registerUser2(pseudo, email, password);
 
                     call.enqueue(new Callback<Utilisateur>() {
                         @Override
@@ -79,6 +78,14 @@ public class Inscription extends AppCompatActivity {
                                 showToast("Inscription réussie !");
                             } else {
                                 showToast("Échec de l'inscription : ");
+                                Log.d("REPONSE", String.valueOf(response));
+                                Log.d("REPONSE", "Code de réponse : " + response.code());
+                                Log.d("REPONSE", "Message de réponse : " + response.message());
+                                Log.d("REPONSE", "Corps de la réponse : " + response.body());
+                                Log.d("Requete", "URL de la requête : " + call.request().url());
+                                Log.d("Requete", "Méthode de la requête : " + call.request().method());
+                                Log.d("Requete", "En-têtes de la requête : " + call.request().headers());
+                                Log.d("Requete", "Corps de la requête : " + call.request().body());
                             }
                         }
                         @Override
