@@ -69,7 +69,7 @@ public class Inscription extends AppCompatActivity {
                     Call<Utilisateur> call = userService.registerUser(user);*/
 
 
-                    Call<Utilisateur> call = userService.registerUser2(pseudo, email, password);
+                    Call<Utilisateur> call = userService.registerUser(pseudo, email, password);
 
                     call.enqueue(new Callback<Utilisateur>() {
                         @Override
