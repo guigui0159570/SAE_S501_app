@@ -1,10 +1,17 @@
 package com.example.sae_s501.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Utilisateur implements Serializable {
+    @SerializedName("pseudo")
     private String pseudo;
+
+    @SerializedName("email")
     private String email;
+
+    @SerializedName("password")
     private String password;
 
     public Utilisateur(String pseudo, String email, String password) {

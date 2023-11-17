@@ -107,11 +107,16 @@ public class Inscription extends AppCompatActivity {
                             showToast("Inscription réussie !");
                             Intent intent = new Intent(Inscription.this, Connexion.class);
                             startActivity(intent);
+                            // Réinitialiser les champs, que l'inscription soit réussie ou non
+                            editTextPseudo.setText("");
+                            editTextEmail.setText("");
+                            editTextPassword.setText("");
+                            editTextConfirmationPassword.setText("");
                         } else {
-                            showToast("Échec de l'inscription !");
-                            recreate();
+                            showToast("L'adresse e-mail existe déjà ou n'est pas correcte.");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Utilisateur> call, Throwable t) {
                         showToast("Erreur : " + t.getMessage());
