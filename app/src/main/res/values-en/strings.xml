@@ -40,7 +40,7 @@
     <string name="notification0">Notification</string>
     <string name="publications">My publications</string>
     <string name="pseudo">Pseudo</string>
-    <string name="adresse_mail">email</string>
+    <string name="adresse_mail">Email</string>
     <string name="editpseudo">Pseudo</string>
     <string name="faire_recherche">To research</string>
     <string name="description_rea">Description Achievement</string>
@@ -49,4 +49,15 @@
     <string name="description_rea2">Description Achievement</string>
     <string name="numero_rea3">Production number</string>
     <string name="description_rea3">Description Achievement</string>
+    <string name="hint_adresse_e_mail">E-mail address</string>
+    <string name="hint_mot_de_passe">Password</string>
+    <string name="s_inscrire">Register</string>
+    <string name="inscrivez_vous">Sign up!</string>
+    <string name="vous_avez_d_j_un_compte_se_connecter">Already have an account ? : To log in</string>
+
+
+
+
+
+
 </resources>

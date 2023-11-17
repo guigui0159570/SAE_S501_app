@@ -23,10 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.connexion);
     }
 
-    public void onInscriptionClick(View view) {
-        Intent intent = new Intent(this, Connexion.class);
-        startActivity(intent);
-    }
+
 
     public void onNouveauInscriptionClick(View view) {
         Intent intent = new Intent(this, Inscription.class);

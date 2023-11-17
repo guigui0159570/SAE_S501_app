@@ -2,6 +2,8 @@ package com.example.sae_s501;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,7 +51,7 @@ public class Inscription extends AppCompatActivity {
         buttonEnvoyer = findViewById(R.id.btnInscription);
 
 
-
+        /* creation requete */
         userService = retrofitService.getRetrofit().create(UserService.class);
         buttonEnvoyer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,43 +64,94 @@ public class Inscription extends AppCompatActivity {
                 String password = editTextPassword.getText().toString();
                 String confirmationPassword = editTextConfirmationPassword.getText().toString();
 
+                // mot de passe critères
 
-
-                if (password.equals(confirmationPassword)) {
-                    /*Utilisateur user = new Utilisateur(pseudo, email, password);
-                    Call<Utilisateur> call = userService.registerUser(user);*/
-
-
-                    Call<Utilisateur> call = userService.registerUser(pseudo, email, password);
-
-                    call.enqueue(new Callback<Utilisateur>() {
-                        @Override
-                        public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
-                            if (response.isSuccessful()) {
-                                showToast("Inscription réussie !");
-                            } else {
-                                showToast("Échec de l'inscription : ");
-                                Log.d("REPONSE", String.valueOf(response));
-                                Log.d("REPONSE", "Code de réponse : " + response.code());
-                                Log.d("REPONSE", "Message de réponse : " + response.message());
-                                Log.d("REPONSE", "Corps de la réponse : " + response.body());
-                                Log.d("Requete", "URL de la requête : " + call.request().url());
-                                Log.d("Requete", "Méthode de la requête : " + call.request().method());
-                                Log.d("Requete", "En-têtes de la requête : " + call.request().headers());
-                                Log.d("Requete", "Corps de la requête : " + call.request().body());
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<Utilisateur> call, Throwable t) {
-                            showToast("Erreur : " + t.getMessage());
-                        }
-                    });
+                // Vérifier si le mot de passe et le mot de passe de confirmation correspondent
+                if (!password.equals(confirmationPassword)) {
+                    showToast("Les mots de passe ne correspondent pas.");
+                    return;
                 }
+
+                if (password.length() < 8) {
+                    showToast("Le mot de passe doit contenir au moins 8 caractères.");
+                    return;
+                }
+
+                if (!MDPCharacterSpe(password)) {
+                    showToast("Le mot de passe doit contenir au moins un caractère spécial.");
+                    return;
+                }
+
+                if (!MotDePasseMaj(password)) {
+                    showToast("Le mot de passe doit contenir au moins une majuscule.");
+                    return;
+                }
+                if (!MDPChiffre(password)) {
+                    showToast("Le mot de passe doit contenir au moins un chiffre.");
+                    return;
+                }
+
+
+
+                /*Utilisateur user = new Utilisateur(pseudo, email, password);
+                Call<Utilisateur> call = userService.registerUser(user);*/
+
+                /* envoie requete */
+                Call<Utilisateur> call = userService.registerUser(pseudo, email, password);
+
+                call.enqueue(new Callback<Utilisateur>() {
+                    /* resultat de la requete */
+                    @Override
+                    public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
+                        if (response.isSuccessful()) {
+                            showToast("Inscription réussie !");
+                            Intent intent = new Intent(Inscription.this, Connexion.class);
+                            startActivity(intent);
+                        } else {
+                            showToast("Échec de l'inscription !");
+                            recreate();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Utilisateur> call, Throwable t) {
+                        showToast("Erreur : " + t.getMessage());
+                    }
+                });
             }
         });
     }
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    // Vérifier si le mot de passe contient au moins un caractère spécial
+    private boolean MDPCharacterSpe(String password) {
+        String specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>/?";
+        for (char specialChar : specialCharacters.toCharArray()) {
+            if (password.contains(String.valueOf(specialChar))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Vérifier si le mot de passe contient une majuscule
+    private boolean MotDePasseMaj(String password) {
+        for (char character : password.toCharArray()) {
+            if (Character.isUpperCase(character)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    // Vérifier si le mot de passe contient au moins un chiffre
+    private boolean MDPChiffre(String password) {
+        for (char character : password.toCharArray()) {
+            if (Character.isDigit(character)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
