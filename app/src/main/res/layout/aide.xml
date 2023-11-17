@@ -38,7 +38,7 @@
         android:layout_width="300dp"
         android:layout_height="136dp"
         android:layout_gravity="center"
-        android:hint="  Mot de passe"
+        android:hint="Décrire le problème"
         android:inputType="textPassword"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="48dp"

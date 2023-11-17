@@ -39,6 +39,9 @@
     <string name="notification3">Notification</string>
     <string name="notification0">Notification</string>
     <string name="publications">My publications</string>
+    <string name="text_connexion_mail">Mail address</string>
+    <string name="edit_connexion_mail">M</string>
+    <string name="text_connexion_mail">Mail adress</string>
     <string name="pseudo">Pseudo</string>
     <string name="adresse_mail">email</string>
     <string name="editpseudo">Pseudo</string>
@@ -49,4 +52,6 @@
     <string name="description_rea2">Description Achievement</string>
     <string name="numero_rea3">Production number</string>
     <string name="description_rea3">Description Achievement</string>
+    <string name="btn_inscription">Register</string>
+    <string name="btn_valider">Validate</string>
 </resources>
