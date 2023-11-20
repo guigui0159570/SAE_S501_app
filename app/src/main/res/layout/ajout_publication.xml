@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#17282D"
+    tools:context=".AjoutPublication"
     >
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40sp"
             android:text="@string/ajout_pub_titre"
-            android:textAppearance="@style/se_connecte"></TextView>
+            android:textAppearance="@style/se_connecte"/>
 
         <!--Contient attributs (avant description) -->
         <LinearLayout
@@ -37,9 +45,9 @@
                 <ImageView
                     android:layout_width="150sp"
                     android:layout_height="150sp"
-                    android:layout_marginTop="25sp"
                     android:layout_marginLeft="25sp"
-                    android:background="@color/white"/>
+                    android:layout_marginTop="25sp"
+                    android:background="@color/white" />
 
                 <TextView
                     android:id="@+id/charger_img"
@@ -51,7 +59,7 @@
                     android:clickable="true"
                     android:layout_marginLeft="25sp"
                     android:gravity="center"
-                />
+                    android:onClick="chargerImage" />
             </LinearLayout>
 
             <!-- Titre, copyright et valeur monétaire-->
@@ -61,7 +69,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/editTextEmail"
+                    android:id="@+id/editTextTitle"
                     style="@style/CustomEditTextStyle"
                     android:layout_width="150sp"
                     android:layout_height="30dp"
@@ -70,7 +78,8 @@
                     android:hint="@string/ajouter_titre_pub"
                     android:textColorHint="#00BA8D"
                     android:gravity="center"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textColor="#00BA8D"/>
 
                 <ImageView
                     android:layout_width="25sp"
@@ -88,10 +97,10 @@
                         android:layout_width="100sp"
                         android:layout_height="50sp"
                         android:text="@string/checkbox_gratuit"
-                        android:background="@color/white"
+                        android:textColor="@color/white"
                         android:paddingRight="5sp"
                         android:layout_gravity="center"
-                        />
+                       />
 
                     <EditText
                         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -106,6 +115,9 @@
                         android:paddingRight="5sp"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:textSize="12sp"
+                        android:textColor="#00BA8D"
                         />
                 </LinearLayout>
             </LinearLayout>
@@ -117,28 +129,56 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/EditTextDescription"
+                style="@style/CustomEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="250sp"
-                style="@style/CustomEditTextStyle"
-                android:background="@color/white"
                 android:layout_marginLeft="25sp"
                 android:layout_marginRight="25sp"
-                android:hint="@string/description_pub"
+                android:background="@color/white"
                 android:gravity="left"
+                android:hint="@string/description_pub"
+                android:textColor="#00BA8D"
+                android:paddingLeft="10dp"
                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginLeft="20sp"
+              >
+
+                <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/checkbox_public"
+                    android:layout_width="100sp"
+                    android:layout_height="50sp"
+                    android:layout_gravity="center"
+                    android:paddingRight="5sp"
+                    android:text="@string/checkbox_public"
+                    android:textColor="@color/white" />
+
+                <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/prive"
+                    android:layout_width="100sp"
+                    android:layout_height="50sp"
+                    android:layout_gravity="center"
+                    android:paddingRight="5sp"
+                    android:text="@string/checkbox_prive"
+                    android:textColor="@color/white"
+                    android:checked="true"/>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/bouton_publier"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50sp"
                 android:background="@drawable/custom_button_background"
-                android:layout_marginTop="120sp"
-                android:layout_marginBottom="120sp"
-                android:layout_marginRight="50sp"
-                android:layout_marginLeft="50sp"
                 android:text="@string/button_publier"
-                android:textAppearance="@style/se_connecte">
-            </Button>
+                android:textAppearance="@style/se_connecte" />
+
+
         </LinearLayout>
     </LinearLayout>
 
