@@ -14,11 +14,19 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setContentView(R.layout.connexion);
+    }
+
+
+
+    public void onNouveauInscriptionClick(View view) {
+        Intent intent = new Intent(this, Inscription.class);
+        startActivity(intent);
     }
 }

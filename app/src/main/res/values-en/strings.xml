@@ -18,4 +18,56 @@
     <string name="checkbox_payant">enter price</string>
     <string name="button_publier">Publish</string>
     <string name="description_pub">Description</string>
+    <string name="nom">Name</string>
+    <string name="descriptionproduitgratuit">Product description</string>
+    <string name="visualiser_img">View image</string>
+    <string name="ajouter_panier">Add to Cart</string>
+    <string name="ajouter_commentaire">add a comment</string>
+    <string name="commentaire_personne">Person\'s comment</string>
+    <string name="prix_payant">Item price</string>
+    <string name="telecharger">Download article</string>
+    <string name="nomutilisateur">Name</string>
+    <string name="nomUtilisateur">Name</string>
+    <string name="notification">Notification</string>
+    <string name="date">Date</string>
+    <string name="nomutilisateur2">Name</string>
+    <string name="date1">Date</string>
+    <string name="date2">Date</string>
+    <string name="date3">Date</string>
+    <string name="notification1">Notification</string>
+    <string name="notification2">Notification</string>
+    <string name="notification3">Notification</string>
+    <string name="notification0">Notification</string>
+    <string name="publications">My publications</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="adresse_mail">Email</string>
+    <string name="editpseudo">Pseudo</string>
+    <string name="faire_recherche">To research</string>
+    <string name="description_rea">Description Achievement</string>
+    <string name="numero_rea">Production number</string>
+    <string name="numero_rea2">Production number</string>
+    <string name="description_rea2">Description Achievement</string>
+    <string name="numero_rea3">Production number</string>
+    <string name="description_rea3">Description Achievement</string>
+    <string name="hint_adresse_e_mail">E-mail address</string>
+    <string name="hint_mot_de_passe">Password</string>
+    <string name="s_inscrire">Register</string>
+    <string name="inscrivez_vous">Sign up!</string>
+    <string name="vous_avez_d_j_un_compte_se_connecter">Already have an account ? : To log in</string>
+    <string name="fil_actu_titre">News</string>
+    <string name="edit_fil_actu">To research</string>
+    <string name="btn_inscription">Register</string>
+    <string name="btn_valider">To validate</string>
+    <string name="text_connexion_mail">E-mail address :</string>
+    <string name="edit_connexion_mail">E-mail address</string>
+    <string name="text_connexion_mdp">Password :</string>
+    <string name="edit_connexion_mdp">Password</string>
+    <string name="mdp_oublie"><u>Forgot your password ?</u></string>
+    <string name="btn_connexion">Log in</string>
+    <string name="text_nouveau_venu">Are-you new ?</string>
+    <string name="text_vers_inscription"><u>Register</u></string>
+
+
+
+
 </resources>

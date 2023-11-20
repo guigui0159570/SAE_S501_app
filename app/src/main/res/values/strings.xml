@@ -5,7 +5,7 @@
     <string name="connectez_v">Connectez-vous avec votre adresse e-mail</string>
     <string name="adresse_mai">Adresse Mail</string>
     <string name="mdp" >Mot de passe</string>
-    <string name="mot_de_pass"><u>Mot de passe oublié ? </u></string>
+    <string name="mot_de_pass"><u> Mot de passe oublié ? </u></string>
     <string name="nouveau"> Vous êtes nouveau ? : <u> S’inscrire </u></string>
     <string name="panier">Panier</string>
     <string name="cout_total_text"> Coût total : </string>
@@ -18,4 +18,59 @@
     <string name="checkbox_payant">Entrez le prix</string>
     <string name="button_publier">Publier</string>
     <string name="description_pub">Description</string>
+
+    <string name="fil_actu_titre">Fil d\'actualité</string>
+    <string name="edit_fil_actu">Rechercher</string>
+
+    <string name="nom">Nom d\'utilisateur</string>
+    <string name="descriptionproduitgratuit">Description produit </string>
+    <string name="visualiser_img">Visualiser image</string>
+    <string name="ajouter_panier">Ajouter au panier</string>
+    <string name="ajouter_commentaire">Ajouter un commentaire</string>
+    <string name="commentaire_personne">Commentaire de la personne</string>
+    <string name="prix_payant">Prix de l\'article</string>
+    <string name="telecharger">Telecharger article</string>
+    <string name="nomutilisateur">Nom d\'utilisateur</string>
+    <string name="nomUtilisateur">Nom d\'utilisateur</string>
+    <string name="notification">Notification</string>
+    <string name="date">Date</string>
+    <string name="nomutilisateur2">Nom d\'utilisateur</string>
+    <string name="date1">Date</string>
+    <string name="date2">Date</string>
+    <string name="date3">Date</string>
+    <string name="notification0">notification</string>
+    <string name="notification1">notification</string>
+    <string name="notification2">notification</string>
+    <string name="notification3">notification</string>
+    <string name="publications">Mes publications</string>
+
+    <string name="text_connexion_mail">Adresse mail :</string>
+    <string name="edit_connexion_mail">Adresse mail</string>
+    <string name="text_connexion_mdp">Mot de passe :</string>
+    <string name="edit_connexion_mdp">Mot de passe</string>
+    <string name="mdp_oublie"><u>mot de passe oublié ?</u></string>
+    <string name="btn_connexion">Se connecter</string>
+    <string name="text_nouveau_venu">Êtes-vous nouveau ?</string>
+    <string name="text_vers_inscription"><u>S\'inscrire</u></string>
+
+    <string name="pseudo">Pseudo</string>
+    <string name="adresse_mail">Email</string>
+    <string name="editpseudo">Pseudo</string>
+    <string name="faire_recherche">Rechercher</string>
+    <string name="description_rea">Description Réalisation</string>
+    <string name="numero_rea">Numéro réalisation</string>
+    <string name="numero_rea2">Numéro réalisation</string>
+    <string name="description_rea2">Description Réalisation</string>
+    <string name="numero_rea3">Numéro réalisation</string>
+    <string name="description_rea3">Description Réalisation</string>
+    <string name="btn_inscription">S\'inscrire</string>
+    <string name="btn_valider">Valider</string>
+
+    <string name="hint_adresse_e_mail">Adresse e-mail</string>
+    <string name="hint_mot_de_passe">Mot de passe</string>
+    <string name="s_inscrire">S\'inscrire</string>
+    <string name="inscrivez_vous">Inscrivez-vous !</string>
+    <string name="vous_avez_d_j_un_compte_se_connecter">Vous avez déjà un compte ? : Se connecter</string>
+
+
 </resources>

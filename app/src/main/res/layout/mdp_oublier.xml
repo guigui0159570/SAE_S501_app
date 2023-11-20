@@ -13,12 +13,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginTop="444dp"
+        android:layout_marginEnd="236dp"
         android:gravity="top"
         android:text="Confirmer adresse mail"
         android:textAppearance="@style/adresse_mai"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="442dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextPassword2"
@@ -26,11 +27,12 @@
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:hint="  Mot de passe"
+        android:layout_marginTop="472dp"
+        android:layout_marginEnd="60dp"
+        android:hint="Adresse e-mail"
         android:inputType="textPassword"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="474dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/england"
@@ -117,12 +119,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginTop="336dp"
+        android:layout_marginEnd="292dp"
         android:gravity="top"
         android:text="@string/adresse_mai"
         android:textAppearance="@style/adresse_mai"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="344dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -130,26 +133,28 @@
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_marginTop="368dp"
+        android:layout_marginEnd="60dp"
         android:hint="  Adresse e-mail"
         android:inputType="textEmailAddress"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="381dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         style="@style/CustomButtonStyle"
         android:layout_width="193dp"
         android:layout_height="28dp"
         android:layout_gravity="center"
+        android:layout_marginTop="560dp"
+        android:layout_marginEnd="108dp"
         android:background="@drawable/custom_button_background"
         android:gravity="center_vertical|center_horizontal"
         android:onClick="onLoginClick"
         android:text="Valider"
         android:textAlignment="center"
         android:textSize="14sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="109dp"
-        tools:layout_editor_absoluteY="554dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
