@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    tools:context=".ToolBarreFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_margin="2dp">
+
+            <ImageButton
+                android:id="@+id/myPublicationBouton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/grid"
+                android:background="@color/transparent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_margin="2dp">
+
+            <ImageButton
+                android:id="@+id/homeBouton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/home"
+                android:background="@color/transparent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/profilLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_margin="2dp">
+
+            <ImageButton
+                android:id="@+id/profilBouton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/profile"
+                android:background="@color/transparent"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</FrameLayout>
