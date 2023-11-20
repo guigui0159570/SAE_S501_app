@@ -27,7 +27,9 @@ public class MonCompteViewModel extends ViewModel {
 
     public MonCompteViewModel() throws ExecutionException, InterruptedException {
     }
-    public CompletableFuture<Integer> RequeteCountAbonnement() {
+
+
+    public OkHttpClient creationClientSansSSL(){
         X509TrustManager trustManager = new X509TrustManager() {
             @Override
             public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
@@ -51,39 +53,38 @@ public class MonCompteViewModel extends ViewModel {
             e.printStackTrace();
         }
 
-// Créez un client OkHttpClient avec la configuration personnalisée
+        // Créez un client OkHttpClient avec la configuration personnalisée
         OkHttpClient client = new OkHttpClient.Builder()
                 .sslSocketFactory(sslSocketFactory, trustManager) // Ignorer la vérification du certificat
                 .hostnameVerifier((hostname, session) -> true) // Ignorer la vérification du nom d'hôte
                 .build();
+        return client;
+    }
 
+
+    public CompletableFuture<String> RequestInformation() {
+        OkHttpClient client = creationClientSansSSL();
+        ConfigSpring configSpring = new ConfigSpring();
         Request request = new Request.Builder()
-                .url("http://10.6.4.184:8080/countAbonnement/102")
+                .url("http://"+configSpring.Adresse()+":8080/userInformation/102")
                 .build();
-
-        CompletableFuture<Integer> futureCount = new CompletableFuture<>();
-
-        Log.d("lamerde777", String.valueOf(request));
+        CompletableFuture<String> futureInformation = new CompletableFuture<>();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                futureCount.completeExceptionally(e);
+                futureInformation.completeExceptionally(e);
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    Integer responseData = Integer.parseInt(response.body().string());
-                    Log.d("response", String.valueOf(responseData));
-                    futureCount.complete(responseData);
-                    Log.d("888888888", String.valueOf(futureCount));
+                    String responseData = response.body().string();
+                    futureInformation.complete(responseData);
                 } else {
-                    futureCount.completeExceptionally(new RuntimeException("Request failed"));
+                    futureInformation.completeExceptionally(new RuntimeException("Request failed"));
                 }
             }
         });
-
-        return futureCount;
+        return futureInformation;
     }
 
 }

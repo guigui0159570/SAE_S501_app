@@ -6,6 +6,8 @@
     <string name="adresse_mai">Adresse Mail</string>
     <string name="mdp" >Mot de passe</string>
     <string name="mot_de_pass"><u> Mot de passe oublié ? </u></string>
+    <string name="mdp">Mot de passe</string>
+    <string name="mot_de_pass"><u>Mot de passe oublié ? </u></string>
     <string name="nouveau"> Vous êtes nouveau ? : <u> S’inscrire </u></string>
     <string name="panier">Panier</string>
     <string name="cout_total_text"> Coût total : </string>
@@ -54,7 +56,7 @@
     <string name="text_vers_inscription"><u>S\'inscrire</u></string>
 
     <string name="pseudo">Pseudo</string>
-    <string name="adresse_mail">Adresse mail</string>
+    <string name="adresse_mail">Email</string>
     <string name="editpseudo">Pseudo</string>
     <string name="faire_recherche">Rechercher</string>
     <string name="description_rea">Description Réalisation</string>
@@ -63,11 +65,16 @@
     <string name="description_rea2">Description Réalisation</string>
     <string name="numero_rea3">Numéro réalisation</string>
     <string name="description_rea3">Description Réalisation</string>
+    <string name="btn_inscription">S\'inscrire</string>
+    <string name="btn_valider">Valider</string>
+
+    <string name="hint_adresse_e_mail">Adresse e-mail</string>
+    <string name="hint_mot_de_passe">Mot de passe</string>
+    <string name="s_inscrire">S\'inscrire</string>
+    <string name="inscrivez_vous">Inscrivez-vous !</string>
+    <string name="vous_avez_d_j_un_compte_se_connecter">Vous avez déjà un compte ? : Se connecter</string>
 
 
-
-
-
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

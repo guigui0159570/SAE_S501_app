@@ -29,7 +29,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="472dp"
         android:layout_marginEnd="60dp"
-        android:hint="  Mot de passe"
+        android:hint="Adresse e-mail"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

@@ -71,7 +71,7 @@
             android:background="@color/white"
             android:hint="@string/edit_connexion_mail"
             android:layout_marginBottom="50sp"/>
-        
+
 
         <TextView
             android:layout_width="250sp"
@@ -141,13 +141,6 @@
                 android:textColor="#0000FF"
                 android:onClick="onNouveauInscriptionClick"/>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1sp"
-            android:layout_margin="35sp"
-            android:background="#FFF" />
-
 
     </LinearLayout>
 
