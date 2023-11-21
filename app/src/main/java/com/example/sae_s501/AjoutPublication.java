@@ -31,13 +31,15 @@ public class AjoutPublication extends AppCompatActivity {
 
     private EditText editTextTitle;
     private CheckBox editCheckbox;
+    private CheckBox editCheckboxPrive;
     private EditText editTextPrix;
     private EditText editTextDescription;
     private Button buttonPublier;
     private TextView TextViewImage;
     private TextView TextViewUpload;
-    private ImageView imageView;
 
+    private boolean imageAdded = false;
+    private boolean fileAdded = false;
     private UserService userService;
     private RetrofitService retrofitService = new RetrofitService();
 
@@ -52,6 +54,7 @@ public class AjoutPublication extends AppCompatActivity {
         editTextDescription = findViewById(R.id.EditTextDescription);
         buttonPublier = findViewById(R.id.bouton_publier);
         editTextPrix.setVisibility(View.VISIBLE);
+        editCheckboxPrive = findViewById(R.id.prive);
         TextViewImage  = findViewById(R.id.charger_img);
         TextViewUpload  = findViewById(R.id.upload);
 
@@ -90,12 +93,17 @@ public class AjoutPublication extends AppCompatActivity {
                 if (title.isEmpty()) {
                     showToast("Veuillez saisir un titre pour votre publication.");
                     return;
-                }
-
-                if (description.isEmpty()) {
+                } else if (description.isEmpty()) {
                     showToast("Veuillez saisir une description pour votre publication.");
                     return;
+                } else if (!(imageAdded)) {
+                    showToast("Veuillez saisir une image pour votre publication.");
+                    return;
+                } else if (!(fileAdded)) {
+                    showToast("Veuillez saisir un modèle 3D pour votre publication.");
+                    return;
                 }
+
 
                 // Vérifier si la case à cocher est cochée
                 if (editCheckbox.isChecked()) {
@@ -134,10 +142,12 @@ public class AjoutPublication extends AppCompatActivity {
             Uri selectedImage = data.getData();
             ImageView photo = findViewById(R.id.imageViewPub);
             photo.setImageURI(selectedImage);
+            imageAdded=true;
         } else if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             // Traitement pour l'ajout d'un fichier
             TextView fichierAjoute = findViewById(R.id.fichierajouté);
             fichierAjoute.setText(R.string.fichierajoute);
+            fileAdded=true;
         }
     }
 

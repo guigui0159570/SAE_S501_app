@@ -146,31 +146,15 @@
                 android:paddingLeft="10dp"
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <CheckBox
+                android:id="@+id/prive"
+                android:layout_width="100sp"
                 android:layout_height="50sp"
                 android:layout_marginLeft="20sp"
-              >
-
-                <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/checkbox_public"
-                    android:layout_width="100sp"
-                    android:layout_height="50sp"
-                    android:layout_gravity="center"
-                    android:paddingRight="5sp"
-                    android:text="@string/checkbox_public"
-                    android:textColor="@color/white" />
-
-                <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/prive"
-                    android:layout_width="100sp"
-                    android:layout_height="50sp"
-                    android:layout_gravity="center"
-                    android:paddingRight="5sp"
-                    android:text="@string/checkbox_prive"
-                    android:textColor="@color/white"
-                    android:checked="true"/>
-            </LinearLayout>
+                android:paddingRight="5sp"
+                android:text="@string/checkbox_prive"
+                android:textColor="@color/white" />
 
             <LinearLayout
             android:layout_width="wrap_content"
