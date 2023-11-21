@@ -60,7 +60,7 @@
         android:id="@+id/container_pub_fil_actu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="175sp"
+        android:layout_marginTop="250sp"
         android:layout_marginBottom="75sp"
         android:orientation="vertical">
     </LinearLayout>

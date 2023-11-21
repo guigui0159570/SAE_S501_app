@@ -71,7 +71,6 @@
                 android:textAppearance="@style/adresse_mai"/>
 
             <EditText
-                android:id="@+id/editTextEmail"
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="30dp"
@@ -89,7 +88,6 @@
                 android:textAppearance="@style/adresse_mai" />
 
             <EditText
-                android:id="@+id/editTextEmail"
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="30dp"
@@ -131,7 +129,6 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <View
-                android:id="@+id/rectangle_3"
                 android:layout_width="310dp"
                 android:layout_height="2dp"
                 android:layout_alignParentLeft="true"
