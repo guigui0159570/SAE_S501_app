@@ -73,6 +73,9 @@
     <string name="vous_avez_d_j_un_compte_se_connecter">Vous avez déjà un compte ? : Se connecter</string>
     <string name="checkbox_public">Publique</string>
     <string name="checkbox_prive">Privée</string>
+    <string name="upload"><u>Téléverser_modèle_3D_</u></string>
+    <string name="fichierajoute"><i> : Fichier 3D ajouté</i></string>
+    <string name="fichier_pas_ajoute"><i> : Aucun fichier ajouté</i></string>
 
 
 </resources>

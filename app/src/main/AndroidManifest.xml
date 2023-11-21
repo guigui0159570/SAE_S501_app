@@ -39,6 +39,7 @@
         </activity>
         <activity android:name=".AjoutPublication"
             android:exported="true">
+
         </activity>
 
     </application>

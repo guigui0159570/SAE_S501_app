@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,9 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        /*setContentView(R.layout.connexion);*/
-        setContentView(R.layout.ajout_publication);
+        setContentView(R.layout.connexion);
     }
 
 
@@ -30,4 +29,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Inscription.class);
         startActivity(intent);
     }
+    public void OnClickConnexion(View view) {
+        Intent intent = new Intent(this, AjoutPublication.class);
+        startActivity(intent);
+    }
+
 }

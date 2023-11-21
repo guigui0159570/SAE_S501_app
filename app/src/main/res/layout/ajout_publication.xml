@@ -43,12 +43,15 @@
                 tools:ignore="ExtraText">
 
                 <ImageView
+                    android:id="@+id/imageViewPub"
+
                     android:layout_width="150sp"
                     android:layout_height="150sp"
                     android:layout_marginLeft="25sp"
                     android:layout_marginTop="25sp"
-                    android:background="@color/white" />
+                    android:background="@color/transparent"
 
+                    />
                 <TextView
                     android:id="@+id/charger_img"
                     android:layout_width="wrap_content"
@@ -60,6 +63,7 @@
                     android:layout_marginLeft="25sp"
                     android:gravity="center"
                     android:onClick="chargerImage" />
+
             </LinearLayout>
 
             <!-- Titre, copyright et valeur monétaire-->
@@ -168,12 +172,43 @@
                     android:checked="true"/>
             </LinearLayout>
 
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- TextView Upload -->
+            <TextView
+                android:id="@+id/upload"
+                android:layout_width="wrap_content"
+                android:layout_height="51dp"
+                android:layout_marginLeft="25sp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/upload"
+                android:textColor="#0000FF"
+                android:textSize="17sp" />
+
+            <!-- TextView Fichier Ajouté -->
+            <TextView
+                android:id="@+id/fichierajouté"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15sp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/fichier_pas_ajoute"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
             <Button
                 android:id="@+id/bouton_publier"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="50sp"
+                android:layout_marginTop="30sp"
                 android:background="@drawable/custom_button_background"
                 android:text="@string/button_publier"
                 android:textAppearance="@style/se_connecte" />
