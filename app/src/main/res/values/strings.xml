@@ -76,6 +76,7 @@
     <string name="upload"><u>Téléverser_modèle_3D_</u></string>
     <string name="fichierajoute"><i> : Fichier 3D ajouté</i></string>
     <string name="fichier_pas_ajoute"><i> : Aucun fichier ajouté</i></string>
+    <string name="motcle_pub">Mots clés : </string>
 
 
 </resources>

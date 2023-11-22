@@ -131,12 +131,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
+            <EditText
+                android:id="@+id/EditTextMotCle"
+                style="@style/CustomEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginLeft="25sp"
+                android:layout_marginRight="25sp"
+                android:background="@color/white"
+                android:gravity="left"
+                android:hint="@string/motcle_pub"
+                android:textColor="#00BA8D"
+                android:paddingLeft="10dp"
+                android:layout_marginBottom="16dp"
+                />
             <EditText
                 android:id="@+id/EditTextDescription"
                 style="@style/CustomEditTextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="250sp"
+                android:layout_height="150sp"
                 android:layout_marginLeft="25sp"
                 android:layout_marginRight="25sp"
                 android:background="@color/white"
@@ -145,6 +158,7 @@
                 android:textColor="#00BA8D"
                 android:paddingLeft="10dp"
                 />
+
 
 
             <CheckBox
@@ -175,7 +189,7 @@
 
             <!-- TextView Fichier Ajouté -->
             <TextView
-                android:id="@+id/fichierajouté"
+                android:id="@+id/fichierajoute"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginLeft="15sp"

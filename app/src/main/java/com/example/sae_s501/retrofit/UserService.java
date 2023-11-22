@@ -22,14 +22,27 @@ public interface UserService {
                                    @Field("password") String password);
 
 
-    @FormUrlEncoded
-    @POST("/savePublication")
-    Call<Publication> createPublication(
-            @Field("title") String title,
-            @Field("description") String description,
-            @Field("gratuit") boolean gratuit,
-            @Field("prix") float prix
+    @Multipart
+    @POST("/publication/save")
+    Call<Void> createPublication(
+            @Part("title") RequestBody title,
+            @Part("description") RequestBody description,
+            @Part("gratuit") RequestBody gratuit,
+            @Part("publique") RequestBody publique,
+            @Part("prix") RequestBody prix,
+            @Part MultipartBody.Part image,
+            @Part MultipartBody.Part file,
+            @Part("proprietaire") RequestBody proprietaire
     );
 }
-
+/*@PostMapping("/savePublication")
+    public Publication savePublication(
+            @RequestParam("titre") String titre,
+            @RequestParam("description") String description,
+            @RequestParam("gratuit") boolean gratuit,
+            @RequestParam("publique") boolean publique,
+            @RequestParam("prix") float prix,
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("fichier") MultipartFile fichier,
+            @RequestParam("proprietaire") Long proprietaire) {*/
 

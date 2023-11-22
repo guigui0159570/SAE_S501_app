@@ -1,7 +1,11 @@
 package com.example.sae_s501;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -16,10 +20,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.sae_s501.model.Publication;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.UserService;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +44,6 @@ import retrofit2.Response;
 public class AjoutPublication extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST =1 ;
     private static final int PICK_FILE_REQUEST =2 ;
-
 
     private EditText editTextTitle;
     private CheckBox editCheckbox;
@@ -37,11 +53,15 @@ public class AjoutPublication extends AppCompatActivity {
     private Button buttonPublier;
     private TextView TextViewImage;
     private TextView TextViewUpload;
+    private boolean publiqueCheck = true;
+
 
     private boolean imageAdded = false;
     private boolean fileAdded = false;
     private UserService userService;
     private RetrofitService retrofitService = new RetrofitService();
+    private String imagePath;
+    private String filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,12 +123,15 @@ public class AjoutPublication extends AppCompatActivity {
                     showToast("Veuillez saisir un modèle 3D pour votre publication.");
                     return;
                 }
+                if (editCheckboxPrive.isChecked()){
+                    publiqueCheck = false;
+                }
 
 
                 // Vérifier si la case à cocher est cochée
                 if (editCheckbox.isChecked()) {
                     // Si la case à cocher est cochée, envoyer la requête avec le booléen à true
-                    sendPublicationRequest(title, description, true, 0);
+                    sendPublicationRequest(title, description, true,publiqueCheck, 0, 752L);
                 } else {
                     // Si la case à cocher n'est pas cochée
                     prix = ConversionFloat(editTextPrix);
@@ -118,11 +141,14 @@ public class AjoutPublication extends AppCompatActivity {
                         return;
                     }
                     // Envoyer la requête avec le booléen à false
-                    sendPublicationRequest(title, description, false, prix);
+                    sendPublicationRequest(title, description, false,publiqueCheck,prix,752L);
                 }
             }
         });
     }
+
+
+
     private void openImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
@@ -143,36 +169,77 @@ public class AjoutPublication extends AppCompatActivity {
             ImageView photo = findViewById(R.id.imageViewPub);
             photo.setImageURI(selectedImage);
             imageAdded=true;
+            File image = new File(Uri.parse(selectedImage.toString()).getPath());
+            imagePath = image.getAbsolutePath();
+            Log.d("IMAGE CHEMIN", imagePath);
         } else if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            // Traitement pour l'ajout d'un fichier
-            TextView fichierAjoute = findViewById(R.id.fichierajouté);
-            fichierAjoute.setText(R.string.fichierajoute);
-            fileAdded=true;
+            try {
+                // Traitement pour l'ajout d'un fichier
+                TextView fichierAjoute = findViewById(R.id.fichierajoute);
+                fichierAjoute.setText(R.string.fichierajoute);
+                fileAdded = true;
+                File file = new File(Uri.parse(data.getDataString()).getPath());
+                filePath = file.getAbsolutePath();
+                Log.d("FICHIER CHEMIN", filePath);
+            } catch (Exception e) {
+                e.printStackTrace();
+                showToast("Erreur lors de la récupération du chemin du fichier.");
+            }
         }
     }
 
-    private void sendPublicationRequest(String title, String description, boolean gratuit, float prix) {
-        // Envoi de la requête au serveur
-        Call<Publication> call = userService.createPublication(title, description, gratuit, prix);
+    private void sendPublicationRequest(String title, String description, boolean gratuit, boolean publique, float prix, Long proprietaire) {
+        // Créez une MultipartBody.Part pour le fichier image
+        MultipartBody.Part imagePart = prepareFilePart("image", imagePath);
 
-        call.enqueue(new Callback<Publication>() {
-            @Override
-            public void onResponse(Call<Publication> call, Response<Publication> response) {
-                if (response.isSuccessful()) {
-                    showToast("Publication réussie !");
-                    // Réinitialiser les champs après une publication réussie
-                    resetFields();
-                } else {
-                    showToast("Échec de la publication !");
+        // Créez une MultipartBody.Part pour le fichier
+        MultipartBody.Part filePart = prepareFilePart("file", filePath);
+
+        // Vérifiez si les parties du fichier ne sont pas null
+        if (imagePart != null && filePart != null) {
+            // Convertissez l'identifiant du propriétaire en RequestBody
+            RequestBody proprietaireRequestBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(proprietaire));
+
+            // Envoi de la requête au serveur avec les données multipart et l'identifiant du propriétaire
+            Call<Void> call = userService.createPublication(
+                    createRequestBody(title),
+                    createRequestBody(description),
+                    createRequestBody(String.valueOf(gratuit)),
+                    createRequestBody(String.valueOf(publique)),
+                    createRequestBody(String.valueOf(prix)),
+                    imagePart,
+                    filePart,
+                    proprietaireRequestBody
+            );
+
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        showToast("Publication réussie !");
+                        // Réinitialiser les champs après une publication réussie
+                        resetFields();
+                    } else {
+                        showToast("Échec de la publication !");
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Publication> call, Throwable t) {
-                showToast("Erreur : " + t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    if (t instanceof FileNotFoundException) {
+                        showToast("Erreur : Le fichier n'a pas pu être ouvert par le serveur.");
+                        Log.d("Erreur serv", "onFailure: "+ t.getMessage());
+                    } else {
+                        showToast("Erreur : " + t.getMessage());
+                    }
+                }
+            });
+        } else {
+            // Gérer le cas où une des parties du fichier est null
+            showToast("Erreur : Une des parties du fichier est null.");
+        }
     }
+
 
     private float ConversionFloat(EditText editText) {
         try {
@@ -182,6 +249,8 @@ public class AjoutPublication extends AppCompatActivity {
             return Float.MIN_VALUE;
         }
     }
+
+
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -195,5 +264,18 @@ public class AjoutPublication extends AppCompatActivity {
         editTextPrix.setVisibility(editCheckbox.isChecked() ? View.GONE : View.VISIBLE);
         // Décocher la CheckBox
         editCheckbox.setChecked(false);
+    }
+
+
+    // Créez une MultipartBody.Part à partir du chemin d'un fichier
+    private MultipartBody.Part prepareFilePart(String partName, String filePath) {
+        File file = new File(filePath);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+    // Créez un RequestBody à partir d'une chaîne
+    private RequestBody createRequestBody(String value) {
+        return RequestBody.create(MediaType.parse("multipart/form-data"), value);
     }
 }
