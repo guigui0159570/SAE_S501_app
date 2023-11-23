@@ -1,6 +1,7 @@
 package com.example.sae_s501;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -131,7 +132,7 @@ public class AjoutPublication extends AppCompatActivity {
                 // Vérifier si la case à cocher est cochée
                 if (editCheckbox.isChecked()) {
                     // Si la case à cocher est cochée, envoyer la requête avec le booléen à true
-                    sendPublicationRequest(title, description, true,publiqueCheck, 0, 752L);
+                    sendPublicationRequest(title, description, true,publiqueCheck, 0.0F, 752L);
                 } else {
                     // Si la case à cocher n'est pas cochée
                     prix = ConversionFloat(editTextPrix);
@@ -159,22 +160,28 @@ public class AjoutPublication extends AppCompatActivity {
         startActivityForResult(intent, PICK_FILE_REQUEST);
     }
 
+    // Modification de onActivityResult pour traiter l'image comme un Bitmap
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            // Traitement pour l'ajout d'une image
             Uri selectedImage = data.getData();
-            ImageView photo = findViewById(R.id.imageViewPub);
-            photo.setImageURI(selectedImage);
-            imageAdded=true;
-            File image = new File(Uri.parse(selectedImage.toString()).getPath());
-            imagePath = image.getAbsolutePath();
-            Log.d("IMAGE CHEMIN", imagePath);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                ImageView photo = findViewById(R.id.imageViewPub);
+                photo.setImageBitmap(bitmap);
+                imageAdded = true;
+
+                // Utiliser la nouvelle méthode pour obtenir le chemin du fichier
+                String filePath = getRealPathFromURI(selectedImage);
+                Log.d("Request", "Image Path: " + filePath);
+                // Utiliser filePath pour vos opérations ultérieures si nécessaire
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             try {
-                // Traitement pour l'ajout d'un fichier
                 TextView fichierAjoute = findViewById(R.id.fichierajoute);
                 fichierAjoute.setText(R.string.fichierajoute);
                 fileAdded = true;
@@ -187,13 +194,39 @@ public class AjoutPublication extends AppCompatActivity {
             }
         }
     }
+    private String getRealPathFromURI(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String filePath = cursor.getString(column_index);
+        cursor.close();
+        return filePath;
+    }
 
     private void sendPublicationRequest(String title, String description, boolean gratuit, boolean publique, float prix, Long proprietaire) {
-        // Créez une MultipartBody.Part pour le fichier image
-        MultipartBody.Part imagePart = prepareFilePart("image", imagePath);
+        Bitmap imageBitmap = ((BitmapDrawable) ((ImageView) findViewById(R.id.imageViewPub)).getDrawable()).getBitmap();
 
-        // Créez une MultipartBody.Part pour le fichier
-        MultipartBody.Part filePart = prepareFilePart("file", filePath);
+        // Vérifiez si imageBitmap est null
+        if (imageBitmap == null) {
+            showToast("Erreur : Image non valide.");
+            return;
+        }
+
+        // Create MultipartBody.Part for the image
+        MultipartBody.Part imagePart = prepareImagePart("image", imageBitmap);
+
+        // Vérifiez si filePath est null
+        if (filePath == null) {
+            showToast("Erreur : Chemin du fichier non valide.");
+            return;
+        }
+
+        // Create MultipartBody.Part for the file
+        MultipartBody.Part filePart = prepareFilePart("file", new File(filePath));
 
         // Vérifiez si les parties du fichier ne sont pas null
         if (imagePart != null && filePart != null) {
@@ -208,7 +241,6 @@ public class AjoutPublication extends AppCompatActivity {
                     createRequestBody(String.valueOf(publique)),
                     createRequestBody(String.valueOf(prix)),
                     imagePart,
-                    filePart,
                     proprietaireRequestBody
             );
 
@@ -217,6 +249,8 @@ public class AjoutPublication extends AppCompatActivity {
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
                         showToast("Publication réussie !");
+                        Intent intent = new Intent(AjoutPublication.this, Connexion.class);
+                        startActivity(intent);
                         // Réinitialiser les champs après une publication réussie
                         resetFields();
                     } else {
@@ -260,19 +294,46 @@ public class AjoutPublication extends AppCompatActivity {
         editTextTitle.setText("");
         editTextPrix.setText("");
         editTextDescription.setText("");
-        // Remettre la visibilité par défaut de l'editTextPrix
         editTextPrix.setVisibility(editCheckbox.isChecked() ? View.GONE : View.VISIBLE);
-        // Décocher la CheckBox
         editCheckbox.setChecked(false);
+        // Réinitialiser l'affichage de l'image
+        ImageView photo = findViewById(R.id.imageViewPub);
+        photo.setImageDrawable(null); // Effacer l'image
+        imageAdded = false;
+
+        // Réinitialiser l'affichage du fichier 3D
+        TextView fichierAjoute = findViewById(R.id.fichierajoute);
+        fichierAjoute.setText("");  // Effacer le texte du fichier ajouté
+        fileAdded = false;
+
+        // Réinitialiser les variables de chemin de fichier
+        filePath = null;
     }
 
+    // Modification de la méthode prepareFilePart pour accepter Bitmap pour les images
+    private MultipartBody.Part prepareImagePart(String partName, Bitmap bitmap) {
+        // Convert Bitmap to byte array
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
 
-    // Créez une MultipartBody.Part à partir du chemin d'un fichier
-    private MultipartBody.Part prepareFilePart(String partName, String filePath) {
-        File file = new File(filePath);
+        // Create RequestBody for image file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageBytes);
+
+        // Create MultipartBody.Part for image
+        return MultipartBody.Part.createFormData(partName, "image.jpg", requestFile);
+    }
+
+    // Créez une MultipartBody.Part à partir d'un fichier
+    private MultipartBody.Part prepareFilePart(String partName, File file) {
+        // Create RequestBody for file
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        // Create MultipartBody.Part for file
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
+
+
 
     // Créez un RequestBody à partir d'une chaîne
     private RequestBody createRequestBody(String value) {

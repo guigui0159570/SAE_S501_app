@@ -16,7 +16,7 @@ import retrofit2.http.Part;
 public interface UserService {
 
     @FormUrlEncoded
-    @POST("/register/save")
+    @POST("/api/auth/register/save")
     Call<Utilisateur> registerUser(@Field("pseudo") String pseudo,
                                    @Field("email") String email,
                                    @Field("password") String password);
@@ -25,13 +25,12 @@ public interface UserService {
     @Multipart
     @POST("/publication/save")
     Call<Void> createPublication(
-            @Part("title") RequestBody title,
+            @Part("titre") RequestBody title,
             @Part("description") RequestBody description,
             @Part("gratuit") RequestBody gratuit,
             @Part("publique") RequestBody publique,
             @Part("prix") RequestBody prix,
             @Part MultipartBody.Part image,
-            @Part MultipartBody.Part file,
             @Part("proprietaire") RequestBody proprietaire
     );
 }
