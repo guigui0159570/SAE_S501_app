@@ -34,6 +34,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -51,6 +55,7 @@ public class AjoutPublication extends AppCompatActivity {
     private CheckBox editCheckboxPrive;
     private EditText editTextPrix;
     private EditText editTextDescription;
+    private EditText editTextMotCle;
     private Button buttonPublier;
     private TextView TextViewImage;
     private TextView TextViewUpload;
@@ -78,6 +83,7 @@ public class AjoutPublication extends AppCompatActivity {
         editCheckboxPrive = findViewById(R.id.prive);
         TextViewImage  = findViewById(R.id.charger_img);
         TextViewUpload  = findViewById(R.id.upload);
+        editTextMotCle = findViewById(R.id.EditTextMotCle);
 
         userService = retrofitService.getRetrofit().create(UserService.class);
         TextViewImage.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +115,8 @@ public class AjoutPublication extends AppCompatActivity {
                 // Récupération des données saisies dans les champs de texte
                 String title = editTextTitle.getText().toString();
                 String description = editTextDescription.getText().toString();
+                String motcle = editTextMotCle.getText().toString();
+                List<String> tags = extractTags(motcle);
                 float prix = 0;
 
                 if (title.isEmpty()) {
@@ -128,11 +136,10 @@ public class AjoutPublication extends AppCompatActivity {
                     publiqueCheck = false;
                 }
 
-
                 // Vérifier si la case à cocher est cochée
                 if (editCheckbox.isChecked()) {
                     // Si la case à cocher est cochée, envoyer la requête avec le booléen à true
-                    sendPublicationRequest(title, description, true,publiqueCheck, 0.0F, 752L);
+                    sendPublicationRequest(title, description, true,publiqueCheck, 0.0F, 752L,tags);
                 } else {
                     // Si la case à cocher n'est pas cochée
                     prix = ConversionFloat(editTextPrix);
@@ -142,13 +149,29 @@ public class AjoutPublication extends AppCompatActivity {
                         return;
                     }
                     // Envoyer la requête avec le booléen à false
-                    sendPublicationRequest(title, description, false,publiqueCheck,prix,752L);
+                    sendPublicationRequest(title, description, false,publiqueCheck,prix,752L,tags);
                 }
             }
         });
     }
 
+    public static List<String> extractTags(String inputText) {
+        List<String> tagList = new ArrayList<>();
 
+        // Définir le motif de l'expression régulière pour trouver les tags
+        Pattern pattern = Pattern.compile("#(\\w+)");
+
+        // Créer un objet Matcher pour trouver les correspondances dans le texte
+        Matcher matcher = pattern.matcher(inputText);
+
+        // Parcourir toutes les correspondances et ajouter les tags à la liste
+        while (matcher.find()) {
+            String tag = matcher.group(1); // Capturer le contenu entre # et la fin du mot
+            tagList.add(tag);
+        }
+
+        return tagList;
+    }
 
     private void openImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -207,7 +230,7 @@ public class AjoutPublication extends AppCompatActivity {
         return filePath;
     }
 
-    private void sendPublicationRequest(String title, String description, boolean gratuit, boolean publique, float prix, Long proprietaire) {
+    private void sendPublicationRequest(String title, String description, boolean gratuit, boolean publique, float prix, Long proprietaire,List<String> tags) {
         Bitmap imageBitmap = ((BitmapDrawable) ((ImageView) findViewById(R.id.imageViewPub)).getDrawable()).getBitmap();
 
         // Vérifiez si imageBitmap est null
@@ -216,7 +239,6 @@ public class AjoutPublication extends AppCompatActivity {
             return;
         }
 
-        // Create MultipartBody.Part for the image
         MultipartBody.Part imagePart = prepareImagePart("image", imageBitmap);
 
         // Vérifiez si filePath est null
@@ -225,7 +247,6 @@ public class AjoutPublication extends AppCompatActivity {
             return;
         }
 
-        // Create MultipartBody.Part for the file
         MultipartBody.Part filePart = prepareFilePart("file", new File(filePath));
 
         // Vérifiez si les parties du fichier ne sont pas null
@@ -241,7 +262,8 @@ public class AjoutPublication extends AppCompatActivity {
                     createRequestBody(String.valueOf(publique)),
                     createRequestBody(String.valueOf(prix)),
                     imagePart,
-                    proprietaireRequestBody
+                    proprietaireRequestBody,
+                    createRequestBodyList(tags)
             );
 
             call.enqueue(new Callback<Void>() {
@@ -269,7 +291,6 @@ public class AjoutPublication extends AppCompatActivity {
                 }
             });
         } else {
-            // Gérer le cas où une des parties du fichier est null
             showToast("Erreur : Une des parties du fichier est null.");
         }
     }
@@ -279,7 +300,6 @@ public class AjoutPublication extends AppCompatActivity {
         try {
             return Float.parseFloat(editText.getText().toString());
         } catch (NumberFormatException e) {
-            // Gérer l'exception si la conversion en float échoue
             return Float.MIN_VALUE;
         }
     }
@@ -312,24 +332,19 @@ public class AjoutPublication extends AppCompatActivity {
 
     // Modification de la méthode prepareFilePart pour accepter Bitmap pour les images
     private MultipartBody.Part prepareImagePart(String partName, Bitmap bitmap) {
-        // Convert Bitmap to byte array
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
 
-        // Create RequestBody for image file
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageBytes);
 
-        // Create MultipartBody.Part for image
         return MultipartBody.Part.createFormData(partName, "image.jpg", requestFile);
     }
 
     // Créez une MultipartBody.Part à partir d'un fichier
     private MultipartBody.Part prepareFilePart(String partName, File file) {
-        // Create RequestBody for file
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
-        // Create MultipartBody.Part for file
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
@@ -338,5 +353,18 @@ public class AjoutPublication extends AppCompatActivity {
     // Créez un RequestBody à partir d'une chaîne
     private RequestBody createRequestBody(String value) {
         return RequestBody.create(MediaType.parse("multipart/form-data"), value);
+    }
+
+    // Créez un RequestBody à partir d'une liste de chaînes
+    private RequestBody createRequestBodyList(List<String> values) {
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
+
+        for (String value : values) {
+            builder.addFormDataPart("tags", value);
+            // Remplacez "key" par la clé que vous souhaitez utiliser pour chaque élément de la liste
+        }
+
+        return builder.build();
     }
 }

@@ -31,7 +31,8 @@ public interface UserService {
             @Part("publique") RequestBody publique,
             @Part("prix") RequestBody prix,
             @Part MultipartBody.Part image,
-            @Part("proprietaire") RequestBody proprietaire
+            @Part("proprietaire") RequestBody proprietaire,
+            @Part("tags") RequestBody tags
     );
 }
 /*@PostMapping("/savePublication")
