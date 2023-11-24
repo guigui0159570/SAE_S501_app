@@ -19,7 +19,7 @@
             android:background="@drawable/custom_button_return"
             android:layout_width="50sp"
             android:layout_height="50sp"
-            android:layout_marginRight="150sp"
+            android:layout_marginRight="600sp"
             android:layout_marginTop="35sp"
             android:src="@drawable/custom_button_return"
             android:clickable="true"></Button>

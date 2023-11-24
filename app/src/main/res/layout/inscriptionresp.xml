@@ -25,7 +25,7 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout_titre_connecter"
+        android:id="@+id/linearLayout_titre_inscription"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="150sp"
@@ -42,7 +42,7 @@
             android:textAppearance="@style/se_connecte" />
 
         <TextView
-            android:id="@+id/connectez_v"
+            android:id="@+id/incrivez_vous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
