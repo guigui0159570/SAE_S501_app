@@ -4,13 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
-import android.widget.Button;
 
-import java.util.Locale;
+import com.example.sae_s501.retrofit.SessionManager;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,11 +21,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // SessionManager.deleteToken(this);
+        SessionManager.isSessionValid(this);
         setContentView(R.layout.activity_main);
-        setContentView(R.layout.connexion);
     }
 
-
+    private void redirectToLoginScreen() {
+        Intent intent = new Intent(this, Connexion.class);
+        startActivity(intent);
+    }
 
     public void onNouveauInscriptionClick(View view) {
         Intent intent = new Intent(this, Inscription.class);
