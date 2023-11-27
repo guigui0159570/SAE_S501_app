@@ -2,6 +2,7 @@ package com.example.sae_s501.authentification;
 
 
 import com.example.sae_s501.Dictionnaire;
+import com.example.sae_s501.model.UserEmailResponse;
 import com.example.sae_s501.retrofit.AuthService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.TokenValidationCallback;
@@ -37,6 +38,7 @@ public class Authentification {
 
                     // Stocker le jeton dans SharedPreferences
                     SessionManager.saveJwtToken(context, jwtResponse.getToken());
+                    SessionManager.saveUserEmail(context, jwtResponse.getEmail());
                     Toast.makeText(context, "Connexion réussie !", Toast.LENGTH_SHORT).show();
                     Log.d("Connexion token", jwtResponse.getToken());
                     Log.d("Connexion token shared", SessionManager.getJwtToken(context) + "");
@@ -52,6 +54,7 @@ public class Authentification {
                         Toast.makeText(context, "Erreur d'authentification: " + response.message(), Toast.LENGTH_SHORT).show();
                     }
                 }
+
             }
 
             @Override
@@ -91,7 +94,7 @@ public class Authentification {
 
         return retrofit.create(AuthService.class);
     }
-    private static AuthService createAuthServiceToken(Context context) {
+    public static AuthService createAuthServiceToken(Context context) {
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -141,4 +144,5 @@ public class Authentification {
             }
         });
     }
+
 }

@@ -21,7 +21,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.RetrofitService;
+import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
 
 import java.io.BufferedReader;
@@ -68,6 +70,7 @@ public class AjoutPublication extends AppCompatActivity {
     private RetrofitService retrofitService;
     private String imagePath;
     private String filePath;
+    private Authentification authentification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,7 @@ public class AjoutPublication extends AppCompatActivity {
         editTextMotCle = findViewById(R.id.EditTextMotCle);
 
         retrofitService = new RetrofitService(this);
+
 
         userService = retrofitService.getRetrofit().create(UserService.class);
         TextViewImage.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +144,7 @@ public class AjoutPublication extends AppCompatActivity {
                 // Vérifier si la case à cocher est cochée
                 if (editCheckbox.isChecked()) {
                     // Si la case à cocher est cochée, envoyer la requête avec le booléen à true
-                    sendPublicationRequest(title, description, true,publiqueCheck, 0.0F, 752L,tags);
+                    sendPublicationRequest(title, description, true,publiqueCheck, 0.0F,tags);
                 } else {
                     // Si la case à cocher n'est pas cochée
                     prix = ConversionFloat(editTextPrix);
@@ -150,7 +154,7 @@ public class AjoutPublication extends AppCompatActivity {
                         return;
                     }
                     // Envoyer la requête avec le booléen à false
-                    sendPublicationRequest(title, description, false,publiqueCheck,prix,752L,tags);
+                    sendPublicationRequest(title, description, false,publiqueCheck,prix,tags);
                 }
             }
         });
@@ -231,9 +235,11 @@ public class AjoutPublication extends AppCompatActivity {
         return filePath;
     }
 
-    private void sendPublicationRequest(String title, String description, boolean gratuit, boolean publique, float prix, Long proprietaire,List<String> tags) {
+    private void sendPublicationRequest(String title, String description, boolean gratuit, boolean publique, float prix,List<String> tags) {
         Bitmap imageBitmap = ((BitmapDrawable) ((ImageView) findViewById(R.id.imageViewPub)).getDrawable()).getBitmap();
+        String jwtEmail = SessionManager.getUserEmail(this);
 
+        Log.d("jwtEmail", jwtEmail);
         // Vérifiez si imageBitmap est null
         if (imageBitmap == null) {
             showToast("Erreur : Image non valide.");
@@ -252,8 +258,6 @@ public class AjoutPublication extends AppCompatActivity {
 
         // Vérifiez si les parties du fichier ne sont pas null
         if (imagePart != null && filePart != null) {
-            // Convertissez l'identifiant du propriétaire en RequestBody
-            RequestBody proprietaireRequestBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(proprietaire));
 
             // Envoi de la requête au serveur avec les données multipart et l'identifiant du propriétaire
             Call<Void> call = userService.createPublication(
@@ -263,8 +267,8 @@ public class AjoutPublication extends AppCompatActivity {
                     createRequestBody(String.valueOf(publique)),
                     createRequestBody(String.valueOf(prix)),
                     imagePart,
-                    proprietaireRequestBody,
-                    tags
+                    tags,
+                    jwtEmail
             );
             call.enqueue(new Callback<Void>() {
                 @Override
@@ -277,7 +281,6 @@ public class AjoutPublication extends AppCompatActivity {
                         showToast("Échec de la publication !");
                     }
                 }
-
 
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {

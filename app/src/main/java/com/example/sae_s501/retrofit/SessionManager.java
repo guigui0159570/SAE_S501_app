@@ -1,5 +1,7 @@
 package com.example.sae_s501.retrofit;
 
+import static com.example.sae_s501.authentification.Authentification.createAuthServiceToken;
+
 import android.content.AttributionSource;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +14,7 @@ import com.example.sae_s501.Inscription;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.authentification.JwtResponse;
 import com.example.sae_s501.authentification.LoginRequest;
+import com.example.sae_s501.model.UserEmailResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +25,7 @@ public class SessionManager {
 
     private static final String SESSION_PREFS_NAME = "session_prefs";
     private static final String KEY_JWT_TOKEN = "jwt_token";
+    private static final String KEY_USER_EMAIL = "user_email";
 
     public static void isSessionValid(Context context) {
         String jwtToken = SessionManager.getJwtToken(context);
@@ -69,4 +73,15 @@ public class SessionManager {
         SharedPreferences preferences = context.getSharedPreferences(SESSION_PREFS_NAME, Context.MODE_PRIVATE);
         return preferences.getString(KEY_JWT_TOKEN, null);
     }
+    public static void saveUserEmail(Context context, String userEmail) {
+        SharedPreferences preferences = context.getSharedPreferences(SESSION_PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(KEY_USER_EMAIL, userEmail);
+        editor.apply();
+    }
+    public static String getUserEmail(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(SESSION_PREFS_NAME, Context.MODE_PRIVATE);
+        return preferences.getString(KEY_USER_EMAIL, null);
+    }
+
 }

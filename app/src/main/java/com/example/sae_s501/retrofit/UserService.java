@@ -33,18 +33,9 @@ public interface UserService {
             @Part("publique") RequestBody publique,
             @Part("prix") RequestBody prix,
             @Part MultipartBody.Part image,
-            @Part("proprietaire") RequestBody proprietaire,
-            @Part("tags") List<String> tags
+            @Part("tags") List<String> tags,
+            @Part("email") String email
     );
 }
-/*@PostMapping("/savePublication")
-    public Publication savePublication(
-            @RequestParam("titre") String titre,
-            @RequestParam("description") String description,
-            @RequestParam("gratuit") boolean gratuit,
-            @RequestParam("publique") boolean publique,
-            @RequestParam("prix") float prix,
-            @RequestParam("image") MultipartFile image,
-            @RequestParam("fichier") MultipartFile fichier,
-            @RequestParam("proprietaire") Long proprietaire) {*/
+
 
