@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.connexion);
         // SessionManager.deleteToken(this);
         SessionManager.isSessionValid(this);
-        setContentView(R.layout.activity_main);
     }
 
     private void redirectToLoginScreen() {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.sae_s501.AjoutPublication;
 import com.example.sae_s501.Connexion;
 import com.example.sae_s501.Inscription;
 import com.example.sae_s501.authentification.Authentification;
@@ -34,7 +35,7 @@ public class SessionManager {
                     if (isValid) {
                         // Le token est valide
                         // Faites ce que vous devez faire ici
-                        Intent intent = new Intent(context, Inscription.class);
+                        Intent intent = new Intent(context, AjoutPublication.class);
                         context.startActivity(intent);
                     } else {
                         Intent intent = new Intent(context, Connexion.class);

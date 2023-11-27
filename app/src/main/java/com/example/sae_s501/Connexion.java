@@ -44,7 +44,7 @@ public class Connexion extends AppCompatActivity {
                               @Override
                               public void onAuthSuccess() {
                                   // L'authentification a réussi, vous pouvez effectuer des actions ici
-                                  Intent intent = new Intent(getBaseContext(), Inscription.class);
+                                  Intent intent = new Intent(getBaseContext(), AjoutPublication.class);
                                   startActivity(intent);
                               }
 
@@ -62,5 +62,8 @@ public class Connexion extends AppCompatActivity {
     }
 
 
-
+    public void onNouveauInscriptionClick(View view) {
+        Intent intent = new Intent(Connexion.this, Inscription.class);
+        startActivity(intent);
+    }
 }

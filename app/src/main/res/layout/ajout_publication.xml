@@ -75,7 +75,7 @@
                 <EditText
                     android:id="@+id/editTextTitle"
                     style="@style/CustomEditTextStyle"
-                    android:layout_width="150sp"
+                    android:layout_width="200sp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="25sp"

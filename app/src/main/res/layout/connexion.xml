@@ -86,7 +86,9 @@
             android:layout_height="50sp"
             android:paddingLeft="5sp"
             android:background="@color/white"
-            android:hint="@string/edit_connexion_mdp"/>
+            android:hint="@string/edit_connexion_mdp"
+            android:inputType="textPassword"
+            />
 
         <TextView
             android:id="@+id/mdp_oublie"
