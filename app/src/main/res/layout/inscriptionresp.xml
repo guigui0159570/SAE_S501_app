@@ -40,12 +40,26 @@
             android:lineSpacingExtra="9sp"
             android:text="Inscription"
             android:textAppearance="@style/se_connecte" />
+        <View
+            android:id="@+id/barre_haut"
+            android:layout_width="310dp"
+            android:layout_height="2dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="44dp"
+            android:background="#D9D9D9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.475"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Inscription" />
 
         <TextView
             android:id="@+id/incrivez_vous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="20dp"
             android:gravity="center_horizontal|top"
             android:lineSpacingExtra="3sp"
             android:text="Inscrivez-vous !"
@@ -55,6 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+
             android:layout_marginLeft="35sp"
             android:layout_marginRight="35sp"
             android:orientation="vertical">
@@ -63,8 +79,8 @@
                 android:id="@+id/pseudo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8sp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="10sp"
                 android:lineSpacingExtra="9sp"
                 android:text="@string/pseudo"
                 android:textAppearance="@style/adresse_mai" />
@@ -75,8 +91,8 @@
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="30dp"
-                android:layout_marginBottom="20sp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="20sp"
                 android:hint="Pseudo"
                 android:textColor="#00BA8D" />
 
@@ -84,8 +100,8 @@
                 android:id="@+id/adresse_mail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8sp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="8sp"
                 android:lineSpacingExtra="9sp"
                 android:text="@string/adresse_mail"
                 android:textAppearance="@style/adresse_mai"
@@ -96,8 +112,8 @@
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="30dp"
-                android:layout_marginBottom="20sp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="20sp"
                 android:hint="Adresse e-mail"
                 android:inputType="textEmailAddress" />
 
@@ -105,8 +121,8 @@
                 android:id="@+id/mdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8sp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="8sp"
                 android:text="@string/mdp"
                 android:textAppearance="@style/adresse_mai" />
 
@@ -115,9 +131,9 @@
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="30dp"
+                android:layout_gravity="center"
                 android:layout_marginBottom="20sp"
                 android:hint="Mot de passe"
-                android:layout_gravity="center"
                 android:inputType="textPassword"
                 android:textColor="#00BA8D" />
 
@@ -125,8 +141,8 @@
                 android:id="@+id/mdp2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8sp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="8sp"
                 android:text="Confirmer mot de passe"
                 android:textAppearance="@style/adresse_mai" />
 
@@ -135,8 +151,8 @@
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="30dp"
-                android:layout_marginBottom="20sp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="20sp"
                 android:hint="Mot de passe"
                 android:inputType="textPassword"
                 android:textColor="#00BA8D" />
@@ -161,8 +177,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="1dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="1dp"
                 android:background="#D9D9D9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.475"
@@ -173,9 +189,9 @@
                 android:id="@+id/nouveau"
                 android:layout_width="300dp"
                 android:layout_height="20dp"
+                android:layout_gravity="center"
                 android:layout_margin="5sp"
                 android:layout_marginBottom="8dp"
-                android:layout_gravity="center"
                 android:clickable="true"
                 android:gravity="top"
                 android:lineSpacingExtra="3sp"
@@ -187,9 +203,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.903"
                 app:layout_constraintStart_toStartOf="parent" />
-
-
-
 
 
         </LinearLayout>

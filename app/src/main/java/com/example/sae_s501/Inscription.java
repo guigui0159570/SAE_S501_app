@@ -27,7 +27,7 @@ public class Inscription extends AppCompatActivity {
     private Button buttonEnvoyer;
 
     private UserService userService;
-    private RetrofitService retrofitService = new RetrofitService();
+    private RetrofitService retrofitService = new RetrofitService(this);
 
 
 

@@ -65,14 +65,14 @@ public class AjoutPublication extends AppCompatActivity {
     private boolean imageAdded = false;
     private boolean fileAdded = false;
     private UserService userService;
-    private RetrofitService retrofitService = new RetrofitService();
+    private RetrofitService retrofitService;
     private String imagePath;
     private String filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ajout_publication);
+        setContentView(R.layout.ajout_publicationresp);
 
         editTextTitle = findViewById(R.id.editTextTitle);
         editCheckbox = findViewById(R.id.checkbox_gratuit);
@@ -84,6 +84,8 @@ public class AjoutPublication extends AppCompatActivity {
         TextViewImage  = findViewById(R.id.charger_img);
         TextViewUpload  = findViewById(R.id.upload);
         editTextMotCle = findViewById(R.id.EditTextMotCle);
+
+        retrofitService = new RetrofitService(this);
 
         userService = retrofitService.getRetrofit().create(UserService.class);
         TextViewImage.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +113,6 @@ public class AjoutPublication extends AppCompatActivity {
         buttonPublier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("CLICK BOUTTON", "onClick: TEST");
                 // Récupération des données saisies dans les champs de texte
                 String title = editTextTitle.getText().toString();
                 String description = editTextDescription.getText().toString();
@@ -263,22 +264,20 @@ public class AjoutPublication extends AppCompatActivity {
                     createRequestBody(String.valueOf(prix)),
                     imagePart,
                     proprietaireRequestBody,
-                    createRequestBodyList(tags)
+                    tags
             );
-
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
                         showToast("Publication réussie !");
-                        Intent intent = new Intent(AjoutPublication.this, Connexion.class);
-                        startActivity(intent);
                         // Réinitialiser les champs après une publication réussie
                         resetFields();
                     } else {
                         showToast("Échec de la publication !");
                     }
                 }
+
 
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {
@@ -290,6 +289,7 @@ public class AjoutPublication extends AppCompatActivity {
                     }
                 }
             });
+
         } else {
             showToast("Erreur : Une des parties du fichier est null.");
         }
@@ -316,6 +316,7 @@ public class AjoutPublication extends AppCompatActivity {
         editTextDescription.setText("");
         editTextPrix.setVisibility(editCheckbox.isChecked() ? View.GONE : View.VISIBLE);
         editCheckbox.setChecked(false);
+        editTextMotCle.setText("");
         // Réinitialiser l'affichage de l'image
         ImageView photo = findViewById(R.id.imageViewPub);
         photo.setImageDrawable(null); // Effacer l'image

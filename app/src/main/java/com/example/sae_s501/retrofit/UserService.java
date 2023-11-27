@@ -3,6 +3,8 @@ package com.example.sae_s501.retrofit;
 import com.example.sae_s501.model.Publication;
 import com.example.sae_s501.model.Utilisateur;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -32,7 +34,7 @@ public interface UserService {
             @Part("prix") RequestBody prix,
             @Part MultipartBody.Part image,
             @Part("proprietaire") RequestBody proprietaire,
-            @Part("tags") RequestBody tags
+            @Part("tags") List<String> tags
     );
 }
 /*@PostMapping("/savePublication")

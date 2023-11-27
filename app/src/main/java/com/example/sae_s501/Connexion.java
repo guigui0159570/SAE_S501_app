@@ -2,11 +2,13 @@ package com.example.sae_s501;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.AuthService;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,10 +31,33 @@ public class Connexion extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.connexion);
+        setContentView(R.layout.connexionresp);
         EditText editTextEmail = findViewById(R.id.edit_connexion_mail);
         EditText editTextPassword = findViewById(R.id.edit_connexion_mdp);
         Button button = findViewById(R.id.btn_connexion);
+
+        ImageView langue = findViewById(R.id.langue);
+        Locale currentLocale = getResources().getConfiguration().locale;
+
+        if (currentLocale.getLanguage().equals("en")) {
+            langue.setImageResource(R.drawable.france_flag);
+        } else {
+            langue.setImageResource(R.drawable.greatbritain);
+        }
+        langue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Obtenez la locale actuelle de l'application
+
+                // Changer la langue de l'application
+                if (currentLocale.getLanguage().equals("en")) {
+                    setLocale("fr");
+                } else {
+                    setLocale("en");
+                }
+                recreate();
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
@@ -44,7 +70,7 @@ public class Connexion extends AppCompatActivity {
                               @Override
                               public void onAuthSuccess() {
                                   // L'authentification a réussi, vous pouvez effectuer des actions ici
-                                  Intent intent = new Intent(getBaseContext(), Inscription.class);
+                                  Intent intent = new Intent(getBaseContext(), AjoutPublication.class);
                                   startActivity(intent);
                               }
 
@@ -62,5 +88,17 @@ public class Connexion extends AppCompatActivity {
     }
 
 
+    public void onNouveauInscriptionClick(View view) {
+        Intent intent = new Intent(Connexion.this, Inscription.class);
+        startActivity(intent);
+    }
 
+    private void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+    }
 }
