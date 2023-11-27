@@ -15,7 +15,7 @@ public class Panier extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setContentView(R.layout.panier);
+        setContentView(R.layout.panierresp);
 
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         Button retour_panier = findViewById(R.id.btn_retour_panier);

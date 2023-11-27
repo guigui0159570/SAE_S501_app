@@ -23,7 +23,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sae_s501.MonCompte.ConfigSpring;
 import com.example.sae_s501.MonCompte.MonCompteViewModel;
-import com.example.sae_s501.databinding.MoncompteBinding;
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

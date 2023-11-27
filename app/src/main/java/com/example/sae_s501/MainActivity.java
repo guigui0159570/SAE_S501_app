@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.connexion);
+        setContentView(R.layout.connexionresp);
         // SessionManager.deleteToken(this);
         SessionManager.isSessionValid(this);
     }

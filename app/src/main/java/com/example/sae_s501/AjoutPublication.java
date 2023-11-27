@@ -72,7 +72,7 @@ public class AjoutPublication extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ajout_publication);
+        setContentView(R.layout.ajout_publicationresp);
 
         editTextTitle = findViewById(R.id.editTextTitle);
         editCheckbox = findViewById(R.id.checkbox_gratuit);

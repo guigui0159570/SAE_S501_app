@@ -26,20 +26,20 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import com.example.sae_s501.MonCompte.MonCompteViewModel;
-import com.example.sae_s501.databinding.MoncompteBinding;
+import com.example.sae_s501.databinding.MoncompterespBinding;
 
 import java.util.Base64;
 import java.util.concurrent.CompletableFuture;
 
 
 public class MyCompteActivity extends AppCompatActivity {
-    private MoncompteBinding binding;
+    private MoncompterespBinding binding;
     private UpdatemoncompteBinding bindingUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = MoncompteBinding.inflate(getLayoutInflater());
+        binding = MoncompterespBinding.inflate(getLayoutInflater());
         View root = binding.getRoot();
         setContentView(root);
         MonCompteViewModel monCompteViewModel = new ViewModelProvider(this).get(MonCompteViewModel.class);
