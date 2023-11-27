@@ -1,25 +1,14 @@
 package com.example.sae_s501.retrofit;
 
-import static com.example.sae_s501.authentification.Authentification.createAuthServiceToken;
-
-import android.content.AttributionSource;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.View;
 
-import com.example.sae_s501.AjoutPublication;
 import com.example.sae_s501.Connexion;
-import com.example.sae_s501.Inscription;
+import com.example.sae_s501.MyCompteActivity;
 import com.example.sae_s501.authentification.Authentification;
-import com.example.sae_s501.authentification.JwtResponse;
-import com.example.sae_s501.authentification.LoginRequest;
-import com.example.sae_s501.model.UserEmailResponse;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class SessionManager {
 
@@ -39,7 +28,7 @@ public class SessionManager {
                     if (isValid) {
                         // Le token est valide
                         // Faites ce que vous devez faire ici
-                        Intent intent = new Intent(context, AjoutPublication.class);
+                        Intent intent = new Intent(context, MyCompteActivity.class);
                         context.startActivity(intent);
                     } else {
                         Intent intent = new Intent(context, Connexion.class);

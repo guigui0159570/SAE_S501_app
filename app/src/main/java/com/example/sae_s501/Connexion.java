@@ -70,7 +70,7 @@ public class Connexion extends AppCompatActivity {
                               @Override
                               public void onAuthSuccess() {
                                   // L'authentification a réussi, vous pouvez effectuer des actions ici
-                                  Intent intent = new Intent(getBaseContext(), AjoutPublication.class);
+                                  Intent intent = new Intent(getBaseContext(), MyCompteActivity.class);
                                   startActivity(intent);
                               }
 

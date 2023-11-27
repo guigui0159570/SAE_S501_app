@@ -73,6 +73,10 @@
     <string name="fichier_pas_ajoute"><i> : No files added</i></string>
     <string name="motcle_pub">Keywords : </string>
     <string name="mon_compte">My Account</string>
+    <string name="aides">Help</string>
+    <string name="modifier_profil">Edit Profile</string>
+    <string name="englais">French</string>
+    <string name="deconnexion">Disconnection</string>
 
 
 

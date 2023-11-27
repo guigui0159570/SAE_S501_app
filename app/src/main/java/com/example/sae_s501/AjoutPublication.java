@@ -70,7 +70,6 @@ public class AjoutPublication extends AppCompatActivity {
     private RetrofitService retrofitService;
     private String imagePath;
     private String filePath;
-    private Authentification authentification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

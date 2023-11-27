@@ -81,4 +81,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="aides">Aide</string>
+    <string name="modifier_profil">Modifier Profil</string>
+    <string name="englais">Englais</string>
+    <string name="deconnexion">Deconnexion</string>
 </resources>

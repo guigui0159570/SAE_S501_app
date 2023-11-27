@@ -18,8 +18,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
+import com.example.sae_s501.retrofit.SessionManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -103,6 +105,20 @@ public class MyCompteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), MyUpdateCompteActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        //Deconnexion
+        Button deconnexion = root.findViewById(R.id.deconnexion);
+        deconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SessionManager.deleteToken(getApplicationContext());
+                Toast.makeText(MyCompteActivity.this, "Vous êtes déconnecté !", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(view.getContext(), Connexion.class);
+                startActivity(intent);
+
             }
         });
     }
