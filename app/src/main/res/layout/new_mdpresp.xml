@@ -32,13 +32,30 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/Inscription"
-            android:layout_width="250dp"
-            android:layout_height="86dp"
+            android:id="@+id/New_MDP"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_margin="1sp"
+            android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
-            android:lineSpacingExtra="9sp"
-            android:text="Mot de passe Oublié"
-            android:textAppearance="@style/se_connecte"/>
+            android:lineSpacingExtra="10sp"
+            android:text="Saisie nouveau Mot de passe"
+            android:textAppearance="@style/se_connecte" />
+
+        <View
+            android:id="@+id/rectangle_3"
+            android:layout_width="310dp"
+            android:layout_height="2dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="4dp"
+            android:background="#D9D9D9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.475"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Inscription" />
 
         <LinearLayout
             android:layout_width="367dp"
@@ -46,58 +63,43 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-            <View
-                android:id="@+id/rectangle_3"
-                android:layout_width="310dp"
-                android:layout_height="2dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
-                android:background="#D9D9D9"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.475"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Inscription" />
-
             <TextView
-                android:id="@+id/adresse_mai"
-                android:layout_width="120dp"
-                android:layout_height="20dp"
-                android:layout_marginBottom="8sp"
-                android:text="@string/adresse_mai"
-                android:textAppearance="@style/adresse_mai"/>
-
-            <EditText
-                android:id="@+id/editTextEmail"
-                style="@style/CustomEditTextStyle"
-                android:layout_width="300dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="40sp"
-                android:hint="  Adresse e-mail"
-                android:inputType="textEmailAddress" />
-
-            <TextView
-                android:id="@+id/mdp2"
+                android:id="@+id/New_mdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8sp"
-                android:text="Confirmer Adresse Mail"
+                android:layout_marginBottom="1sp"
+                android:lineSpacingExtra="9sp"
+                android:gravity="center_horizontal"
+                android:text="Nouveau Mot de passe"
                 android:textAppearance="@style/adresse_mai" />
 
             <EditText
-                android:id="@+id/editTextEmail"
+                android:id="@+id/editTextMDP"
+                style="@style/CustomEditTextStyle"
+                android:layout_width="300dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="20sp"
+                android:layout_gravity="center"
+                android:hint="  Mot de passe"
+                android:inputType="textEmailAddress"/>
+
+            <TextView
+                android:id="@+id/validation_newMDP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:gravity="top"
+                android:text="Validation Nouveau Mot de passe"
+                android:textAppearance="@style/adresse_mai"/>
+
+            <EditText
+                android:id="@+id/editTextNew_MDP"
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20sp"
-                android:hint="  Adresse e-mail"
-                android:inputType="textEmailAddress"
-                tools:ignore="DuplicateIds" />
+                android:hint="Mot de passe"
+                android:inputType="textPassword"/>
 
             <Button
                 android:id="@+id/btn_valider"
@@ -110,25 +112,6 @@
                 android:text="@string/btn_valider"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/nouveau"
-                android:layout_width="300dp"
-                android:layout_height="20dp"
-                android:layout_margin="40sp"
-                android:layout_marginBottom="30dp"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:gravity="top"
-                android:lineSpacingExtra="3sp"
-                android:onClick="onInscriptionClick"
-                android:text="Vous avez déjà un compte ? : Se connecter"
-                android:textAppearance="@style/nouveau"
-                android:translationY="-1.74sp"
-                app:layout_constraintBottom_toBottomOf="@+id/rectangle_"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.903"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <View
                 android:id="@+id/rectangle_3"
@@ -146,9 +129,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Inscription"
                 tools:ignore="DuplicateIds" />
+
+
+
         </LinearLayout>
 
 
     </LinearLayout>
+
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
