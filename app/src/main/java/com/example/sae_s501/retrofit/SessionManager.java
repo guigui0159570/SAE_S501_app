@@ -39,6 +39,7 @@ public class SessionManager {
             });
         } else {
             // Aucun token JWT n'est présent
+            Log.e("JWT Token", "Non présent");
             Intent intent = new Intent(context, Connexion.class);
             context.startActivity(intent);
         }
