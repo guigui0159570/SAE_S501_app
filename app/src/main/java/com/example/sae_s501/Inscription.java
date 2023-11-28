@@ -40,7 +40,7 @@ public class Inscription extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmationPassword = findViewById(R.id.editTextPasswordConfirm);
         buttonEnvoyer = findViewById(R.id.btnInscription);
-        retrofitService = new RetrofitService(this);
+        retrofitService = new RetrofitService(Inscription.this);
 
         /* creation requete */
         userService = retrofitService.getRetrofit().create(UserService.class);

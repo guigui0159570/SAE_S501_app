@@ -70,22 +70,18 @@ public class Authentification {
     // Méthode pour effectuer des requêtes authentifiées avec le jeton
     public static OkHttpClient createAuthenticatedClient(Context context) {
         String jwtToken = SessionManager.getJwtToken(context);
-        if (jwtToken != null){
-            return new OkHttpClient.Builder()
-                    .addInterceptor(chain -> {
-                        Request originalRequest = chain.request();
+        return new OkHttpClient.Builder()
+                .addInterceptor(chain -> {
+                    Request originalRequest = chain.request();
 
-                        // Ajouter le jeton dans l'en-tête "Authorization"
-                        Request newRequest = originalRequest.newBuilder()
-                                .header("Authorization", "Bearer " + jwtToken)
-                                .build();
+                    // Ajouter le jeton dans l'en-tête "Authorization"
+                    Request newRequest = originalRequest.newBuilder()
+                            .header("Authorization", "Bearer " + jwtToken)
+                            .build();
 
-                        return chain.proceed(newRequest);
-                    })
-                    .build();
-        } else {
-            return new OkHttpClient();
-        }
+                    return chain.proceed(newRequest);
+                })
+                .build();
 
     }
 

@@ -60,8 +60,12 @@ public class SessionManager {
     }
 
     public static String getJwtToken(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(SESSION_PREFS_NAME, Context.MODE_PRIVATE);
-        return preferences.getString(KEY_JWT_TOKEN, null);
+        if (context != null){
+            SharedPreferences preferences = context.getSharedPreferences(SESSION_PREFS_NAME, Context.MODE_PRIVATE);
+            return preferences.getString(KEY_JWT_TOKEN, null);
+        }else {
+            return null;
+        }
     }
     public static void saveUserEmail(Context context, String userEmail) {
         SharedPreferences preferences = context.getSharedPreferences(SESSION_PREFS_NAME, Context.MODE_PRIVATE);

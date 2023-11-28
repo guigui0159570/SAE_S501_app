@@ -30,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        // Supprimer les préférences partagées au moment de la fermeture de l'application
+        clearSessionCheckPreferences();
+
+        super.onDestroy();
+    }
+
     private void redirectToLoginScreen() {
         Intent intent = new Intent(this, Connexion.class);
         startActivity(intent);
@@ -57,5 +65,17 @@ public class MainActivity extends AppCompatActivity {
     public void onNouveauInscriptionClick(View view) {
         Intent intent = new Intent(this, Inscription.class);
         startActivity(intent);
+    }
+
+    private void clearSessionCheckPreferences() {
+        // Utiliser le contexte de l'activité pour accéder aux préférences partagées
+        SharedPreferences preferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // Supprimer les préférences liées à la vérification de session
+        editor.remove("isSessionCheckPerformed");
+
+        // Appliquer les changements
+        editor.apply();
     }
 }
