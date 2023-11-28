@@ -1,0 +1,7 @@
+<!-- res/layout/fragment_fil_actu.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_pub_fil_actu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+</LinearLayout>

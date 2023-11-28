@@ -77,25 +77,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="50sp">
 
-                    <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/checkbox_gratuit"
+                    <EditText
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        style="@style/CustomEditTextStyle"
+                        android:id="@+id/checkbox_payant"
                         android:layout_width="100sp"
-                        android:layout_height="50sp"
-                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/checkbox_payant"
+                        android:background="@color/white"
+                        android:textColorHint="#00BA8D"
+                        android:layout_marginLeft="10sp"
                         android:paddingRight="5sp"
-                        android:text="@string/checkbox_gratuit"
-                        android:textColor="@color/white" />
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:textSize="12sp"
+                        android:textColor="#00BA8D"
+                        />
+
+
 
 
 
                 </LinearLayout>
 
-                <RatingBar
-                    android:id="@+id/ratingBar4"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
-                    android:layout_marginTop="90sp" />
             </LinearLayout>
 
             <ImageView
@@ -167,11 +172,31 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:id="@+id/description_produit"
+                android:layout_width="wrap_content"
+                android:layout_height="35sp"
+                android:layout_marginLeft="25sp"
+                android:layout_marginTop="35sp"
+                android:clickable="true"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:onClick="chargerImage"
+                android:text="Description produit"
+                android:textSize="17sp" />
+
+            <RatingBar
+                android:id="@+id/ratingBar4"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:layout_marginTop="10sp" />
+
+            <TextView
                 android:id="@+id/commentaires_pers"
                 android:layout_width="wrap_content"
                 android:layout_height="35sp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="80sp"                android:clickable="true"
+                android:layout_marginTop="70sp"                android:clickable="true"
                 android:gravity="center"
                 android:onClick="chargerImage"
                 android:text="Commentaires : "

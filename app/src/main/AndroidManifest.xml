@@ -51,6 +51,10 @@
             android:exported="true">
 
         </activity>
+        <activity android:name=".MesPublications"
+            android:exported="true">
+
+        </activity>
 
     </application>
 
