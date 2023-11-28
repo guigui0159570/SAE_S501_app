@@ -55,6 +55,10 @@
             android:exported="true">
 
         </activity>
+        <activity android:name=".FilActu"
+            android:exported="true">
+
+        </activity>
 
     </application>
 

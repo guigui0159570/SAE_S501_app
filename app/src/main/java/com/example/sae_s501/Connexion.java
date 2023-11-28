@@ -22,7 +22,7 @@ public class Connexion extends AppCompatActivity {
         EditText editTextPassword = findViewById(R.id.edit_connexion_mdp);
         Button button = findViewById(R.id.btn_connexion);
 
-        ImageView langue = findViewById(R.id.langue);
+        ImageView langue = findViewById(R.id.langueco);
         Locale currentLocale = getResources().getConfiguration().locale;
 
         if (currentLocale.getLanguage().equals("en")) {
@@ -79,5 +79,10 @@ public class Connexion extends AppCompatActivity {
         Configuration configuration = new Configuration();
         configuration.locale = locale;
         getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    public void onNouveauInscriptionClick(View view) {
+        Intent intent = new Intent(this, Inscription.class);
+        startActivity(intent);
     }
 }

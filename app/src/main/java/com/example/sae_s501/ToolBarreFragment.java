@@ -80,7 +80,7 @@ public class ToolBarreFragment extends Fragment {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent homeview = new Intent(view.getContext(), MyUpdateCompteActivity.class); // a modifier avec la vrai page d'accueil
+                Intent homeview = new Intent(view.getContext(), FilActu.class);
                 startActivity(homeview);
             }
         });

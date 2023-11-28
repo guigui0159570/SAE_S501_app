@@ -8,13 +8,14 @@
     tools:context=".Connexion">
 
     <ImageView
-        android:id="@+id/langue"
+        android:id="@+id/langueco"
         android:layout_width="69dp"
         android:layout_height="77dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+
         />
 
     <LinearLayout
@@ -117,8 +118,7 @@
             android:background="@drawable/custom_button_background"
             android:textSize="16sp"
             android:textColor="@color/white"
-            android:layout_margin="35sp"
-            android:onClick="OnClickConnexion"/>
+            android:layout_margin="35sp" />
 
         <View
             android:layout_width="match_parent"

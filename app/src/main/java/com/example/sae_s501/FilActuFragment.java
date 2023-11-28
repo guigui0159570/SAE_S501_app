@@ -38,7 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FilActuFragment extends Fragment {
 
     private static final String TAG = "FilActuFragment";
-    private static final String IPADDRESS = "10.6.3.229";//"192.168.1.21";
+    private static final String IPADDRESS = " 10.6.2.252";//"192.168.1.21";
 
     @Nullable
     @Override

@@ -9,7 +9,7 @@ public class FilActu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fil_actualite);
+        setContentView(R.layout.fil_actualiteresp);
 
         // Ajoutez le fragment à l'activité
         getSupportFragmentManager().beginTransaction()
