@@ -27,7 +27,7 @@ public class Inscription extends AppCompatActivity {
     private Button buttonEnvoyer;
 
     private UserService userService;
-    private RetrofitService retrofitService = new RetrofitService(this);
+    private RetrofitService retrofitService;
 
 
 
@@ -40,14 +40,13 @@ public class Inscription extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmationPassword = findViewById(R.id.editTextPasswordConfirm);
         buttonEnvoyer = findViewById(R.id.btnInscription);
-
+        retrofitService = new RetrofitService(this);
 
         /* creation requete */
         userService = retrofitService.getRetrofit().create(UserService.class);
         buttonEnvoyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 // Récupération des données saisies dans les champs de texte
                 String pseudo = editTextPseudo.getText().toString();

@@ -2,6 +2,7 @@ package com.example.sae_s501;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,7 +71,7 @@ public class Connexion extends AppCompatActivity {
                               @Override
                               public void onAuthSuccess() {
                                   // L'authentification a réussi, vous pouvez effectuer des actions ici
-                                  Intent intent = new Intent(getBaseContext(), MyCompteActivity.class);
+                                  Intent intent = new Intent(getBaseContext(), MesPublications.class);
                                   startActivity(intent);
                               }
 
@@ -81,16 +82,9 @@ public class Connexion extends AppCompatActivity {
                               }
                           }
                   );
-
               }
         });
 
-    }
-
-
-    public void onNouveauInscriptionClick(View view) {
-        Intent intent = new Intent(Connexion.this, Inscription.class);
-        startActivity(intent);
     }
 
     private void setLocale(String languageCode) {

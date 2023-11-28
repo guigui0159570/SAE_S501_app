@@ -13,6 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background" />
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/croix_cercle_new"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,7 +69,7 @@
                     android:layout_height="35sp"
                     android:text="@string/charger_img"
                     android:textSize="17sp"
-                    android:textColor="#0000FF"
+                    android:textColor="#FFA500"
                     android:clickable="true"
                     android:layout_marginLeft="25sp"
                     android:gravity="center"
@@ -184,7 +195,7 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:text="@string/upload"
-                android:textColor="#0000FF"
+                android:textColor="#FFA500"
                 android:textSize="17sp" />
 
             <!-- TextView Fichier Ajouté -->

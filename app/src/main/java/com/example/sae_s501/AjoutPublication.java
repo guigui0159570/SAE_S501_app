@@ -61,6 +61,9 @@ public class AjoutPublication extends AppCompatActivity {
     private Button buttonPublier;
     private TextView TextViewImage;
     private TextView TextViewUpload;
+
+    private ImageView retour;
+
     private boolean publiqueCheck = true;
 
 
@@ -86,11 +89,21 @@ public class AjoutPublication extends AppCompatActivity {
         TextViewImage  = findViewById(R.id.charger_img);
         TextViewUpload  = findViewById(R.id.upload);
         editTextMotCle = findViewById(R.id.EditTextMotCle);
+        retour = findViewById(R.id.close);
 
         retrofitService = new RetrofitService(this);
 
 
         userService = retrofitService.getRetrofit().create(UserService.class);
+
+
+        retour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AjoutPublication.this, MesPublications.class);
+                startActivity(intent);
+            }
+        });
         TextViewImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
