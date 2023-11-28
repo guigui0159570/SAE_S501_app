@@ -121,6 +121,8 @@ public class MyCompteActivity extends AppCompatActivity {
 
             }
         });
+        Button langue = root.findViewById(R.id.langues);
+
     }
     public void informationUser(CompletableFuture<String> integerCompletableFuture, View root){
         integerCompletableFuture.thenAccept(resultat -> {

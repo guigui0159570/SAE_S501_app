@@ -68,7 +68,15 @@ public class ToolBarreFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_tool_barre, container, false);
         ImageButton home = rootView.findViewById(R.id.homeBouton);
         ImageButton profil = rootView.findViewById(R.id.profilBouton);
+        ImageButton myPublication = rootView.findViewById(R.id.myPublicationBouton);
 
+        myPublication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mespub = new Intent(view.getContext(), MesPublications.class);
+                startActivity(mespub);
+            }
+        });
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

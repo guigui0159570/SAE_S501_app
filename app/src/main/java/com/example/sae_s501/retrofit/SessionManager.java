@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.sae_s501.Connexion;
+import com.example.sae_s501.MesPublications;
 import com.example.sae_s501.MyCompteActivity;
 import com.example.sae_s501.authentification.Authentification;
 
@@ -28,7 +29,7 @@ public class SessionManager {
                     if (isValid) {
                         // Le token est valide
                         // Faites ce que vous devez faire ici
-                        Intent intent = new Intent(context, MyCompteActivity.class);
+                        Intent intent = new Intent(context, MesPublications.class);
                         context.startActivity(intent);
                     } else {
                         Intent intent = new Intent(context, Connexion.class);

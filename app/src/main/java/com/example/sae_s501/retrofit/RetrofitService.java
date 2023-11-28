@@ -19,8 +19,8 @@ public class RetrofitService {
 
     public void initializerRetrofit(Context context){
         this.retrofit = new Retrofit.Builder()
-                /*.baseUrl("http://10.6.2.252:8080")*/
-                .baseUrl("http://192.168.1.21:8080")
+                .baseUrl("http://10.6.2.252:8080")
+                /*.baseUrl("http://192.168.1.21:8080")*/
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .client(Authentification.createAuthenticatedClient(context))
                 .build();
