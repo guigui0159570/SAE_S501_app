@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31"
+        tools:targetApi="tiramisu"
         android:theme="@style/Theme.AppCompat.DayNight">
 
 
@@ -48,12 +47,7 @@
         </activity>
 
         <activity android:name=".Connexion" />
-        <activity android:name=".Panier"
-            android:exported="true">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+
         <activity android:name=".Inscription"
             android:exported="true">
             <intent-filter>

@@ -3,34 +3,44 @@ package com.example.sae_s501;
 import android.app.Notification;
 
 import com.example.sae_s501.model.Utilisateur;
+import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Publication {
     private Long id;
+    @SerializedName("titre")
     private String titre;
+    @SerializedName("description")
     private String description;
     private Boolean gratuit;
     private Boolean publique;
+    private Float prix;
+    @SerializedName("image")
     private String image;
+    @SerializedName("fichier")
     private String fichier;
     private int nb_telechargement;
-    private List<Panier> paniers;
+    private List<Object> paniers;
     private Notification notification;
     private Utilisateur proprietaire;
+    private List<Avis> avis = new ArrayList<>();
 
-    public Publication(Long id, String titre, String description, Boolean gratuit, Boolean publique, String image, String fichier, int nb_telechargement, List<Panier> paniers, Notification notification, Utilisateur proprietaire) {
+    public Publication(Long id, String titre, String description, Boolean gratuit, Boolean publique, Float prix, String image, String fichier, int nb_telechargement, List<Object> paniers, Notification notification, Utilisateur proprietaire, List<Avis> avis) {
         this.id = id;
         this.titre = titre;
         this.description = description;
         this.gratuit = gratuit;
         this.publique = publique;
+        this.prix = prix;
         this.image = image;
         this.fichier = fichier;
         this.nb_telechargement = nb_telechargement;
         this.paniers = paniers;
         this.notification = notification;
         this.proprietaire = proprietaire;
+        this.avis = avis;
     }
 
     public Publication() {
@@ -100,11 +110,11 @@ public class Publication {
         this.nb_telechargement = nb_telechargement;
     }
 
-    public List<Panier> getPaniers() {
+    public List<Object> getPaniers() {
         return paniers;
     }
 
-    public void setPaniers(List<Panier> paniers) {
+    public void setPaniers(List<Object> paniers) {
         this.paniers = paniers;
     }
 
@@ -122,5 +132,21 @@ public class Publication {
 
     public void setProprietaire(Utilisateur proprietaire) {
         this.proprietaire = proprietaire;
+    }
+
+    public Float getPrix() {
+        return prix;
+    }
+
+    public void setPrix(Float prix) {
+        this.prix = prix;
+    }
+
+    public Integer notation_publication(){
+        int sum = 0;
+        for(Avis i : avis){
+            sum += i.getEtoile();
+        }
+        return Math.round((float) sum /avis.size());
     }
 }

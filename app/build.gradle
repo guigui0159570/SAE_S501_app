@@ -51,4 +51,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'com.google.android.material:material:1.4.0'
 
+    implementation 'com.caverock:androidsvg:1.4'
+
+
 }
