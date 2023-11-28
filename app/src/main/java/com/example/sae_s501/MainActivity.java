@@ -22,8 +22,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.connexionresp);
-        // SessionManager.deleteToken(this);
-        SessionManager.isSessionValid(this);
+        if (!isSessionCheckPerformed()) {
+            // Effectuer la vérification de session
+            SessionManager.isSessionValid(this);
+            // Mettre à jour la variable pour indiquer que la vérification a été effectuée
+            setSessionCheckPerformed(true);
+        }
     }
 
     private void redirectToLoginScreen() {
@@ -31,13 +35,27 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onNouveauInscriptionClick(View view) {
-        Intent intent = new Intent(this, Inscription.class);
-        startActivity(intent);
-    }
     public void OnClickConnexion(View view) {
         Intent intent = new Intent(this, AjoutPublication.class);
         startActivity(intent);
     }
 
+    private boolean isSessionCheckPerformed() {
+        // Utiliser les préférences partagées pour vérifier si la vérification de session a déjà été effectuée
+        SharedPreferences preferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE);
+        return preferences.getBoolean("isSessionCheckPerformed", false);
+    }
+
+    private void setSessionCheckPerformed(boolean performed) {
+        // Mettre à jour l'état de la vérification de session dans les préférences partagées
+        SharedPreferences preferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isSessionCheckPerformed", performed);
+        editor.apply();
+    }
+
+    public void onNouveauInscriptionClick(View view) {
+        Intent intent = new Intent(this, Inscription.class);
+        startActivity(intent);
+    }
 }
