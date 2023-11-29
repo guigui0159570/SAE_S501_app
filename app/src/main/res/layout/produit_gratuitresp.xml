@@ -102,7 +102,7 @@
                 android:id="@+id/imageViewUtilisateur"
                 android:layout_width="130sp"
                 android:layout_height="80sp"
-                android:layout_marginLeft="-1100sp"
+                android:layout_marginLeft="-720sp"
                 android:layout_marginTop="60sp"
                 android:background="@color/transparent"></ImageView>
 
@@ -189,6 +189,15 @@
                 android:layout_marginTop="40sp"
                 android:hint="Ajouter un commentaire"
                 android:inputType="textEmailAddress" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="19dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="-30sp"
+                android:background="@drawable/sent_1"
+                tools:ignore="MissingConstraints"/>
 
 
 

@@ -107,7 +107,7 @@
                 android:id="@+id/imageViewUtilisateur"
                 android:layout_width="130sp"
                 android:layout_height="80sp"
-                android:layout_marginLeft="-1100sp"
+                android:layout_marginLeft="-720sp"
                 android:layout_marginTop="60sp"
                 android:background="@color/transparent"></ImageView>
 
@@ -115,7 +115,7 @@
                 android:id="@+id/nom_utilisateur"
                 android:layout_width="wrap_content"
                 android:layout_height="35sp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="35dp"
                 android:layout_marginTop="80sp"
                 android:clickable="true"
                 android:gravity="center"
