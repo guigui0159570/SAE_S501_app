@@ -5,6 +5,6 @@ import android.location.Address;
 public class ConfigSpring {
 
     public String Adresse(){
-        return "192.168.103.14";
+        return "10.6.2.252";
     }
 }

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#17282D"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#17282D">
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,22 +29,22 @@
             android:id="@+id/cloche_actu"
             android:layout_width="50sp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="50sp"
+            android:layout_marginStart="50sp"
             android:clickable="true"
             android:src="@drawable/cloche" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/fil_actu_research"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100sp"
-        android:layout_marginBottom="650sp">
-
+        android:layout_marginBottom="500dp">
         <EditText
             android:id="@+id/edit_rechercher_actu"
             android:layout_width="250sp"
             android:layout_height="35sp"
-            android:layout_marginLeft="15sp"
+            android:layout_marginStart="15sp"
             android:layout_marginTop="10sp"
             android:background="#FFF"
             android:hint="@string/edit_fil_actu"/>
@@ -53,19 +53,24 @@
             android:id="@+id/filtre_fil_actu"
             android:layout_width="50sp"
             android:layout_height="35sp"
-            android:layout_marginLeft="15sp"
+            android:layout_marginStart="15sp"
             android:layout_marginTop="10sp"
             android:src="@drawable/filtre"
             android:clickable="true"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/container_pub_fil_actu"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="175sp"
-        android:layout_marginBottom="75sp"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:layout_marginTop="250sp"
+        android:layout_marginBottom="75sp">
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/fil_actu_research"/>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

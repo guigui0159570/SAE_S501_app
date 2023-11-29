@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -31,6 +32,7 @@ import com.example.sae_s501.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.databinding.MoncompterespBinding;
 
 import java.util.Base64;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -122,7 +124,26 @@ public class MyCompteActivity extends AppCompatActivity {
             }
         });
         Button langue = root.findViewById(R.id.langues);
+        ImageView flag =  root.findViewById(R.id.flag_langue);
+        Locale currentLocale = getResources().getConfiguration().locale;
 
+        if (currentLocale.getLanguage().equals("en")) {
+            flag.setImageResource(R.drawable.france_flag);
+        } else {
+            flag.setImageResource(R.drawable.greatbritain);
+        }
+        langue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Changer la langue de l'application
+                if (currentLocale.getLanguage().equals("en")) {
+                    setLocale("fr");
+                } else {
+                    setLocale("en");
+                }
+                recreate();
+            }
+        });
     }
     public void informationUser(CompletableFuture<String> integerCompletableFuture, View root){
         integerCompletableFuture.thenAccept(resultat -> {
@@ -169,6 +190,13 @@ public class MyCompteActivity extends AppCompatActivity {
             }
         });
     }
+    private void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
 
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+    }
 
 }

@@ -1,32 +1,17 @@
 package com.example.sae_s501;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.sae_s501.authentification.Authentification;
-import com.example.sae_s501.retrofit.AuthService;
-
-import java.io.IOException;
 import java.util.Locale;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class Connexion extends AppCompatActivity {
     @Override
@@ -37,7 +22,7 @@ public class Connexion extends AppCompatActivity {
         EditText editTextPassword = findViewById(R.id.edit_connexion_mdp);
         Button button = findViewById(R.id.btn_connexion);
 
-        ImageView langue = findViewById(R.id.langue);
+        ImageView langue = findViewById(R.id.langueco);
         Locale currentLocale = getResources().getConfiguration().locale;
 
         if (currentLocale.getLanguage().equals("en")) {
@@ -94,5 +79,10 @@ public class Connexion extends AppCompatActivity {
         Configuration configuration = new Configuration();
         configuration.locale = locale;
         getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    public void onNouveauInscriptionClick(View view) {
+        Intent intent = new Intent(this, Inscription.class);
+        startActivity(intent);
     }
 }

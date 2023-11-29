@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
@@ -40,7 +41,7 @@ public class Inscription extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmationPassword = findViewById(R.id.editTextPasswordConfirm);
         buttonEnvoyer = findViewById(R.id.btnInscription);
-        retrofitService = new RetrofitService(this);
+        retrofitService = new RetrofitService(Inscription.this);
 
         /* creation requete */
         userService = retrofitService.getRetrofit().create(UserService.class);
@@ -88,7 +89,6 @@ public class Inscription extends AppCompatActivity {
 
                 /* envoie requete */
                 Call<Utilisateur> call = userService.registerUser(pseudo, email, password);
-
                 call.enqueue(new Callback<Utilisateur>() {
                     /* resultat de la requete */
                     @Override
@@ -103,7 +103,22 @@ public class Inscription extends AppCompatActivity {
                             editTextPassword.setText("");
                             editTextConfirmationPassword.setText("");
                         } else {
-                            showToast("L'adresse e-mail existe déjà ou n'est pas correcte.");
+                            // Handle different HTTP error codes with appropriate error messages
+                            if (response.code() == 400) {
+                                showToast("Erreur de requête : Vérifiez les données saisies.");
+                            } else if (response.code() == 401) {
+                                showToast("Erreur d'authentification : Accès non autorisé.");
+                            } else if (response.code() == 403) {
+                                showToast("Erreur d'autorisation : Accès interdit.");
+                            } else if (response.code() == 404) {
+                                showToast("Erreur : Ressource non trouvée.");
+                            } else if (response.code() == 409) {
+                                showToast("Conflit : L'utilisateur existe déjà.");
+                            } else if (response.code() == 500) {
+                                showToast("Erreur interne du serveur : Réessayez plus tard.");
+                            } else {
+                                showToast("Erreur inattendue : " + response.message());
+                            }
                         }
                     }
 

@@ -22,12 +22,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.connexionresp);
-        if (!isSessionCheckPerformed()) {
-            // Effectuer la vérification de session
-            SessionManager.isSessionValid(this);
-            // Mettre à jour la variable pour indiquer que la vérification a été effectuée
-            setSessionCheckPerformed(true);
-        }
+        // SessionManager.deleteToken(this);
+        SessionManager.isSessionValid(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Supprimer les préférences partagées au moment de la fermeture de l'application
+        clearSessionCheckPreferences();
+
+        super.onDestroy();
     }
 
     private void redirectToLoginScreen() {
@@ -35,10 +39,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void OnClickConnexion(View view) {
-        Intent intent = new Intent(this, AjoutPublication.class);
-        startActivity(intent);
-    }
+
 
     private boolean isSessionCheckPerformed() {
         // Utiliser les préférences partagées pour vérifier si la vérification de session a déjà été effectuée
@@ -54,8 +55,17 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public void onNouveauInscriptionClick(View view) {
-        Intent intent = new Intent(this, Inscription.class);
-        startActivity(intent);
+
+
+    private void clearSessionCheckPreferences() {
+        // Utiliser le contexte de l'activité pour accéder aux préférences partagées
+        SharedPreferences preferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // Supprimer les préférences liées à la vérification de session
+        editor.remove("isSessionCheckPerformed");
+
+        // Appliquer les changements
+        editor.apply();
     }
 }
