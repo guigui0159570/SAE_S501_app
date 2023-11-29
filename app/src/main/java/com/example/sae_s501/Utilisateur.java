@@ -1,5 +1,7 @@
 package com.example.sae_s501;
 
+import com.example.sae_s501.model.Profil;
+
 import java.util.HashSet;
 import java.util.Set;
 

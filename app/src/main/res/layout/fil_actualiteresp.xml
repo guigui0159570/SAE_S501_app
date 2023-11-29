@@ -71,6 +71,12 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/fil_actu_research"/>
     </ScrollView>
-
+    <fragment
+        android:id="@+id/bottomFragment"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:name="com.example.sae_s501.ToolBarreFragment"
+        android:gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

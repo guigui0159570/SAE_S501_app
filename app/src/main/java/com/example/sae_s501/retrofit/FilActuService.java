@@ -3,8 +3,6 @@ package com.example.sae_s501.retrofit;
 import com.example.sae_s501.Avis;
 import com.example.sae_s501.Publication;
 
-import org.json.JSONObject;
-
 import java.util.List;
 
 import retrofit2.Call;
