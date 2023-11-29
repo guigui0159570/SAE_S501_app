@@ -1,6 +1,5 @@
 package com.example.sae_s501;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -29,6 +28,11 @@ import com.example.sae_s501.retrofit.FilActuService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
+import okhttp3.Credentials;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,30 +42,53 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FilActuFragment extends Fragment {
 
     private static final String TAG = "FilActuFragment";
-    private static final String IPADDRESS = " 10.6.2.252";//"192.168.1.21";
     private static final String BASE_URL = Dictionnaire.getIpAddress();
 
 
-    @Nullable
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateFragment : creation du fragment");
         View view = inflater.inflate(R.layout.fragment_fil_actu, container, false);
+        Log.d(TAG, "onCreateFragment : attachement de fragment_fil_actu");
         loadData(view);
+        Log.d(TAG, "onCreateFragment : loaded datas");
         return view;
     }
 
     // Ajoutez cette méthode pour effectuer l'appel réseau depuis votre fragment
     private void loadData(View view) {
+
+        // Créez un intercepteur d'authentification
+        Interceptor authInterceptor = new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                // Ajout de l'en-tête d'authentification avec le nom d'utilisateur et le mot de passe
+                Request request = original.newBuilder()
+                        .header("Authorization", Credentials.basic("steven@gmail.com", "@Azerty1234"))
+                        .method(original.method(), original.body())
+                        .build();
+
+                return chain.proceed(request);
+            }
+        };
+
+        // Création OkHttpClient avec l'intercepteur d'authentification
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(authInterceptor)
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        // Instance de l'interface
         FilActuService filActuService = retrofit.create(FilActuService.class);
 
         Call<List<Publication>> call = filActuService.getAllPublication();
-        Log.d(TAG, call.toString());
         call.enqueue(new Callback<List<Publication>>() {
 
             @Override
@@ -105,7 +132,7 @@ public class FilActuFragment extends Fragment {
                             layoutConteneur.setId(View.generateViewId());
                             layoutConteneur.setOrientation(LinearLayout.VERTICAL);
                             layoutConteneur.setVisibility(View.VISIBLE);
-
+                            
                             //Param layoutProduit
                             layoutProduit.setOrientation(LinearLayout.HORIZONTAL);
                             layoutProduit.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
