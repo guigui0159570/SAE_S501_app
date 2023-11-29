@@ -9,6 +9,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+
 public class Publication {
     private Long id;
     @SerializedName("titre")
@@ -19,7 +21,7 @@ public class Publication {
     private Boolean publique;
     private Float prix;
     @SerializedName("image")
-    private String image;
+    private MultipartBody.Part image;
     @SerializedName("fichier")
     private String fichier;
     private int nb_telechargement;
@@ -28,7 +30,7 @@ public class Publication {
     private Utilisateur proprietaire;
     private List<Avis> avis = new ArrayList<>();
 
-    public Publication(Long id, String titre, String description, Boolean gratuit, Boolean publique, Float prix, String image, String fichier, int nb_telechargement, List<Object> paniers, Notification notification, Utilisateur proprietaire, List<Avis> avis) {
+    public Publication(Long id, String titre, String description, Boolean gratuit, Boolean publique, Float prix, MultipartBody.Part image, String fichier, int nb_telechargement, List<Object> paniers, Notification notification, Utilisateur proprietaire, List<Avis> avis) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -87,11 +89,11 @@ public class Publication {
         this.publique = publique;
     }
 
-    public String getImage() {
+    public MultipartBody.Part getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(MultipartBody.Part image) {
         this.image = image;
     }
 

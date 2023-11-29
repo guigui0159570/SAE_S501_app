@@ -113,7 +113,7 @@ public class FilActuFragment extends Fragment {
                             layoutConteneur.setId(View.generateViewId());
                             layoutConteneur.setOrientation(LinearLayout.VERTICAL);
                             layoutConteneur.setVisibility(View.VISIBLE);
-                            
+
                             //Param layoutProduit
                             layoutProduit.setOrientation(LinearLayout.HORIZONTAL);
                             layoutProduit.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
@@ -137,16 +137,27 @@ public class FilActuFragment extends Fragment {
                             String description = p.getDescription(); TextView desText = new TextView(requireContext());desText.setId(View.generateViewId());desText.setText(description);
                             layoutTitreDes.addView(titreText); layoutTitreDes.addView(desText);
 
+                            String prix = String.valueOf(p.getPrix());
+                            TextView prixText = new TextView(requireContext());
+                            prixText.setId(View.generateViewId());
+                            prixText.setText(" ");
+                            prixText.setText("Prix : " + prix);
+                            prixText.setLayoutParams(params_elt);
+                            layoutTitreDes.addView(prixText);
+
                             //Param layoutPersonnel
                             layoutPersonnel.setOrientation(LinearLayout.HORIZONTAL);
                             layoutPersonnel.setGravity(LinearLayout.TEXT_ALIGNMENT_TEXT_START);
                             layoutPersonnel.setId(View.generateViewId());
-                            layoutPersonnel.setBackgroundResource(R.color.blue);
 
                             // Accéder aux valeurs de l'objet
                             //mettre image utilisateur
                             if(p.getProprietaire() != null){
-                                Utilisateur pseudo = p.getProprietaire(); TextView pseudoText = new TextView(requireContext());pseudoText.setId(View.generateViewId());pseudoText.setText(pseudo.getPseudo());
+                                Utilisateur pseudo = p.getProprietaire();
+                                TextView pseudoText = new TextView(requireContext());
+                                pseudoText.setId(View.generateViewId());
+                                pseudoText.setText(pseudo.getPseudo());
+                                pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue)); // Changer la couleur en bleu
                                 layoutPersonnel.addView(pseudoText);
                             }
                             //Ajout de la notation
