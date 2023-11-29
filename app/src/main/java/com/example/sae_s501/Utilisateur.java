@@ -19,7 +19,7 @@ public class Utilisateur {
 
     private Set<Avis> avis;
 
-    private Panier panier;
+    //private Panier panier;
 
     public Set<Avis> getAvis() {
         return avis;
@@ -93,12 +93,12 @@ public class Utilisateur {
         this.password = password;
     }
 
-    public Panier getPanier() {
-        return panier;
-    }
-
-    public void setPanier(Panier panier) {
-        this.panier = panier;
-    }
+//    public Panier getPanier() {
+//        return panier;
+//    }
+//
+//    public void setPanier(Panier panier) {
+//        this.panier = panier;
+//    }
 }
 

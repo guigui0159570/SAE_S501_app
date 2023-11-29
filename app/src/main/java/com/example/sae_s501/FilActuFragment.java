@@ -39,6 +39,8 @@ public class FilActuFragment extends Fragment {
 
     private static final String TAG = "FilActuFragment";
     private static final String IPADDRESS = " 10.6.2.252";//"192.168.1.21";
+    private static final String BASE_URL = Dictionnaire.getIpAddress();
+
 
     @Nullable
     @Override
@@ -51,7 +53,7 @@ public class FilActuFragment extends Fragment {
     // Ajoutez cette méthode pour effectuer l'appel réseau depuis votre fragment
     private void loadData(View view) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://" + IPADDRESS + ":8080")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
