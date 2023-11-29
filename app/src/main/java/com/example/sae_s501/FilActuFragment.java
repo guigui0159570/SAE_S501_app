@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
 
@@ -59,30 +60,10 @@ public class FilActuFragment extends Fragment {
     // Ajoutez cette méthode pour effectuer l'appel réseau depuis votre fragment
     private void loadData(View view) {
 
-        // Créez un intercepteur d'authentification
-        Interceptor authInterceptor = new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-
-                // Ajout de l'en-tête d'authentification avec le nom d'utilisateur et le mot de passe
-                Request request = original.newBuilder()
-                        .header("Authorization", Credentials.basic("steven@gmail.com", "@Azerty1234"))
-                        .method(original.method(), original.body())
-                        .build();
-
-                return chain.proceed(request);
-            }
-        };
-
-        // Création OkHttpClient avec l'intercepteur d'authentification
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(authInterceptor)
-                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(client)
+                .client(Authentification.createAuthenticatedClient(getActivity()))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

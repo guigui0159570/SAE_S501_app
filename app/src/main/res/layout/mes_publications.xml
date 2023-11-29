@@ -22,13 +22,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:layout_marginEnd="550dp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:lineSpacingExtra="9sp"
         android:text="@string/publications"
         android:textAppearance="@style/se_connecte"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/searchLayout" />
+
 
     <LinearLayout
         android:id="@+id/searchLayout"
@@ -54,33 +56,43 @@
             android:layout_width="47dp"
             android:layout_height="41dp"
             android:layout_marginStart="8dp"
-            app:srcCompat="@drawable/_159641_1" />
+            app:srcCompat="@drawable/_159641_1"
+            android:clickable="true"/>
     </LinearLayout>
 
-
-    <fragment
-        android:id="@+id/bottomFragment"
-        android:name="com.example.sae_s501.ToolBarreFragment"
-        android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+    <!-- ScrollView moved here -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/searchLayout"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toTopOf="@+id/ajout_pub">
+
+        <FrameLayout
+            android:id="@+id/fragment_container_pub"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 
     <ImageView
         android:id="@+id/ajout_pub"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/bottomFragment"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/add_3_1"
-        android:clickable="true" />
+        app:srcCompat="@drawable/add_3_1" />
 
+    <fragment
+        android:id="@+id/bottomFragment"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:name="com.example.sae_s501.ToolBarreFragment"
+        android:gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.sae_s501;
 
 import android.app.Notification;
 
+import com.example.sae_s501.Avis;
 import com.example.sae_s501.model.Utilisateur;
 import com.google.gson.annotations.SerializedName;
 
