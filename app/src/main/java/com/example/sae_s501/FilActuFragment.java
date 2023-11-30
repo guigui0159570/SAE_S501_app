@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,23 +151,40 @@ public class FilActuFragment extends Fragment {
                             layoutProduit.addView(layoutTitreDes);
 
 
-                            String titre = p.getTitre(); TextView titreText = new TextView(requireContext());titreText.setId(View.generateViewId());titreText.setText(titre);
+                            String titre = p.getTitre();
+                            TextView titreText = new TextView(requireContext());
+                            titreText.setId(View.generateViewId());titreText.setText(titre);
+                            titreText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                            titreText.setTextColor(Color.parseColor("#00BA8D"));
                             titreText.setLayoutParams(params_elt);
-                            String description = p.getDescription(); TextView desText = new TextView(requireContext());desText.setId(View.generateViewId());desText.setText(description);
-                            layoutTitreDes.addView(titreText); layoutTitreDes.addView(desText);
 
+                            String description = p.getDescription();
+                            TextView desText = new TextView(requireContext());
+                            desText.setId(View.generateViewId());
+                            desText.setText(description);
+
+                            layoutTitreDes.addView(titreText);
+                            layoutTitreDes.addView(desText);
+
+                            Boolean gratuit = p.getGratuit();
                             String prix = String.valueOf(p.getPrix());
                             TextView prixText = new TextView(requireContext());
                             prixText.setId(View.generateViewId());
-                            prixText.setText(" ");
-                            prixText.setText("Prix : " + prix);
+                            if(gratuit) {
+                                prixText.setText("    Gratuit");
+
+                            }
+                            else{
+                                prixText.setText("    Prix : " + prix);
+
+                            }
                             prixText.setLayoutParams(params_elt);
-                            layoutTitreDes.addView(prixText);
 
                             //Param layoutPersonnel
                             layoutPersonnel.setOrientation(LinearLayout.HORIZONTAL);
                             layoutPersonnel.setGravity(LinearLayout.TEXT_ALIGNMENT_TEXT_START);
                             layoutPersonnel.setId(View.generateViewId());
+
 
                             // Accéder aux valeurs de l'objet
                             //mettre image utilisateur
@@ -175,9 +193,12 @@ public class FilActuFragment extends Fragment {
                                 TextView pseudoText = new TextView(requireContext());
                                 pseudoText.setId(View.generateViewId());
                                 pseudoText.setText(pseudo.getPseudo());
-                                pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue)); // Changer la couleur en bleu
+                                pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
                                 layoutPersonnel.addView(pseudoText);
+                                layoutPersonnel.addView(prixText);
+
                             }
+
                             //Ajout de la notation
                             Call<List<Avis>> callAvis = filActuService.getAllAvisByPublication(p.getId()) ;
                             callAvis.enqueue(new Callback<List<Avis>>() {

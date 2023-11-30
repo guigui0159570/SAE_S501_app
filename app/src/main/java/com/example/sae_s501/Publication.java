@@ -21,7 +21,7 @@ public class Publication {
     private Boolean publique;
     private Float prix;
     @SerializedName("image")
-    private MultipartBody.Part image;
+    private String image;
     @SerializedName("fichier")
     private String fichier;
     private int nb_telechargement;
@@ -30,7 +30,7 @@ public class Publication {
     private Utilisateur proprietaire;
     private List<Avis> avis = new ArrayList<>();
 
-    public Publication(Long id, String titre, String description, Boolean gratuit, Boolean publique, Float prix, MultipartBody.Part image, String fichier, int nb_telechargement, List<Object> paniers, Notification notification, Utilisateur proprietaire, List<Avis> avis) {
+    public Publication(Long id, String titre, String description, Boolean gratuit, Boolean publique, Float prix, String image, String fichier, int nb_telechargement, List<Object> paniers, Notification notification, Utilisateur proprietaire, List<Avis> avis) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -89,11 +89,11 @@ public class Publication {
         this.publique = publique;
     }
 
-    public MultipartBody.Part getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(MultipartBody.Part image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

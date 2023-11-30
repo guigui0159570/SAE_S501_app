@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 
 public interface FilActuService {
 
-    @GET("/publication/getAll")
+    @GET("/publication/getAllByTime")
     Call<List<Publication>> getAllPublication();
 
     @GET("/avis/get/pub/{id}")
