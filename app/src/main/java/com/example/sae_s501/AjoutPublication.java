@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import kotlinx.coroutines.channels.ActorKt;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -147,6 +148,10 @@ public class AjoutPublication extends AppCompatActivity {
                     return;
                 } else if (!(fileAdded)) {
                     showToast("Veuillez saisir un modèle 3D pour votre publication.");
+                    return;
+                }
+                else if(motcle.isEmpty()){
+                    showToast("Veuillez saisir au moins un mot clé avec un #");
                     return;
                 }
                 if (editCheckboxPrive.isChecked()){
@@ -287,6 +292,8 @@ public class AjoutPublication extends AppCompatActivity {
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
                         showToast("Publication réussie !");
+                        Intent intent = new Intent(AjoutPublication.this, MesPublications.class);
+                        startActivity(intent);
                         // Réinitialiser les champs après une publication réussie
                         resetFields();
                     } else {

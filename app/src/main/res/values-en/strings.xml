@@ -71,7 +71,7 @@
     <string name="upload"><u>Upload_3D_model_</u></string>
     <string name="fichierajoute"><i> : 3D File Added</i></string>
     <string name="fichier_pas_ajoute"><i> : No files added</i></string>
-    <string name="motcle_pub">Keywords : </string>
+    <string name="motcle_pub">Keywords : (example : #word) </string>
     <string name="mon_compte">My Account</string>
     <string name="aides">Help</string>
     <string name="modifier_profil">Edit Profile</string>
