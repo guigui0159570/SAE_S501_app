@@ -17,6 +17,11 @@ public class MesPublications extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mes_publications);
 
+        // Ajoutez le fragment à l'activité
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container_pub, new MesPublicationsFrag())
+                .commit();
+
         ajout = findViewById(R.id.ajout_pub);
 
         ajout.setOnClickListener(new View.OnClickListener() {

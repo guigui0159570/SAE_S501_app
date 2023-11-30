@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.Objects;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +38,10 @@ public class RetrofitService {
 
     public Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    private OkHttpClient getOkHttpClient() {
+        return new OkHttpClient.Builder().build();
     }
 
 }

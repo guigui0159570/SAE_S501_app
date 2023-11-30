@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
 
@@ -60,30 +61,10 @@ public class FilActuFragment extends Fragment {
     // Ajoutez cette méthode pour effectuer l'appel réseau depuis votre fragment
     private void loadData(View view) {
 
-        // Créez un intercepteur d'authentification
-        Interceptor authInterceptor = new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-
-                // Ajout de l'en-tête d'authentification avec le nom d'utilisateur et le mot de passe
-                Request request = original.newBuilder()
-                        .header("Authorization", Credentials.basic("steven@gmail.com", "@Azerty1234"))
-                        .method(original.method(), original.body())
-                        .build();
-
-                return chain.proceed(request);
-            }
-        };
-
-        // Création OkHttpClient avec l'intercepteur d'authentification
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(authInterceptor)
-                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(client)
+                .client(Authentification.createAuthenticatedClient(getActivity()))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -150,6 +131,7 @@ public class FilActuFragment extends Fragment {
                                 }
                             });
 
+
                             //Param layoutProduit
                             layoutProduit.setOrientation(LinearLayout.HORIZONTAL);
                             layoutProduit.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
@@ -173,16 +155,27 @@ public class FilActuFragment extends Fragment {
                             String description = p.getDescription(); TextView desText = new TextView(requireContext());desText.setId(View.generateViewId());desText.setText(description);
                             layoutTitreDes.addView(titreText); layoutTitreDes.addView(desText);
 
+                            String prix = String.valueOf(p.getPrix());
+                            TextView prixText = new TextView(requireContext());
+                            prixText.setId(View.generateViewId());
+                            prixText.setText(" ");
+                            prixText.setText("Prix : " + prix);
+                            prixText.setLayoutParams(params_elt);
+                            layoutTitreDes.addView(prixText);
+
                             //Param layoutPersonnel
                             layoutPersonnel.setOrientation(LinearLayout.HORIZONTAL);
                             layoutPersonnel.setGravity(LinearLayout.TEXT_ALIGNMENT_TEXT_START);
                             layoutPersonnel.setId(View.generateViewId());
-                            layoutPersonnel.setBackgroundResource(R.color.blue);
 
                             // Accéder aux valeurs de l'objet
                             //mettre image utilisateur
                             if(p.getProprietaire() != null){
-                                Utilisateur pseudo = p.getProprietaire(); TextView pseudoText = new TextView(requireContext());pseudoText.setId(View.generateViewId());pseudoText.setText(pseudo.getPseudo());
+                                Utilisateur pseudo = p.getProprietaire();
+                                TextView pseudoText = new TextView(requireContext());
+                                pseudoText.setId(View.generateViewId());
+                                pseudoText.setText(pseudo.getPseudo());
+                                pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue)); // Changer la couleur en bleu
                                 layoutPersonnel.addView(pseudoText);
                             }
                             //Ajout de la notation

@@ -1,21 +1,24 @@
 package com.example.sae_s501.retrofit;
 
-import com.example.sae_s501.model.Publication;
+import com.example.sae_s501.Publication;
 import com.example.sae_s501.model.Utilisateur;
 
 import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface UserService {
+    /* register */
 
     @FormUrlEncoded
     @POST("/api/auth/register/save")
@@ -24,6 +27,7 @@ public interface UserService {
                                    @Field("password") String password);
 
 
+    /* creation pub*/
     @Multipart
     @POST("/publication/save")
     Call<Void> createPublication(
@@ -36,6 +40,15 @@ public interface UserService {
             @Part("tags") List<String> tags,
             @Part("email") String email
     );
+
+
+    /* affichage pub*/
+    @GET("/get/uti/{id}")
+    Call<List<Publication>> getPublicationByUtilisateurId(@Path("id") Long id);
+
+    /* recup id utilisateur */
+    @GET("getUtilisateurIdByEmail")
+    Call<Long> getUtilisateurIdByEmail(@Query("email") String email);
 }
 
 

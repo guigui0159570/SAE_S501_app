@@ -1,16 +1,13 @@
 package com.example.sae_s501;
 
 
-import com.example.sae_s501.Publication;
-import com.example.sae_s501.Utilisateur;
-
 public class Avis {
 
     private Long id;
     private String commentaire;
     private int etoile;
 
-    private com.example.sae_s501.Publication publication;
+    private Publication publication;
 
     private com.example.sae_s501.Utilisateur utilisateur;
 
@@ -46,7 +43,7 @@ public class Avis {
         this.etoile = etoile;
     }
 
-    public com.example.sae_s501.Publication getPublication() {
+    public Publication getPublication() {
         return publication;
     }
 
