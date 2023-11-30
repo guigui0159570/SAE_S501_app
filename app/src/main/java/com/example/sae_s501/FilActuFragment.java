@@ -1,5 +1,6 @@
 package com.example.sae_s501;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -132,7 +133,23 @@ public class FilActuFragment extends Fragment {
                             layoutConteneur.setId(View.generateViewId());
                             layoutConteneur.setOrientation(LinearLayout.VERTICAL);
                             layoutConteneur.setVisibility(View.VISIBLE);
-                            
+
+                            layoutConteneur.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent;
+                                    if(p.getGratuit()){
+                                        // ne fonctionne pas, à voir via le conteneur
+                                        //Toast.makeText(requireContext(), p.getGratuit().toString(), Toast.LENGTH_SHORT).show();
+                                        intent = new Intent(getActivity(), ProduitGratuit.class);
+                                    }else{
+                                        intent = new Intent(getActivity(), ProduitPayant.class);
+                                    }
+                                    intent.putExtra("id", layoutConteneur.getId());
+                                    startActivity(intent);
+                                }
+                            });
+
                             //Param layoutProduit
                             layoutProduit.setOrientation(LinearLayout.HORIZONTAL);
                             layoutProduit.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
