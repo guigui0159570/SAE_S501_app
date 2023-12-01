@@ -8,6 +8,7 @@ import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -255,6 +256,15 @@ public class MesPublicationsFrag extends Fragment {
                                     } else {
                                         Log.e(TAG, "Error response: " + response.errorBody());
                                         Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if (publications.isEmpty()) {
+                                        // Aucune publication, afficher un message
+                                        TextView emptyTextView = new TextView(requireContext());
+                                        emptyTextView.setText("Vous n'avez pas de publication !");
+                                        emptyTextView.setGravity(Gravity.CENTER);
+                                        emptyTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                                        emptyTextView.setTextColor(Color.parseColor("#FFA500"));
+                                        layout.addView(emptyTextView);
                                     }
                                 }
                             }
