@@ -1,7 +1,10 @@
 package com.example.sae_s501;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.PictureDrawable;
@@ -33,6 +36,8 @@ import com.example.sae_s501.retrofit.SessionManager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,7 +71,6 @@ public class MesPublicationsFrag extends Fragment {
 
         String jwtEmail = SessionManager.getUserEmail(getActivity());
 
-
         Call<Long> callUserId = filActuService.getUtilisateurIdByEmail(jwtEmail);
         callUserId.enqueue(new Callback<Long>() {
             @Override
@@ -87,6 +91,7 @@ public class MesPublicationsFrag extends Fragment {
                                         layout.removeAllViews();
 
                                         for (Publication p : publications) {
+
                                             //Layout qui va contenir les autres layout
                                             LinearLayout layoutConteneur = new LinearLayout(requireContext());
                                             //Layout qui contient l'image du produit ainsi le titre et la description
@@ -148,8 +153,36 @@ public class MesPublicationsFrag extends Fragment {
                                             //mettre l'element image produit
                                             ImageView img_produit = new ImageView(requireContext());
 
-                                            Drawable drawable = ContextCompat.getDrawable(requireContext(),R.drawable.greatbritain);
-                                            img_produit.setImageDrawable(drawable);
+                                            Call<ResponseBody> callImage = filActuService.getImage(p.getImage());
+                                            Log.d("IMAGE", p.getImage());
+
+                                            callImage.enqueue(new Callback<ResponseBody>() {
+                                                @Override
+                                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                    if (response.isSuccessful()) {
+                                                        ResponseBody body = response.body();
+                                                        Log.d("IMAGE", String.valueOf(body));
+                                                        if (body != null) {
+                                                            InputStream inputStream = body.byteStream();
+                                                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                                                            int desiredWidth = 400;
+                                                            int desiredHeight = 400;
+                                                            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
+                                                            Drawable drawable = new BitmapDrawable(getResources(), resizedBitmap);
+                                                            img_produit.setImageDrawable(drawable);
+
+                                                        }
+                                                    } else {
+                                                        Log.e("IMAGE", "Erreur lors de la récupération de l'image. Code de réponse : " + response.code());
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                                    // Gestion des erreurs
+                                                    Log.e("IMAGE", "Échec de la requête pour récupérer l'image : " + t.getMessage());
+                                                }
+                                            });
                                             layoutProduit.addView(img_produit);
                                             layoutProduit.addView(layoutTitreDes);
 
@@ -208,8 +241,8 @@ public class MesPublicationsFrag extends Fragment {
                                             // Set layout parameters for the clickable image
                                             RelativeLayout.LayoutParams clickableImageParams = new RelativeLayout.LayoutParams(
                                                     // Set the desired width and height for the clickable image
-                                                    dpToPx(24),
-                                                    dpToPx(24)
+                                                    dpToPx(32),
+                                                    dpToPx(32)
                                             );
                                             clickableImageParams.setMargins(0, 0, dpToPx(20), dpToPx(20));
                                             supp.setLayoutParams(clickableImageParams);
