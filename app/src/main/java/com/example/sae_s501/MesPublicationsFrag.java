@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -172,11 +173,11 @@ public class MesPublicationsFrag extends Fragment {
                                             TextView prixText = new TextView(requireContext());
                                             prixText.setId(View.generateViewId());
                                             if(gratuit) {
-                                                prixText.setText("    Gratuit");
+                                                prixText.setText("    Gratuit      ");
 
                                             }
                                             else{
-                                                prixText.setText("    Prix : " + prix);
+                                                prixText.setText("    Prix : " + prix+"      ");
 
                                             }
                                             prixText.setLayoutParams(params_elt);
@@ -199,56 +200,50 @@ public class MesPublicationsFrag extends Fragment {
                                                 layoutPersonnel.addView(prixText);
 
                                             }
+                                            ImageView supp = new ImageView(requireContext());
+                                            supp.setId(View.generateViewId());
+                                            supp.setImageResource(R.drawable.poubelle);
 
-                                            //Ajout de la notation
-                                            Call<List<Avis>> callAvis = filActuService.getAllAvisByPublication(p.getId()) ;
-                                            callAvis.enqueue(new Callback<List<Avis>>() {
+                                            // Set layout parameters for the clickable image
+                                            RelativeLayout.LayoutParams clickableImageParams = new RelativeLayout.LayoutParams(
+                                                    // Set the desired width and height for the clickable image
+                                                    dpToPx(24),
+                                                    dpToPx(24)
+                                            );
+                                            clickableImageParams.setMargins(0, 0, dpToPx(20), dpToPx(20));
+                                            supp.setLayoutParams(clickableImageParams);
+                                            supp.setOnClickListener(new View.OnClickListener() {
                                                 @Override
-                                                public void onResponse(Call<List<Avis>> call, Response<List<Avis>> response) {
-                                                    if(response.isSuccessful()){
-                                                        List<Avis> avis = response.body();
-                                                        int sum = 0;
-                                                        assert avis != null;
-                                                        for (Avis avis1 : avis){
-                                                            sum += 1;
-                                                        }
-                                                        int notation_publication = Math.round(sum/avis.size());
-                                                        Log.d(TAG, "NB notation : "+p.notation_publication().toString());
-                                                        for(int i=0; i<notation_publication; i++){
-                                                            InputStream inputStream = getResources().openRawResource(R.raw.star);
-                                                            try {
-                                                                SVG svg = SVG.getFromInputStream(inputStream);
-                                                                // Créer un ImageButton
-                                                                ImageButton imageButton = new ImageButton(requireContext());
-                                                                imageButton.setId(View.generateViewId());
-
-                                                                // Convertir le SVG en PictureDrawable
-                                                                PictureDrawable pictureDrawable = new PictureDrawable(svg.renderToPicture());
-
-                                                                // Définir le fond de l'ImageButton avec le PictureDrawable
-                                                                imageButton.setImageDrawable(pictureDrawable);
-                                                                layoutPersonnel.addView(imageButton);
-                                                            } catch (SVGParseException e) {
-                                                                throw new RuntimeException(e);
-                                                            }
-                                                            try {
-                                                                inputStream.close();
-                                                            } catch (IOException e) {
-                                                                throw new RuntimeException(e);
+                                                public void onClick(View view) {
+                                                    Call<Void> callsupp = filActuService.deletePublication(p.getId());
+                                                    callsupp.enqueue(new Callback<Void>() {
+                                                        @Override
+                                                        public void onResponse(Call<Void> call, Response<Void> response) {
+                                                            if (response.isSuccessful()) {
+                                                                Log.d("REQUETE_SUPPRESSION", "Publication supprimée avec succès");
+                                                                showToast("Publication supprimée avec succès");
+                                                                Intent intent = new Intent(getActivity(), MesPublications.class);
+                                                                startActivity(intent);
+                                                            } else {
+                                                                Log.e("REQUETE_SUPPRESSION", "Échec de la suppression de la publication. Code de réponse : " + response.code());
+                                                                showToast("Échec de la suppression de la publication. Veuillez réessayer.");
                                                             }
                                                         }
-                                                    }
-                                                }
 
-                                                @Override
-                                                public void onFailure(Call<List<Avis>> call, Throwable t) {
-                                                    Log.e(TAG, "Failure: " + t.getMessage());
-                                                    Toast.makeText(requireContext(), "Erreur lors de la communication avec le serveur pour la partie avis", Toast.LENGTH_SHORT).show();
+                                                        @Override
+                                                        public void onFailure(Call<Void> call, Throwable t) {
+                                                            Log.e("REQUETE_SUPPRESSION", "Échec de la suppression de la publication. Erreur : " + t.getMessage());
+                                                            showToast("Échec de la suppression de la publication. Veuillez vérifier votre connexion internet.");
+                                                        }
+                                                    });
+
                                                 }
                                             });
+                                            layoutPersonnel.addView(supp);
 
                                             //Ajout des layout
-                                            layoutConteneur.addView(layoutProduit); layoutConteneur.addView(layoutPersonnel);
+                                            layoutConteneur.addView(layoutProduit);
+                                            layoutConteneur.addView(layoutPersonnel);
 
                                             //Mise en place de bordures
                                             GradientDrawable border = new GradientDrawable();
@@ -257,7 +252,6 @@ public class MesPublicationsFrag extends Fragment {
                                             layoutConteneur.setBackground(border);layoutConteneur.setBackgroundResource(R.color.white);
                                             layout.addView(layoutConteneur);
                                         }
-                                        Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Log.e(TAG, "Error response: " + response.errorBody());
                                         Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
@@ -284,5 +278,12 @@ public class MesPublicationsFrag extends Fragment {
                 Log.e(TAG, "Failure: " + t.getMessage());
             }
         });
+    }
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
+    }
+    private void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

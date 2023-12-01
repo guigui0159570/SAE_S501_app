@@ -6,6 +6,7 @@ import com.example.sae_s501.Publication;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -16,7 +17,7 @@ public interface FilActuService {
     Call<List<Publication>> getAllPublication();
 
     @GET("/avis/get/pub/{id}")
-    Call<List<Avis>> getAllAvisByPublication(@Query(("publication_id")) Long publication);
+    Call<List<Avis>> getAllAvisByPublication(@Path("id") Long publication);
 
     /* affichage pub*/
     @GET("/publication/get/uti/{id}")
@@ -25,4 +26,7 @@ public interface FilActuService {
     /* recup id utilisateur */
     @GET("getUtilisateurIdByEmail")
     Call<Long> getUtilisateurIdByEmail(@Query("email") String email);
+
+    @DELETE("/publication/delete/{id}")
+    Call<Void> deletePublication(@Path("id") Long id);
 }
