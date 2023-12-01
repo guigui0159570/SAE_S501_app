@@ -1,5 +1,7 @@
 package com.example.sae_s501;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,6 +33,7 @@ import com.caverock.androidsvg.SVGParseException;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
+import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 
 import java.io.IOException;
@@ -48,6 +51,7 @@ public class MesPublicationsFrag extends Fragment {
 
     private static final String TAG = "MesPublicationsFrag";
     private static final String BASE_URL = Dictionnaire.getIpAddress();
+    private RetrofitService retrofitService;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,13 +65,11 @@ public class MesPublicationsFrag extends Fragment {
 
     // Ajoutez cette méthode pour effectuer l'appel réseau depuis votre fragment
     private void loadData(View view) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(Authentification.createAuthenticatedClient(getActivity()))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        retrofitService = new RetrofitService(getContext());
 
-        FilActuService filActuService = retrofit.create(FilActuService.class);
+
+
+        FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
 
         String jwtEmail = SessionManager.getUserEmail(getActivity());
 
@@ -238,7 +240,6 @@ public class MesPublicationsFrag extends Fragment {
                                             supp.setId(View.generateViewId());
                                             supp.setImageResource(R.drawable.poubelle);
 
-                                            // Set layout parameters for the clickable image
                                             RelativeLayout.LayoutParams clickableImageParams = new RelativeLayout.LayoutParams(
                                                     // Set the desired width and height for the clickable image
                                                     dpToPx(32),
@@ -246,31 +247,11 @@ public class MesPublicationsFrag extends Fragment {
                                             );
                                             clickableImageParams.setMargins(0, 0, dpToPx(20), dpToPx(20));
                                             supp.setLayoutParams(clickableImageParams);
+
                                             supp.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View view) {
-                                                    Call<Void> callsupp = filActuService.deletePublication(p.getId());
-                                                    callsupp.enqueue(new Callback<Void>() {
-                                                        @Override
-                                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                                            if (response.isSuccessful()) {
-                                                                Log.d("REQUETE_SUPPRESSION", "Publication supprimée avec succès");
-                                                                showToast("Publication supprimée avec succès");
-                                                                Intent intent = new Intent(getActivity(), MesPublications.class);
-                                                                startActivity(intent);
-                                                            } else {
-                                                                Log.e("REQUETE_SUPPRESSION", "Échec de la suppression de la publication. Code de réponse : " + response.code());
-                                                                showToast("Échec de la suppression de la publication. Veuillez réessayer.");
-                                                            }
-                                                        }
-
-                                                        @Override
-                                                        public void onFailure(Call<Void> call, Throwable t) {
-                                                            Log.e("REQUETE_SUPPRESSION", "Échec de la suppression de la publication. Erreur : " + t.getMessage());
-                                                            showToast("Échec de la suppression de la publication. Veuillez vérifier votre connexion internet.");
-                                                        }
-                                                    });
-
+                                                    showDeleteConfirmationDialog(p.getId());
                                                 }
                                             });
                                             layoutPersonnel.addView(supp);
@@ -328,5 +309,50 @@ public class MesPublicationsFrag extends Fragment {
     }
     private void showToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+    private void showDeleteConfirmationDialog(long publicationId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Confirmation")
+                .setMessage("Voulez-vous vraiment supprimer cette publication?")
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User clicked "Yes"
+                        deletePublication(publicationId);
+                    }
+                })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void deletePublication(long publicationId) {
+        retrofitService = new RetrofitService(getContext());
+        FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
+        Call<Void> callsupp = filActuService.deletePublication(publicationId);
+        callsupp.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("REQUETE_SUPPRESSION", "Publication supprimée avec succès");
+                    showToast("Publication supprimée avec succès");
+                    Intent intent = new Intent(getActivity(), MesPublications.class);
+                    startActivity(intent);
+                } else {
+                    Log.e("REQUETE_SUPPRESSION", "Échec de la suppression de la publication. Code de réponse : " + response.code());
+                    showToast("Échec de la suppression de la publication. Veuillez réessayer.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("REQUETE_SUPPRESSION", "Échec de la suppression de la publication. Erreur : " + t.getMessage());
+                showToast("Échec de la suppression de la publication. Veuillez vérifier votre connexion internet.");
+            }
+        });
     }
 }
