@@ -110,7 +110,7 @@
                 android:id="@+id/nom_utilisateur"
                 android:layout_width="wrap_content"
                 android:layout_height="35sp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="400dp"
                 android:layout_marginTop="80sp"
                 android:clickable="true"
                 android:gravity="center"
@@ -140,7 +140,7 @@
                 android:gravity="center"
                 android:layout_marginLeft="60dp"
                 android:layout_marginTop="-32sp"
-                android:textColor="#0000FF"
+                android:textColor="#8383B5"
                 android:onClick="chargerImage"
                 android:text="Visualiser image"
                 android:textSize="17sp" />
@@ -163,7 +163,7 @@
                 android:layout_marginTop="-30sp"
                 android:textColor="#0000FF"
                 android:onClick="chargerImage"
-                android:text="Visualiser image"
+                android:text="Télécharger article"
                 android:textSize="17sp" />
 
             <TextView

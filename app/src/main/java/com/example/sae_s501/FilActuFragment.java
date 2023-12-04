@@ -1,7 +1,10 @@
 package com.example.sae_s501;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.PictureDrawable;
@@ -38,6 +41,7 @@ import okhttp3.Credentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -147,8 +151,39 @@ public class FilActuFragment extends Fragment {
 
                             Drawable drawable = ContextCompat.getDrawable(getContext(),R.drawable.greatbritain);
                             img_produit.setImageDrawable(drawable);
+                            Call<ResponseBody> callImage = filActuService.getImage(p.getImage());
+                            Log.d("IMAGE", p.getImage());
+
+                            callImage.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.isSuccessful()) {
+                                        ResponseBody body = response.body();
+                                        Log.d("IMAGE", String.valueOf(body));
+                                        if (body != null) {
+                                            InputStream inputStream = body.byteStream();
+                                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                                            int desiredWidth = 400;
+                                            int desiredHeight = 400;
+                                            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
+                                            Drawable drawable = new BitmapDrawable(getResources(), resizedBitmap);
+                                            img_produit.setImageDrawable(drawable);
+
+                                        }
+                                    } else {
+                                        Log.e("IMAGE", "Erreur lors de la récupération de l'image. Code de réponse : " + response.code());
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    // Gestion des erreurs
+                                    Log.e("IMAGE", "Échec de la requête pour récupérer l'image : " + t.getMessage());
+                                }
+                            });
                             layoutProduit.addView(img_produit);
                             layoutProduit.addView(layoutTitreDes);
+
 
 
                             String titre = p.getTitre();

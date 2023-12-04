@@ -42,13 +42,7 @@ public interface UserService {
     );
 
 
-    /* affichage pub*/
-    @GET("/get/uti/{id}")
-    Call<List<Publication>> getPublicationByUtilisateurId(@Path("id") Long id);
 
-    /* recup id utilisateur */
-    @GET("getUtilisateurIdByEmail")
-    Call<Long> getUtilisateurIdByEmail(@Query("email") String email);
 }
 
 
