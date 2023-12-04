@@ -14,17 +14,9 @@ import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.UserService;
 
-import java.io.IOException;
-
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Inscription extends AppCompatActivity {
 
@@ -36,7 +28,7 @@ public class Inscription extends AppCompatActivity {
     private Button buttonEnvoyer;
 
     private UserService userService;
-    private RetrofitService retrofitService = new RetrofitService();
+    private RetrofitService retrofitService;
 
 
 
@@ -49,14 +41,13 @@ public class Inscription extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmationPassword = findViewById(R.id.editTextPasswordConfirm);
         buttonEnvoyer = findViewById(R.id.btnInscription);
-
+        retrofitService = new RetrofitService(Inscription.this);
 
         /* creation requete */
         userService = retrofitService.getRetrofit().create(UserService.class);
         buttonEnvoyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 // Récupération des données saisies dans les champs de texte
                 String pseudo = editTextPseudo.getText().toString();
@@ -98,7 +89,6 @@ public class Inscription extends AppCompatActivity {
 
                 /* envoie requete */
                 Call<Utilisateur> call = userService.registerUser(pseudo, email, password);
-
                 call.enqueue(new Callback<Utilisateur>() {
                     /* resultat de la requete */
                     @Override
@@ -113,7 +103,22 @@ public class Inscription extends AppCompatActivity {
                             editTextPassword.setText("");
                             editTextConfirmationPassword.setText("");
                         } else {
-                            showToast("L'adresse e-mail existe déjà ou n'est pas correcte.");
+                            // Handle different HTTP error codes with appropriate error messages
+                            if (response.code() == 400) {
+                                showToast("Erreur de requête : Vérifiez les données saisies.");
+                            } else if (response.code() == 401) {
+                                showToast("Erreur d'authentification : Accès non autorisé.");
+                            } else if (response.code() == 403) {
+                                showToast("Erreur d'autorisation : Accès interdit.");
+                            } else if (response.code() == 404) {
+                                showToast("Erreur : Ressource non trouvée.");
+                            } else if (response.code() == 409) {
+                                showToast("Conflit : L'utilisateur existe déjà.");
+                            } else if (response.code() == 500) {
+                                showToast("Erreur interne du serveur : Réessayez plus tard.");
+                            } else {
+                                showToast("Erreur inattendue : " + response.message());
+                            }
                         }
                     }
 

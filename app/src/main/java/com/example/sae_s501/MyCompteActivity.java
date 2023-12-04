@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -20,11 +21,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sae_s501.MonCompte.AbonneCompte;
 import com.example.sae_s501.MonCompte.AbonnementCompte;
 import com.example.sae_s501.MonCompte.ConfigSpring;
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
+import com.example.sae_s501.retrofit.SessionManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -32,22 +35,23 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import com.example.sae_s501.MonCompte.MonCompteViewModel;
-import com.example.sae_s501.databinding.MoncompteBinding;
+import com.example.sae_s501.databinding.MoncompterespBinding;
 
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Locale;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 
 public class MyCompteActivity extends AppCompatActivity {
-    private MoncompteBinding binding;
+    private MoncompterespBinding binding;
     private UpdatemoncompteBinding bindingUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = MoncompteBinding.inflate(getLayoutInflater());
+        binding = MoncompterespBinding.inflate(getLayoutInflater());
         View root = binding.getRoot();
         setContentView(root);
         MonCompteViewModel monCompteViewModel = new ViewModelProvider(this).get(MonCompteViewModel.class);
@@ -111,6 +115,41 @@ public class MyCompteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), MyUpdateCompteActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        //Deconnexion
+        Button deconnexion = root.findViewById(R.id.deconnexion);
+        deconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SessionManager.deleteToken(getApplicationContext());
+                Toast.makeText(MyCompteActivity.this, "Vous êtes déconnecté !", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(view.getContext(), Connexion.class);
+                startActivity(intent);
+
+            }
+        });
+        Button langue = root.findViewById(R.id.langues);
+        ImageView flag =  root.findViewById(R.id.flag_langue);
+        Locale currentLocale = getResources().getConfiguration().locale;
+
+        if (currentLocale.getLanguage().equals("en")) {
+            flag.setImageResource(R.drawable.france_flag);
+        } else {
+            flag.setImageResource(R.drawable.greatbritain);
+        }
+        langue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Changer la langue de l'application
+                if (currentLocale.getLanguage().equals("en")) {
+                    setLocale("fr");
+                } else {
+                    setLocale("en");
+                }
+                recreate();
             }
         });
 
@@ -204,7 +243,14 @@ public class MyCompteActivity extends AppCompatActivity {
             }
         });
     }
+    private void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
 
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+    }
 
 
 }

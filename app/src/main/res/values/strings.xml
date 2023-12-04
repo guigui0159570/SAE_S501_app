@@ -70,8 +70,18 @@
     <string name="s_inscrire">S\'inscrire</string>
     <string name="inscrivez_vous">Inscrivez-vous !</string>
     <string name="vous_avez_d_j_un_compte_se_connecter">Vous avez déjà un compte ? : Se connecter</string>
+    <string name="checkbox_public">Publique</string>
+    <string name="checkbox_prive">Privée</string>
+    <string name="upload"><u>Téléverser_modèle_3D_</u></string>
+    <string name="fichierajoute"><i> : Fichier 3D ajouté</i></string>
+    <string name="fichier_pas_ajoute"><i> : Aucun fichier ajouté</i></string>
+    <string name="motcle_pub">Mots clés : (exemple : #mot)</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="aides">Aide</string>
+    <string name="modifier_profil">Modifier Profil</string>
+    <string name="anglais">Anglais</string>
+    <string name="deconnexion">Deconnexion</string>
 </resources>

@@ -20,6 +20,11 @@ public class Utilisateur implements Serializable {
         this.password = password;
     }
 
+    public Utilisateur(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public String getPseudo() {
         return pseudo;
     }
