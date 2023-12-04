@@ -54,7 +54,6 @@ public class Authentification {
                         Toast.makeText(context, "Erreur d'authentification: " + response.message(), Toast.LENGTH_SHORT).show();
                     }
                 }
-
             }
 
             @Override

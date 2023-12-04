@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import com.example.sae_s501.retrofit.FilActuService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import okhttp3.Credentials;
 import okhttp3.Interceptor;
@@ -65,8 +67,8 @@ public class FilActuFragment extends Fragment {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(Authentification.createAuthenticatedClient(getActivity()))
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(Authentification.createAuthenticatedClient(getActivity()))
                 .build();
 
         FilActuService filActuService = retrofit.create(FilActuService.class);
@@ -85,13 +87,13 @@ public class FilActuFragment extends Fragment {
 
                         for (Publication p : publications) {
                             //Layout qui va contenir les autres layout
-                            LinearLayout layoutConteneur = new LinearLayout(requireContext());
+                            LinearLayout layoutConteneur = new LinearLayout(getContext());
                             //Layout qui contient l'image du produit ainsi le titre et la description
-                            LinearLayout layoutProduit = new LinearLayout(requireContext());
+                            LinearLayout layoutProduit = new LinearLayout(getContext());
                             //Layout qui contient le titre et la description
-                            LinearLayout layoutTitreDes = new LinearLayout(requireContext());
+                            LinearLayout layoutTitreDes = new LinearLayout(getContext());
                             //Layout qui contient la partie personne ainsi que les étoiles de notation
-                            LinearLayout layoutPersonnel = new LinearLayout(requireContext());
+                            LinearLayout layoutPersonnel = new LinearLayout(getContext());
 
                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -112,25 +114,23 @@ public class FilActuFragment extends Fragment {
                             layoutPersonnel.setLayoutParams(layoutParams);
 
                             //Param layoutConteneur
-                            layoutConteneur.setId(View.generateViewId());
+                            layoutConteneur.setId(p.getId().intValue());
                             layoutConteneur.setOrientation(LinearLayout.VERTICAL);
                             layoutConteneur.setVisibility(View.VISIBLE);
 
-                            layoutConteneur.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent;
-                                    if(p.getGratuit()){
-                                        // ne fonctionne pas, à voir via le conteneur
-                                        //Toast.makeText(requireContext(), p.getGratuit().toString(), Toast.LENGTH_SHORT).show();
-                                        intent = new Intent(getActivity(), ProduitGratuit.class);
-                                    }else{
-                                        intent = new Intent(getActivity(), ProduitPayant.class);
-                                    }
-                                    intent.putExtra("id", layoutConteneur.getId());
-                                    startActivity(intent);
-                                }
-                            });
+
+                            if(p.getGratuit()){
+                                layoutConteneur.setOnClickListener(view -> {
+                                    Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
+                                    loadView(view, view.getId(), new Intent(getContext(), ProduitGratuit.class));
+                                });
+                            }else {
+                                layoutConteneur.setOnClickListener(view -> {
+                                    Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
+                                    loadView(view, view.getId(), new Intent(getContext(), ProduitPayant.class));
+                                });
+                            }
+
 
 
                             //Param layoutProduit
@@ -143,23 +143,23 @@ public class FilActuFragment extends Fragment {
                             layoutTitreDes.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
                             layoutTitreDes.setId(View.generateViewId());
                             //mettre l'element image produit
-                            ImageView img_produit = new ImageView(requireContext());
+                            ImageView img_produit = new ImageView(getContext());
 
-                            Drawable drawable = ContextCompat.getDrawable(requireContext(),R.drawable.greatbritain);
+                            Drawable drawable = ContextCompat.getDrawable(getContext(),R.drawable.greatbritain);
                             img_produit.setImageDrawable(drawable);
                             layoutProduit.addView(img_produit);
                             layoutProduit.addView(layoutTitreDes);
 
 
                             String titre = p.getTitre();
-                            TextView titreText = new TextView(requireContext());
+                            TextView titreText = new TextView(getContext());
                             titreText.setId(View.generateViewId());titreText.setText(titre);
                             titreText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                             titreText.setTextColor(Color.parseColor("#00BA8D"));
                             titreText.setLayoutParams(params_elt);
 
                             String description = p.getDescription();
-                            TextView desText = new TextView(requireContext());
+                            TextView desText = new TextView(getContext());
                             desText.setId(View.generateViewId());
                             desText.setText(description);
 
@@ -168,7 +168,7 @@ public class FilActuFragment extends Fragment {
 
                             Boolean gratuit = p.getGratuit();
                             String prix = String.valueOf(p.getPrix());
-                            TextView prixText = new TextView(requireContext());
+                            TextView prixText = new TextView(getContext());
                             prixText.setId(View.generateViewId());
                             if(gratuit) {
                                 prixText.setText("    Gratuit");
@@ -190,61 +190,62 @@ public class FilActuFragment extends Fragment {
                             //mettre image utilisateur
                             if(p.getProprietaire() != null){
                                 Utilisateur pseudo = p.getProprietaire();
-                                TextView pseudoText = new TextView(requireContext());
+                                TextView pseudoText = new TextView(getContext());
                                 pseudoText.setId(View.generateViewId());
                                 pseudoText.setText(pseudo.getPseudo());
-                                pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
+                                pseudoText.setTextColor(ContextCompat.getColor(getContext(), R.color.blue));
                                 layoutPersonnel.addView(pseudoText);
                                 layoutPersonnel.addView(prixText);
 
                             }
 
-                            //Ajout de la notation
-                            Call<List<Avis>> callAvis = filActuService.getAllAvisByPublication(p.getId()) ;
-                            callAvis.enqueue(new Callback<List<Avis>>() {
-                                @Override
-                                public void onResponse(Call<List<Avis>> call, Response<List<Avis>> response) {
-                                    if(response.isSuccessful()){
-                                        List<Avis> avis = response.body();
-                                        int sum = 0;
-                                        assert avis != null;
-                                        for (Avis avis1 : avis){
-                                            sum += 1;
-                                        }
-                                        int notation_publication = Math.round(sum/avis.size());
-                                        Log.d(TAG, "NB notation : "+p.notation_publication().toString());
-                                        for(int i=0; i<notation_publication; i++){
-                                            InputStream inputStream = getResources().openRawResource(R.raw.star);
-                                            try {
-                                                SVG svg = SVG.getFromInputStream(inputStream);
-                                                // Créer un ImageButton
-                                                ImageButton imageButton = new ImageButton(requireContext());
-                                                imageButton.setId(View.generateViewId());
 
-                                                // Convertir le SVG en PictureDrawable
-                                                PictureDrawable pictureDrawable = new PictureDrawable(svg.renderToPicture());
-
-                                                // Définir le fond de l'ImageButton avec le PictureDrawable
-                                                imageButton.setImageDrawable(pictureDrawable);
-                                                layoutPersonnel.addView(imageButton);
-                                            } catch (SVGParseException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                            try {
-                                                inputStream.close();
-                                            } catch (IOException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<List<Avis>> call, Throwable t) {
-                                    Log.e(TAG, "Failure: " + t.getMessage());
-                                    Toast.makeText(requireContext(), "Erreur lors de la communication avec le serveur pour la partie avis", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+//                            //Ajout de la notation
+//                            Call<List<Avis>> callAvis = filActuService.getAllAvisByPublication(p.getId()) ;
+//                            callAvis.enqueue(new Callback<List<Avis>>() {
+//                                @Override
+//                                public void onResponse(Call<List<Avis>> call, Response<List<Avis>> response) {
+//                                    if(response.isSuccessful()){
+//                                        List<Avis> avis = response.body();
+//                                        int sum = 0;
+//                                        assert avis != null;
+//                                        for (Avis avis1 : avis){
+//                                            sum += 1;
+//                                        }
+//                                        int notation_publication = Math.round(sum/avis.size());
+//                                        Log.d(TAG, "NB notation : "+p.notation_publication().toString());
+//                                        for(int i=0; i<notation_publication; i++){
+//                                            InputStream inputStream = getResources().openRawResource(R.raw.star);
+//                                            try {
+//                                                SVG svg = SVG.getFromInputStream(inputStream);
+//                                                // Créer un ImageButton
+//                                                ImageButton imageButton = new ImageButton(requireContext());
+//                                                imageButton.setId(View.generateViewId());
+//
+//                                                // Convertir le SVG en PictureDrawable
+//                                                PictureDrawable pictureDrawable = new PictureDrawable(svg.renderToPicture());
+//
+//                                                // Définir le fond de l'ImageButton avec le PictureDrawable
+//                                                imageButton.setImageDrawable(pictureDrawable);
+//                                                layoutPersonnel.addView(imageButton);
+//                                            } catch (SVGParseException e) {
+//                                                throw new RuntimeException(e);
+//                                            }
+//                                            try {
+//                                                inputStream.close();
+//                                            } catch (IOException e) {
+//                                                throw new RuntimeException(e);
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<List<Avis>> call, Throwable t) {
+//                                    Log.e(TAG, "Failure: " + t.getMessage());
+//                                    Toast.makeText(requireContext(), "Erreur lors de la communication avec le serveur pour la partie avis", Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
 
                             //Ajout des layout
                             layoutConteneur.addView(layoutProduit); layoutConteneur.addView(layoutPersonnel);
@@ -256,10 +257,10 @@ public class FilActuFragment extends Fragment {
                             layoutConteneur.setBackground(border);layoutConteneur.setBackgroundResource(R.color.white);
                             layout.addView(layoutConteneur);
                         }
-                        Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
                     } else {
                         Log.e(TAG, "Error response: " + response.errorBody());
-                        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -267,8 +268,13 @@ public class FilActuFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<List<Publication>> call, @NonNull Throwable t) {
                 Log.e(TAG, "Failure: " + t.getMessage());
-                Toast.makeText(requireContext(), "Erreur lors de la communication avec le serveur", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Erreur lors de la communication avec le serveur", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public static void loadView(View view, int id, Intent intent){
+        intent.putExtra("id", id);
+        view.getContext().startActivity(intent);
     }
 }
