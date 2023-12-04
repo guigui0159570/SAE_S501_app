@@ -7,13 +7,17 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface FilActuService {
 
-    @GET("/publication/getAllByTime")
+    @GET("/publication/getAll")
     Call<List<Publication>> getAllPublication();
 
     @GET("/avis/get/pub/{id}")
-    Call<List<Avis>> getAllAvisByPublication(@Query(("publication_id")) Long publication);
+    Call<List<Avis>> getAllAvisByPublication(@Path(("id")) Long publication);
+
+    @GET("/publication/get/{id}")
+    Call<Publication> getPublicationById(@Path(("id")) Long publication);
 }
