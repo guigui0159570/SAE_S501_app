@@ -150,8 +150,6 @@ public class FilActuFragment extends Fragment {
                             //mettre l'element image produit
                             ImageView img_produit = new ImageView(getContext());
 
-                            Drawable drawable = ContextCompat.getDrawable(getContext(),R.drawable.greatbritain);
-                            img_produit.setImageDrawable(drawable);
                             Call<ResponseBody> callImage = filActuService.getImage(p.getImage());
                             Log.d("IMAGE", p.getImage());
 

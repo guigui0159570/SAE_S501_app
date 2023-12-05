@@ -29,8 +29,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sae_s501.MonCompte.ConfigSpring;
 import com.example.sae_s501.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.MonCompte.UpdateUserService;
-import com.example.sae_s501.databinding.AjoutPublicationBinding;
-import com.example.sae_s501.databinding.MoncompteBinding;
+
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

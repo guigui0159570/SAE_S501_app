@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.RetrofitService;
+import com.example.sae_s501.retrofit.RetrofitServiceRegister;
 import com.example.sae_s501.retrofit.UserService;
 
 import retrofit2.Call;
@@ -28,7 +29,7 @@ public class Inscription extends AppCompatActivity {
     private Button buttonEnvoyer;
 
     private UserService userService;
-    private RetrofitService retrofitService;
+    private RetrofitServiceRegister retrofitService;
 
 
 
@@ -41,7 +42,7 @@ public class Inscription extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmationPassword = findViewById(R.id.editTextPasswordConfirm);
         buttonEnvoyer = findViewById(R.id.btnInscription);
-        retrofitService = new RetrofitService(Inscription.this);
+        retrofitService = new RetrofitServiceRegister();
 
         /* creation requete */
         userService = retrofitService.getRetrofit().create(UserService.class);
