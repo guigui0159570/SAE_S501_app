@@ -196,7 +196,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35sp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="70sp"                android:clickable="true"
+                android:layout_marginTop="70sp"
+                android:clickable="true"
                 android:gravity="center"
                 android:onClick="chargerImage"
                 android:text="Commentaires : "
@@ -226,4 +227,11 @@
         </LinearLayout>
     </LinearLayout>
 
+    <fragment
+        android:id="@+id/bottomFragment"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:name="com.example.sae_s501.ToolBarreFragment"
+        android:gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
