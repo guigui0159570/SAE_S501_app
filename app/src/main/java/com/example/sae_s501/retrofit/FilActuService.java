@@ -14,14 +14,17 @@ import retrofit2.http.Query;
 
 public interface FilActuService {
 
-    @GET("/publication/getAllByTime")
+    @GET("/publication/getAll")
     Call<List<Publication>> getAllPublication();
 
     @GET("/publication/getByFiltre")
     Call<List<Publication>> getAllPublicationByFiltre(@Query("filtre") String filtre);
 
     @GET("/avis/get/pub/{id}")
-    Call<List<Avis>> getAllAvisByPublication(@Path("id") Long publication);
+    Call<List<Avis>> getAllAvisByPublication(@Path(("id")) Long publication);
+
+    @GET("/publication/get/{id}")
+    Call<Publication> getPublicationById(@Path(("id")) Long publication);
 
     @GET("/publication/get/uti/{id}/getFiltreByUser")
     Call<List<Publication>> getPublicationFiltreByUtilisateurId(@Path("id") Long id,@Query("filtre") String filtre);

@@ -10,7 +10,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,11 +26,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sae_s501.MonCompte.AbonneCompte;
+import com.example.sae_s501.MonCompte.AbonnementCompte;
+import com.example.sae_s501.MonCompte.ConfigSpring;
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
 import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -37,9 +43,11 @@ import com.google.gson.JsonParser;
 import com.example.sae_s501.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.databinding.MoncompterespBinding;
 
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Call;
@@ -193,6 +201,24 @@ public class MyCompteActivity extends AppCompatActivity {
                 });
             }
         });
+
+        TextView textViewAbonnementview = root.findViewById(R.id.AbonnementView);
+        textViewAbonnementview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), AbonnementCompte.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView textViewAbonneview = root.findViewById(R.id.AbonneView);
+        textViewAbonneview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), AbonneCompte.class);
+                startActivity(intent);
+            }
+        });
     }
     public void informationUser(CompletableFuture<String> integerCompletableFuture, View root){
         integerCompletableFuture.thenAccept(resultat -> {
@@ -213,7 +239,21 @@ public class MyCompteActivity extends AppCompatActivity {
                             TextView textViewAbonnement = root.findViewById(R.id.countAbonnement);
                             textViewAbonnement.setText(String.valueOf(countAbonnementElement).replaceAll("^\"|\"$", ""));
 
+                            //Partie pseudo
+                            JsonElement pseudoElement = jsonObject.get("pseudo");
+                            TextView textViewPseudo = root.findViewById(R.id.mon_compte);
+                            String pseudo = String.valueOf(pseudoElement).replaceAll("^\"|\"$", "");
+                            textViewPseudo.setText(pseudo);
+
+                            //Partie Description
+                            JsonElement descriptionElement = jsonObject.get("description");
+                            TextView textViewDescription = root.findViewById(R.id.description);
+                            Gson gson = new Gson();
+                            String extractedString = gson.fromJson(descriptionElement, String.class);
+                            textViewDescription.setText(extractedString);
+
                             //Partie photo
+                            ImageView imageViewPhoto = root.findViewById(R.id.photoProfil);
                             JsonElement photoElement = jsonObject.get("photo");
 
                             if (photoElement != null && !photoElement.isJsonNull()) {
@@ -226,9 +266,22 @@ public class MyCompteActivity extends AppCompatActivity {
                                 Bitmap bitmap = BitmapFactory.decodeByteArray(decodedImageData, 0, decodedImageData.length);
 
                                 // Afficher le Bitmap dans l'ImageView
-                                ImageView imageViewPhoto = root.findViewById(R.id.photoProfil);
+
                                 imageViewPhoto.setImageBitmap(bitmap);
+                            }else {
+                                //creation image random
+                                String initials = String.valueOf(pseudo.charAt(0));
+                                int width = 200;
+                                int height = 200;
+
+                                int backgroundColor = ConfigSpring.couleurDefault;
+                                int textColor = Color.WHITE;
+
+                                MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
+                                Bitmap generatedImage = monCompteViewModel.generateInitialsImage(initials, width, height, backgroundColor, textColor);
+                                imageViewPhoto.setImageBitmap(generatedImage);
                             }
+
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }

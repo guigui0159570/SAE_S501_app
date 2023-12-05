@@ -1,5 +1,8 @@
 package com.example.sae_s501.MonCompte;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
@@ -24,49 +27,18 @@ import okhttp3.Response;
 
 public class MonCompteViewModel extends ViewModel {
 
+    private ConfigSpring configSpring = new ConfigSpring();
 
     public MonCompteViewModel() throws ExecutionException, InterruptedException {
     }
 
 
-    public OkHttpClient creationClientSansSSL(){
-        X509TrustManager trustManager = new X509TrustManager() {
-            @Override
-            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-            }
-
-            @Override
-            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-            }
-
-            @Override
-            public X509Certificate[] getAcceptedIssuers() {
-                return new X509Certificate[0];
-            }
-        };
-        SSLSocketFactory sslSocketFactory = null;
-        try {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, new X509TrustManager[]{trustManager}, null);
-            sslSocketFactory = sslContext.getSocketFactory();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Créez un client OkHttpClient avec la configuration personnalisée
-        OkHttpClient client = new OkHttpClient.Builder()
-                .sslSocketFactory(sslSocketFactory, trustManager) // Ignorer la vérification du certificat
-                .hostnameVerifier((hostname, session) -> true) // Ignorer la vérification du nom d'hôte
-                .build();
-        return client;
-    }
-
 
     public CompletableFuture<String> RequestInformation() {
-        OkHttpClient client = creationClientSansSSL();
+        OkHttpClient client = configSpring.creationClientSansSSL();
         ConfigSpring configSpring = new ConfigSpring();
         Request request = new Request.Builder()
-                .url("http://"+configSpring.Adresse()+":8080/userInformation/102")
+                .url("http://"+configSpring.Adresse()+":8080/userInformation/"+configSpring.userEnCour()+"")
                 .build();
         CompletableFuture<String> futureInformation = new CompletableFuture<>();
         client.newCall(request).enqueue(new Callback() {
@@ -85,6 +57,28 @@ public class MonCompteViewModel extends ViewModel {
             }
         });
         return futureInformation;
+    }
+
+    public Bitmap generateInitialsImage(String initials, int width, int height, int backgroundColor, int textColor) {
+        // Créer une image vide avec le fond coloré
+        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(image);
+        canvas.drawColor(backgroundColor);
+
+        // Configurer la peinture pour le texte
+        Paint paint = new Paint();
+        paint.setColor(textColor);
+        paint.setTextSize(height * 0.6f); // Taille du texte ajustée
+
+        // Centrer le texte sur l'image
+        paint.setTextAlign(Paint.Align.CENTER);
+        float x = width / 2.0f;
+        float y = height / 2.0f - (paint.descent() + paint.ascent()) / 2.0f;
+
+        // Dessiner les initiales sur l'image
+        canvas.drawText(initials, x, y, paint);
+
+        return image;
     }
 
 }
