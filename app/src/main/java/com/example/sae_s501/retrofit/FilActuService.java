@@ -17,8 +17,14 @@ public interface FilActuService {
     @GET("/publication/getAllByTime")
     Call<List<Publication>> getAllPublication();
 
+    @GET("/publication/getByFiltre")
+    Call<List<Publication>> getAllPublicationByFiltre(@Query("filtre") String filtre);
+
     @GET("/avis/get/pub/{id}")
     Call<List<Avis>> getAllAvisByPublication(@Path("id") Long publication);
+
+    @GET("/publication/get/uti/{id}/getFiltreByUser")
+    Call<List<Publication>> getPublicationFiltreByUtilisateurId(@Path("id") Long id,@Query("filtre") String filtre);
 
     /* affichage pub*/
     @GET("/publication/get/uti/{id}")
@@ -33,4 +39,5 @@ public interface FilActuService {
 
     @GET("fichiers/image/{nomFichier}")
     Call<ResponseBody> getImage(@Path("nomFichier") String nomFichier);
+
 }

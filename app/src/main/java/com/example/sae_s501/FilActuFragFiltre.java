@@ -11,10 +11,10 @@ import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,10 +36,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import okhttp3.Credentials;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,13 +43,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FilActuFragment extends Fragment {
+public class FilActuFragFiltre extends Fragment {
 
     private static final String TAG = "FilActuFragment";
     private static final String BASE_URL = Dictionnaire.getIpAddress();
+    private String filterValue;
 
-
-
+    public void setFilterValue(String value) {
+        this.filterValue = value;
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateFragment : creation du fragment");
@@ -67,7 +65,7 @@ public class FilActuFragment extends Fragment {
     // Ajoutez cette méthode pour effectuer l'appel réseau depuis votre fragment
     private void loadData(View view) {
 
-
+        Log.d(TAG, "loadData: "+ filterValue);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(Authentification.createAuthenticatedClient(getActivity()))
@@ -76,7 +74,7 @@ public class FilActuFragment extends Fragment {
 
         FilActuService filActuService = retrofit.create(FilActuService.class);
 
-        Call<List<Publication>> call = filActuService.getAllPublication();
+        Call<List<Publication>> call = filActuService.getAllPublicationByFiltre(filterValue);
         call.enqueue(new Callback<List<Publication>>() {
 
             @Override
@@ -293,6 +291,15 @@ public class FilActuFragment extends Fragment {
                     } else {
                         Log.e(TAG, "Error response: " + response.errorBody());
                         Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
+                    }
+                    if (publications.isEmpty()) {
+                        // Aucune publication, afficher un message
+                        TextView emptyTextView = new TextView(requireContext());
+                        emptyTextView.setText("Aucune publication ne correspond à ce filtre !");
+                        emptyTextView.setGravity(Gravity.CENTER);
+                        emptyTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                        emptyTextView.setTextColor(Color.parseColor("#FFA500"));
+                        layout.addView(emptyTextView);
                     }
                 }
             }

@@ -85,4 +85,5 @@
     <string name="modifier_profil">Modifier Profil</string>
     <string name="anglais">Anglais</string>
     <string name="deconnexion">Deconnexion</string>
+    <string name="supprimer_utilisateur" >Supprimer mon compte</string>
 </resources>

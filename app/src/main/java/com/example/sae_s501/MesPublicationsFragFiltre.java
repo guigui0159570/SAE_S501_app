@@ -47,11 +47,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MesPublicationsFrag extends Fragment {
+public class MesPublicationsFragFiltre extends Fragment {
 
     private static final String TAG = "MesPublicationsFrag";
-    private static final String BASE_URL = Dictionnaire.getIpAddress();
     private RetrofitService retrofitService;
+    private String filterValue;
+
+    public void setFilterValue(String value) {
+        this.filterValue = value;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,7 +84,7 @@ public class MesPublicationsFrag extends Fragment {
                 if (response.isSuccessful()) {
                     Long userId = response.body();
                     if (userId != null) {
-                        Call<List<Publication>> callPublications = filActuService.getPublicationByUtilisateurId(userId);
+                        Call<List<Publication>> callPublications = filActuService.getPublicationFiltreByUtilisateurId(userId,filterValue);
                         callPublications.enqueue(new Callback<List<Publication>>() {
 
                             @Override
@@ -281,7 +285,7 @@ public class MesPublicationsFrag extends Fragment {
                                     if (publications.isEmpty()) {
                                         // Aucune publication, afficher un message
                                         TextView emptyTextView = new TextView(requireContext());
-                                        emptyTextView.setText("Vous n'avez pas de publication !");
+                                        emptyTextView.setText("Aucune publication ne correspond à ce filtre !");
                                         emptyTextView.setGravity(Gravity.CENTER);
                                         emptyTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                                         emptyTextView.setTextColor(Color.parseColor("#FFA500"));

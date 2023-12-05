@@ -1,8 +1,11 @@
 package com.example.sae_s501;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -22,7 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
+import com.example.sae_s501.retrofit.FilActuService;
+import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
+import com.example.sae_s501.retrofit.UserService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -32,12 +38,20 @@ import com.example.sae_s501.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.databinding.MoncompterespBinding;
 
 import java.util.Base64;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class MyCompteActivity extends AppCompatActivity {
     private MoncompterespBinding binding;
+    private RetrofitService retrofitService;
+    private FilActuService filActuService;
+
     private UpdatemoncompteBinding bindingUpdate;
 
     @Override
@@ -47,6 +61,9 @@ public class MyCompteActivity extends AppCompatActivity {
         View root = binding.getRoot();
         setContentView(root);
         MonCompteViewModel monCompteViewModel = new ViewModelProvider(this).get(MonCompteViewModel.class);
+
+        retrofitService = new RetrofitService(this);
+        FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
 
         //Partie information
         CompletableFuture<String> stringCompletableFuture = monCompteViewModel.RequestInformation();
@@ -144,6 +161,38 @@ public class MyCompteActivity extends AppCompatActivity {
                 recreate();
             }
         });
+        String jwtEmail = SessionManager.getUserEmail(MyCompteActivity.this);
+        //Supprimer compte
+        Button supprimer = root.findViewById(R.id.supprimer);
+        supprimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<Long> callUserId = filActuService.getUtilisateurIdByEmail(jwtEmail);
+                Log.d("callUserId", callUserId.toString());
+
+                callUserId.enqueue(new Callback<Long>() {
+                    @Override
+                    public void onResponse(Call<Long> call, Response<Long> response) {
+                        if (response.isSuccessful()) {
+                            Long userId = response.body();
+                            Log.d("UserID", String.valueOf(userId));
+                            if (userId != null) {
+                                DeleteConfirmation(userId);
+
+                            }
+                        }
+                        else{
+                            Log.d("ERREUR REQUETE", "ERREUR REQUETE" + response);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Long> call, Throwable t) {
+                        showToast("Erreur lors de la communication avec le serveur");
+                    }
+                });
+            }
+        });
     }
     public void informationUser(CompletableFuture<String> integerCompletableFuture, View root){
         integerCompletableFuture.thenAccept(resultat -> {
@@ -197,6 +246,57 @@ public class MyCompteActivity extends AppCompatActivity {
         Configuration configuration = new Configuration();
         configuration.locale = locale;
         getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    private void DeleteConfirmation(Long id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation")
+                .setMessage("Voulez-vous vraiment supprimer votre compte?")
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deletePublication(id);
+                        SessionManager.deleteToken(getApplicationContext());
+                    }
+                })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void deletePublication(Long id) {
+        retrofitService = new RetrofitService(this);
+        UserService userService = retrofitService.getRetrofit().create(UserService.class);
+        Call<Void> callsupp = userService.deleteUtilisateur(id);
+
+        callsupp.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("REQUETE_SUPPRESSION", "Votre compte a été supprimé avec succès");
+                    showToast("Votre compte a été supprimé !");
+                    Intent intent = new Intent(MyCompteActivity.this, Connexion.class);
+                    startActivity(intent);
+                } else {
+                    Log.e("REQUETE_SUPPRESSION", "Échec de la suppression du compte. Code de réponse : " + response.code());
+                    showToast("Échec de la suppression du compte. Veuillez réessayer.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("REQUETE_SUPPRESSION", "Échec de la suppression du compte. Erreur : " + t.getMessage());
+                showToast("Échec de la suppression du compte. Veuillez vérifier votre connexion internet.");
+            }
+        });
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 }

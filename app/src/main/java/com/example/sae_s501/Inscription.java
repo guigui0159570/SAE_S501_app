@@ -111,7 +111,7 @@ public class Inscription extends AppCompatActivity {
                             } else if (response.code() == 403) {
                                 showToast("Erreur d'autorisation : Accès interdit.");
                             } else if (response.code() == 404) {
-                                showToast("Erreur : Ressource non trouvée.");
+                                showToast("Erreur : Cette adresse mail est déjà utilisée !");
                             } else if (response.code() == 409) {
                                 showToast("Conflit : L'utilisateur existe déjà.");
                             } else if (response.code() == 500) {

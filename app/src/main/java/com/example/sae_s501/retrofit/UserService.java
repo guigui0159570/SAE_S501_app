@@ -8,6 +8,7 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -40,6 +41,8 @@ public interface UserService {
             @Part("tags") List<String> tags,
             @Part("email") String email
     );
+    @DELETE("/utilisateur/delete/{id}")
+    Call<Void> deleteUtilisateur(@Path("id") Long id);
 
 
 

@@ -31,9 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="1sp"
             android:layout_marginLeft="25sp"
-            android:layout_marginTop="30sp"
+            android:layout_marginTop="25sp"
             android:layout_marginRight="25sp"
-            android:layout_marginBottom="10sp"
+            android:layout_marginBottom="0dp"
             android:background="#FFF" />
 
         <!-- Bouton "Déconnexion" -->
@@ -67,9 +67,9 @@
             android:layout_width="match_parent"
             android:layout_height="1sp"
             android:layout_marginLeft="25sp"
-            android:layout_marginTop="10sp"
+            android:layout_marginTop="0dp"
             android:layout_marginRight="25sp"
-            android:layout_marginBottom="10sp"
+            android:layout_marginBottom="0dp"
             android:background="#FFF" />
 
         <!-- Bouton "Langues" -->
@@ -104,9 +104,9 @@
             android:layout_width="match_parent"
             android:layout_height="1sp"
             android:layout_marginLeft="25sp"
-            android:layout_marginTop="10sp"
+            android:layout_marginTop="0dp"
             android:layout_marginRight="25sp"
-            android:layout_marginBottom="10sp"
+            android:layout_marginBottom="0dp"
             android:background="#FFF" />
 
         <!-- Bouton "Modifier Profil" -->
@@ -140,9 +140,9 @@
             android:layout_width="match_parent"
             android:layout_height="1sp"
             android:layout_marginLeft="25sp"
-            android:layout_marginTop="10sp"
+            android:layout_marginTop="0dp"
             android:layout_marginRight="25sp"
-            android:layout_marginBottom="10sp"
+            android:layout_marginBottom="0dp"
             android:background="#FFF" />
 
         <!-- Bouton "Aides" -->
@@ -170,8 +170,47 @@
                 android:textSize="20dp"
                 android:layout_marginLeft="10dp"/>
 
+
+
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="25sp"
+            android:layout_marginBottom="0dp"
+            android:background="#FFF" />
+        <!-- Bouton "Supprimer" -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:orientation="horizontal"
+            android:background="#FFF">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/poubelle"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:id="@+id/supprimer"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_button"
+                android:text="@string/supprimer_utilisateur"
+                android:textColor="#00BA8D"
+                android:textSize="20dp"
+                android:layout_marginLeft="10dp"/>
+
+
+
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
