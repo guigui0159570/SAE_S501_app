@@ -97,11 +97,11 @@ public class MesPublicationsFrag extends Fragment {
                                             //Layout qui va contenir les autres layout
                                             LinearLayout layoutConteneur = new LinearLayout(requireContext());
                                             //Layout qui contient l'image du produit ainsi le titre et la description
-                                            LinearLayout layoutProduit = new LinearLayout(requireContext());
+                                            LinearLayout layoutProduit = new LinearLayout(getContext());
                                             //Layout qui contient le titre et la description
-                                            LinearLayout layoutTitreDes = new LinearLayout(requireContext());
+                                            LinearLayout layoutTitreDes = new LinearLayout(getContext());
                                             //Layout qui contient la partie personne ainsi que les étoiles de notation
-                                            LinearLayout layoutPersonnel = new LinearLayout(requireContext());
+                                            LinearLayout layoutPersonnel = new LinearLayout(getContext());
 
                                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -126,22 +126,6 @@ public class MesPublicationsFrag extends Fragment {
                                             layoutConteneur.setOrientation(LinearLayout.VERTICAL);
                                             layoutConteneur.setVisibility(View.VISIBLE);
 
-                                            layoutConteneur.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    Intent intent;
-                                                    if(p.getGratuit()){
-                                                        // ne fonctionne pas, à voir via le conteneur
-                                                        //Toast.makeText(requireContext(), p.getGratuit().toString(), Toast.LENGTH_SHORT).show();
-                                                        intent = new Intent(getActivity(), ProduitGratuit.class);
-                                                    }else{
-                                                        intent = new Intent(getActivity(), ProduitPayant.class);
-                                                    }
-                                                    intent.putExtra("id", layoutConteneur.getId());
-                                                    startActivity(intent);
-                                                }
-                                            });
-
 
                                             //Param layoutProduit
                                             layoutProduit.setOrientation(LinearLayout.HORIZONTAL);
@@ -152,6 +136,7 @@ public class MesPublicationsFrag extends Fragment {
                                             layoutTitreDes.setOrientation(LinearLayout.VERTICAL);
                                             layoutTitreDes.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
                                             layoutTitreDes.setId(View.generateViewId());
+
                                             //mettre l'element image produit
                                             ImageView img_produit = new ImageView(requireContext());
 
@@ -161,21 +146,23 @@ public class MesPublicationsFrag extends Fragment {
                                             callImage.enqueue(new Callback<ResponseBody>() {
                                                 @Override
                                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                                    if (response.isSuccessful()) {
-                                                        ResponseBody body = response.body();
-                                                        Log.d("IMAGE", String.valueOf(body));
-                                                        if (body != null) {
-                                                            InputStream inputStream = body.byteStream();
-                                                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                                                            int desiredWidth = 400;
-                                                            int desiredHeight = 400;
-                                                            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
-                                                            Drawable drawable = new BitmapDrawable(getResources(), resizedBitmap);
-                                                            img_produit.setImageDrawable(drawable);
+                                                    if (getActivity() != null && getContext() != null){
+                                                        if (response.isSuccessful()) {
+                                                            ResponseBody body = response.body();
+                                                            Log.d("IMAGE", String.valueOf(body));
+                                                            if (body != null) {
+                                                                InputStream inputStream = body.byteStream();
+                                                                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                                                                int desiredWidth = 400;
+                                                                int desiredHeight = 400;
+                                                                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
+                                                                Drawable drawable = new BitmapDrawable(getResources(), resizedBitmap);
+                                                                img_produit.setImageDrawable(drawable);
 
+                                                            }
+                                                        } else {
+                                                            Log.e("IMAGE", "Erreur lors de la récupération de l'image. Code de réponse : " + response.code());
                                                         }
-                                                    } else {
-                                                        Log.e("IMAGE", "Erreur lors de la récupération de l'image. Code de réponse : " + response.code());
                                                     }
                                                 }
 
@@ -237,7 +224,7 @@ public class MesPublicationsFrag extends Fragment {
                                                 TextView pseudoText = new TextView(requireContext());
                                                 pseudoText.setId(View.generateViewId());
                                                 pseudoText.setText(pseudo.getPseudo());
-                                                pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
+                                                pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
                                                 layoutPersonnel.addView(pseudoText);
                                                 layoutPersonnel.addView(prixText);
                                                 layoutPersonnel.addView(textnbTelechargement);

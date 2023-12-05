@@ -127,12 +127,12 @@ public class FilActuFragment extends Fragment {
                             if(p.getGratuit()){
                                 layoutConteneur.setOnClickListener(view -> {
                                     Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
-                                    loadView(view, view.getId(), new Intent(getContext(), ProduitGratuit.class));
+                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuit.class));
                                 });
                             }else {
                                 layoutConteneur.setOnClickListener(view -> {
                                     Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
-                                    loadView(view, view.getId(), new Intent(getContext(), ProduitPayant.class));
+                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayant.class));
                                 });
                             }
 
@@ -150,8 +150,7 @@ public class FilActuFragment extends Fragment {
                             //mettre l'element image produit
                             ImageView img_produit = new ImageView(getContext());
 
-                            Drawable drawable = ContextCompat.getDrawable(getContext(),R.drawable.greatbritain);
-                            img_produit.setImageDrawable(drawable);
+
                             Call<ResponseBody> callImage = filActuService.getImage(p.getImage());
                             Log.d("IMAGE", p.getImage());
 
@@ -229,7 +228,7 @@ public class FilActuFragment extends Fragment {
                                 TextView pseudoText = new TextView(getContext());
                                 pseudoText.setId(View.generateViewId());
                                 pseudoText.setText(pseudo.getPseudo());
-                                pseudoText.setTextColor(ContextCompat.getColor(getContext(), R.color.blue));
+                                pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
                                 layoutPersonnel.addView(pseudoText);
                                 layoutPersonnel.addView(prixText);
 
@@ -308,7 +307,8 @@ public class FilActuFragment extends Fragment {
         });
     }
 
-    public static void loadView(View view, int id, Intent intent){
+    public static void loadView(View view, long id, Intent intent){
+        Log.d("ID de la pub", ""+id);
         intent.putExtra("id", id);
         view.getContext().startActivity(intent);
     }
