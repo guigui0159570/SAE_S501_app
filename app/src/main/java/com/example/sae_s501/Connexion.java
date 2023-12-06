@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.sae_s501.authentification.Authentification;
@@ -20,6 +21,7 @@ public class Connexion extends AppCompatActivity {
         setContentView(R.layout.connexionresp);
         EditText editTextEmail = findViewById(R.id.edit_connexion_mail);
         EditText editTextPassword = findViewById(R.id.edit_connexion_mdp);
+        TextView mdpOublie = findViewById(R.id.mdp_oublie);
         Button button = findViewById(R.id.btn_connexion);
 
         ImageView langue = findViewById(R.id.langueco);
@@ -42,6 +44,13 @@ public class Connexion extends AppCompatActivity {
                     setLocale("en");
                 }
                 recreate();
+            }
+        });
+        mdpOublie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), MdpOublie.class);
+                startActivity(intent);
             }
         });
         button.setOnClickListener(new View.OnClickListener() {

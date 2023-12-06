@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#17282D"
-    tools:context=".MainActivity">
+    tools:context=".NewMDP">
 
     <EditText
         android:id="@+id/editTextPassword2"
@@ -16,7 +16,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="544dp"
         android:layout_marginEnd="60dp"
-        android:hint="  Mot de passe"
+        android:hint="Mot de passe"
+        android:paddingLeft="10dp"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -60,7 +61,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/nouveau"
+        android:id="@+id/retourLogin"
         android:layout_width="245dp"
         android:layout_height="18dp"
         android:layout_marginBottom="8dp"
@@ -70,7 +71,6 @@
         android:textAppearance="@style/nouveau"
         android:translationY="-1.74sp"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle_"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
@@ -125,7 +125,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="440dp"
         android:layout_marginEnd="60dp"
-        android:hint="  Mot de passe"
+        android:hint="Mot de passe"
+        android:paddingLeft="10dp"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
