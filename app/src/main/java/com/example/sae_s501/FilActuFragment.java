@@ -127,12 +127,12 @@ public class FilActuFragment extends Fragment {
                             if(p.getGratuit()){
                                 layoutConteneur.setOnClickListener(view -> {
                                     Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
-                                    loadView(view, view.getId(), new Intent(getContext(), ProduitGratuit.class));
+                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuit.class));
                                 });
                             }else {
                                 layoutConteneur.setOnClickListener(view -> {
                                     Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
-                                    loadView(view, view.getId(), new Intent(getContext(), ProduitPayant.class));
+                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayant.class));
                                 });
                             }
 
@@ -227,59 +227,11 @@ public class FilActuFragment extends Fragment {
                                 TextView pseudoText = new TextView(getContext());
                                 pseudoText.setId(View.generateViewId());
                                 pseudoText.setText(pseudo.getPseudo());
-                                pseudoText.setTextColor(ContextCompat.getColor(getContext(), R.color.blue));
+                                pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
                                 layoutPersonnel.addView(pseudoText);
                                 layoutPersonnel.addView(prixText);
 
                             }
-
-
-//                            //Ajout de la notation
-//                            Call<List<Avis>> callAvis = filActuService.getAllAvisByPublication(p.getId()) ;
-//                            callAvis.enqueue(new Callback<List<Avis>>() {
-//                                @Override
-//                                public void onResponse(Call<List<Avis>> call, Response<List<Avis>> response) {
-//                                    if(response.isSuccessful()){
-//                                        List<Avis> avis = response.body();
-//                                        int sum = 0;
-//                                        assert avis != null;
-//                                        for (Avis avis1 : avis){
-//                                            sum += 1;
-//                                        }
-//                                        int notation_publication = Math.round(sum/avis.size());
-//                                        Log.d(TAG, "NB notation : "+p.notation_publication().toString());
-//                                        for(int i=0; i<notation_publication; i++){
-//                                            InputStream inputStream = getResources().openRawResource(R.raw.star);
-//                                            try {
-//                                                SVG svg = SVG.getFromInputStream(inputStream);
-//                                                // Créer un ImageButton
-//                                                ImageButton imageButton = new ImageButton(requireContext());
-//                                                imageButton.setId(View.generateViewId());
-//
-//                                                // Convertir le SVG en PictureDrawable
-//                                                PictureDrawable pictureDrawable = new PictureDrawable(svg.renderToPicture());
-//
-//                                                // Définir le fond de l'ImageButton avec le PictureDrawable
-//                                                imageButton.setImageDrawable(pictureDrawable);
-//                                                layoutPersonnel.addView(imageButton);
-//                                            } catch (SVGParseException e) {
-//                                                throw new RuntimeException(e);
-//                                            }
-//                                            try {
-//                                                inputStream.close();
-//                                            } catch (IOException e) {
-//                                                throw new RuntimeException(e);
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onFailure(Call<List<Avis>> call, Throwable t) {
-//                                    Log.e(TAG, "Failure: " + t.getMessage());
-//                                    Toast.makeText(requireContext(), "Erreur lors de la communication avec le serveur pour la partie avis", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
 
                             //Ajout des layout
                             layoutConteneur.addView(layoutProduit); layoutConteneur.addView(layoutPersonnel);
@@ -306,7 +258,8 @@ public class FilActuFragment extends Fragment {
         });
     }
 
-    public static void loadView(View view, int id, Intent intent){
+    public static void loadView(View view, long id, Intent intent){
+        Log.d("ID de la pub", ""+id);
         intent.putExtra("id", id);
         view.getContext().startActivity(intent);
     }
