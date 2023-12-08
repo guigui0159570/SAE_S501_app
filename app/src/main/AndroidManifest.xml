@@ -66,6 +66,10 @@
             android:exported="true">
 
         </activity>
+        <activity android:name=".MdpOublie"
+            android:exported="true">
+
+        </activity>
 
         <activity android:name=".ProduitGratuit" android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"> </activity>
