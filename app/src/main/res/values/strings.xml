@@ -85,4 +85,13 @@
     <string name="anglais">Anglais</string>
     <string name="deconnexion">Deconnexion</string>
     <string name="supprimer_utilisateur" >Supprimer mon compte</string>
+    <string name="description_pub_gratuit" />
+    <string name="titre_pub_gratuit" />
+    <string name="pseudo_pub_gratuit" />
+    <string name="visualiser_img_gratuit">Visualiser l\'article</string>
+    <string name="telecharger_img_gratuit">Télécharger l\'article</string>
+    <string name="text_commentaires_gratuit">"Commentaires : "</string>
+    <string name="ajout_commentaire_gratuit">Ajouter un commentaire</string>
+    <string name="btn_validation_gratuit">Valider</string>
+    <string name="payer_img_payant">Ajouter au panier</string>
 </resources>

@@ -78,10 +78,7 @@
     <string name="anglais">French</string>
     <string name="deconnexion">Disconnection</string>
     <string name="supprimer_utilisateur" >Delete my account</string>
-
-
-
-
+    <string name="description_pub_gratuit" />
 
 
 </resources>

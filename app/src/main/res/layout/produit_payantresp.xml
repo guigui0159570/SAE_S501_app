@@ -22,11 +22,11 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/ajout_pub_titre"
+            android:id="@+id/ajout_pub_titre_payant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40sp"
-            android:text="Ma première réalisation"
+            android:text="@string/titre_pub_gratuit"
             android:textAppearance="@style/se_connecte"/>
 
         <!--Contient attributs (avant description) -->
@@ -40,167 +40,140 @@
                 android:layout_width="180sp"
                 android:layout_height="220sp"
                 android:orientation="vertical"
+                android:layout_gravity="center"
                 tools:ignore="ExtraText">
 
                 <ImageView
                     android:id="@+id/imageViewPub"
-
+                    android:layout_gravity="center"
                     android:layout_width="150sp"
                     android:layout_height="150sp"
-                    android:layout_marginLeft="25sp"
                     android:layout_marginTop="25sp"
-                    android:background="@color/transparent"
+                    android:background="@color/transparent" />
 
-                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="15dp"
+                    android:paddingTop="30dp"
+                    android:layout_marginBottom="15dp">
+
+                    <ImageView
+                        android:id="@+id/img_profil_payant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="25dp"/>
+
+                    <TextView
+                        android:id="@+id/pseudo_pub_payant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/pseudo_pub_gratuit"
+                        android:layout_marginBottom="15dp"/>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/charger_img"
                     android:layout_width="wrap_content"
                     android:layout_height="35sp"
-                    android:layout_marginLeft="25sp"
+                    android:layout_marginStart="25dp"
+                    android:clickable="true"
+                    android:layout_gravity="left"
+                    android:text="@string/description_pub_gratuit"
+                    android:textSize="17sp"
+                    tools:ignore="RtlHardcoded" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Layout qui contient toute la partie basse-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <!-- Layout qui contient la visualisation de l'image -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="25dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    app:srcCompat="@drawable/eye_1"/>
+
+                <TextView
+                    android:id="@+id/visualiser_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35sp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:onClick="chargerImage"
-                    android:text="Description produit"
+                    android:textColor="#0000FF"
+                    android:text="@string/visualiser_img_gratuit"
                     android:textSize="17sp" />
 
             </LinearLayout>
 
-            <!-- Titre, copyright et valeur monétaire-->
-
+            <!-- Layout qui contient le téléchargement de l'image -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200sp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="25dp"
+                android:gravity="center_vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50sp">
+                <ImageView
+                    android:id="@+id/imageView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    app:srcCompat="@drawable/free_shipping_1"/>
 
-                    <EditText
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        style="@style/CustomEditTextStyle"
-                        android:id="@+id/checkbox_payant"
-                        android:layout_width="100sp"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/checkbox_payant"
-                        android:background="@color/white"
-                        android:textColorHint="#00BA8D"
-                        android:layout_marginLeft="10sp"
-                        android:paddingRight="5sp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:textSize="12sp"
-                        android:textColor="#00BA8D"
-                        />
-
-
-
-
-
-                </LinearLayout>
-
+                <TextView
+                    android:id="@+id/telecharger_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35sp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:textColor="#0000FF"
+                    android:text="@string/payer_img_payant"
+                    android:textSize="17sp" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/imageViewUtilisateur"
-                android:layout_width="130sp"
-                android:layout_height="80sp"
-                android:layout_marginLeft="-720sp"
-                android:layout_marginTop="60sp"
-                android:background="@color/transparent"></ImageView>
-
-            <TextView
-                android:id="@+id/nom_utilisateur"
-                android:layout_width="wrap_content"
-                android:layout_height="35sp"
-                android:layout_marginLeft="400dp"
-                android:layout_marginTop="80sp"
-                android:clickable="true"
-                android:gravity="center"
-                android:onClick="chargerImage"
-                android:text="Nom d'utilisateur"
-                android:textSize="17sp" />>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/eye_1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="60sp"/>
-
-            <TextView
-                android:id="@+id/visualiser_img"
-                android:layout_width="wrap_content"
-                android:layout_height="35sp"
-                android:clickable="true"
-                android:gravity="center"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="-32sp"
-                android:textColor="#0000FF"
-                android:onClick="chargerImage"
-                android:text="Visualiser image"
-                android:textSize="17sp" />
-
-            <ImageView
-                android:id="@+id/imageView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/free_shipping_1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30sp"/>
-
-            <TextView
-                android:id="@+id/telecharger_img"
-                android:layout_width="wrap_content"
-                android:layout_height="35sp"
-                android:clickable="true"
-                android:gravity="center"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="-30sp"
-                android:textColor="#0000FF"
-                android:onClick="chargerImage"
-                android:text="Visualiser image"
-                android:textSize="17sp" />
-
-            <TextView
-                android:id="@+id/description_produit"
-                android:layout_width="wrap_content"
-                android:layout_height="35sp"
-                android:layout_marginLeft="25sp"
-                android:layout_marginTop="35sp"
-                android:clickable="true"
-                android:gravity="center"
-                android:textColor="#FFFFFF"
-                android:onClick="chargerImage"
-                android:text="Description produit"
-                android:textSize="17sp" />
 
             <RatingBar
-                android:id="@+id/ratingBar4"
-                android:layout_width="250dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5sp"
-                android:layout_marginTop="10sp" />
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:layout_marginStart="25dp"/>
 
             <TextView
                 android:id="@+id/commentaires_pers"
                 android:layout_width="wrap_content"
                 android:layout_height="35sp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="70sp"
-                android:clickable="true"
+                android:layout_marginTop="80sp"
+                android:layout_marginStart="25dp"
                 android:gravity="center"
-                android:onClick="chargerImage"
-                android:text="Commentaires : "
+                android:text="@string/text_commentaires_gratuit"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
@@ -211,21 +184,34 @@
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="40sp"
-                android:hint="Ajouter un commentaire"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/ajout_commentaire_gratuit"
                 android:inputType="textEmailAddress" />
 
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="19dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="300dp"
+                android:layout_marginTop="-30sp"
+                android:background="@drawable/sent_1"
+                tools:ignore="MissingConstraints"/>
 
-
-            <LinearLayout
+            <Button
+                android:id="@+id/btn_valider_payant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"/>
-
-
+                android:text="@string/btn_validation_gratuit"
+                android:layout_gravity="center"
+                android:layout_marginTop="75dp"
+                style="@style/CustomButtonStyle"
+                tools:ignore="MissingConstraints" />
         </LinearLayout>
+
     </LinearLayout>
+
+
 
     <fragment
         android:id="@+id/bottomFragment"

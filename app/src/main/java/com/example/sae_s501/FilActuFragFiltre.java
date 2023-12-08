@@ -231,53 +231,6 @@ public class FilActuFragFiltre extends Fragment {
 
                             }
 
-                            //Ajout de la notation
-                            Call<List<Avis>> callAvis = filActuService.getAllAvisByPublication(p.getId()) ;
-                            callAvis.enqueue(new Callback<List<Avis>>() {
-                                @Override
-                                public void onResponse(Call<List<Avis>> call, Response<List<Avis>> response) {
-                                    if(response.isSuccessful()){
-                                        List<Avis> avis = response.body();
-                                        int sum = 0;
-                                        assert avis != null;
-                                        for (Avis avis1 : avis){
-                                            sum += 1;
-                                        }
-                                        int notation_publication = Math.round(sum/avis.size());
-                                        Log.d(TAG, "NB notation : "+p.notation_publication().toString());
-                                        for(int i=0; i<notation_publication; i++){
-                                            InputStream inputStream = getResources().openRawResource(R.raw.star);
-                                            try {
-                                                SVG svg = SVG.getFromInputStream(inputStream);
-                                                // Créer un ImageButton
-                                                ImageButton imageButton = new ImageButton(requireContext());
-                                                imageButton.setId(View.generateViewId());
-
-                                                // Convertir le SVG en PictureDrawable
-                                                PictureDrawable pictureDrawable = new PictureDrawable(svg.renderToPicture());
-
-                                                // Définir le fond de l'ImageButton avec le PictureDrawable
-                                                imageButton.setImageDrawable(pictureDrawable);
-                                                layoutPersonnel.addView(imageButton);
-                                            } catch (SVGParseException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                            try {
-                                                inputStream.close();
-                                            } catch (IOException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<List<Avis>> call, Throwable t) {
-                                    Log.e(TAG, "Failure: " + t.getMessage());
-                                    Toast.makeText(requireContext(), "Erreur lors de la communication avec le serveur pour la partie avis", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
                             //Ajout des layout
                             layoutConteneur.addView(layoutProduit); layoutConteneur.addView(layoutPersonnel);
 
