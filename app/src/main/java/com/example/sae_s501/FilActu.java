@@ -30,6 +30,7 @@ public class FilActu extends AppCompatActivity {
                 filtreActif = true;
 
                 if (!editTextFiltre.getText().toString().equals("")) {
+
                     // Ajoutez le fragment filtre à l'activité
                     FilActuFragFiltre fragmentFiltre = new FilActuFragFiltre();
                     fragmentFiltre.setFilterValue(editTextFiltre.getText().toString());
@@ -37,7 +38,7 @@ public class FilActu extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, fragmentFiltre)
                             .commit();
-                    Log.d(TAG, "Filtre fragment");
+                    Log.d(TAG, "Filtre fragment fil Actu");
                 } else {
                     // Si le filtre n'est pas actif ou le texte est vide, affichez le fragment FilActuFragment
                     getSupportFragmentManager().beginTransaction()

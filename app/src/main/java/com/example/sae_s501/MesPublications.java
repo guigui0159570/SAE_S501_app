@@ -32,6 +32,7 @@ public class MesPublications extends AppCompatActivity {
                 filtreActif = true;
 
                 if (!editTextFiltre.getText().toString().equals("")) {
+
                     // Ajoutez le fragment filtre à l'activité
                     MesPublicationsFragFiltre fragmentFiltre = new MesPublicationsFragFiltre();
                     fragmentFiltre.setFilterValue(editTextFiltre.getText().toString());
@@ -39,7 +40,7 @@ public class MesPublications extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container_pub, fragmentFiltre)
                             .commit();
-                    Log.d(TAG, "Filtre fragment");
+                    Log.d(TAG, "Filtre fragment Mes publications");
                 } else {
                     // Si le filtre n'est pas actif ou le texte est vide, affichez le fragment FilActuFragment
                     getSupportFragmentManager().beginTransaction()

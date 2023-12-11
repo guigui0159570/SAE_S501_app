@@ -8,7 +8,6 @@
     <string name="nouveau"> Vous êtes nouveau ? : <u> S’inscrire </u></string>
     <string name="panier">Panier</string>
     <string name="cout_total_text"> Coût total : </string>
-    <string name="cout_total">00.00 €</string>
     <string name="button_panier">Acheter</string>
     <string name="ajout_pub_titre">Ajouter publication</string>
     <string name="charger_img"><u>Charger une image</u></string>
@@ -85,4 +84,8 @@
     <string name="anglais">Anglais</string>
     <string name="deconnexion">Deconnexion</string>
     <string name="supprimer_utilisateur" >Supprimer mon compte</string>
+    <string name="adresse_de_l_admin">Adresse mail de l\'admin :</string>
+    <string name="veuillez_d_crire_votre_probl_me">Veuillez décrire votre problème</string>
+    <string name="d_crire_le_probl_me">Décrire le problème</string>
+    <string name="retour">Retour</string>
 </resources>

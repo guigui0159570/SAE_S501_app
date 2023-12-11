@@ -43,11 +43,13 @@
                 android:singleLine="true"/>
 
             <ImageButton
+                android:id="@+id/shop"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:src="@drawable/shoppingcart"
                 android:background="@color/transparent"
+                android:clickable="true"
                 />
         </LinearLayout>
         <LinearLayout
@@ -180,7 +182,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/parametreCompte"
-        android:name="com.example.sae_s501.MonCompte.ParamertreCompteFragment"/>
+        android:name="com.example.sae_s501.model.MonCompte.ParamertreCompteFragment"/>
 
 
 

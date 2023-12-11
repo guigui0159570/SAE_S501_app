@@ -1,6 +1,5 @@
 package com.example.sae_s501;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -10,9 +9,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,28 +23,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sae_s501.MonCompte.AbonneCompte;
-import com.example.sae_s501.MonCompte.AbonnementCompte;
-import com.example.sae_s501.MonCompte.ConfigSpring;
+import com.example.sae_s501.model.MonCompte.AbonneCompte;
+import com.example.sae_s501.model.MonCompte.AbonnementCompte;
+import com.example.sae_s501.model.MonCompte.ConfigSpring;
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
 import com.example.sae_s501.retrofit.FilActuService;
+import com.example.sae_s501.retrofit.PanierService;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import com.example.sae_s501.MonCompte.MonCompteViewModel;
+import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.databinding.MoncompterespBinding;
 
-import java.util.Arrays;
 import java.util.Base64;
-import java.util.List;
 import java.util.Locale;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Call;
@@ -59,6 +53,8 @@ public class MyCompteActivity extends AppCompatActivity {
     private MoncompterespBinding binding;
     private RetrofitService retrofitService;
     private FilActuService filActuService;
+    private PanierService panierService;
+    private String jwtEmail;
 
     private UpdatemoncompteBinding bindingUpdate;
 
@@ -69,6 +65,7 @@ public class MyCompteActivity extends AppCompatActivity {
         View root = binding.getRoot();
         setContentView(root);
         MonCompteViewModel monCompteViewModel = new ViewModelProvider(this).get(MonCompteViewModel.class);
+        jwtEmail = SessionManager.getUserEmail(this);
 
         retrofitService = new RetrofitService(this);
         FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
@@ -105,6 +102,36 @@ public class MyCompteActivity extends AppCompatActivity {
                 fragment.setVisibility(View.VISIBLE);
                 floutage.setVisibility(View.VISIBLE);
                 floutage.setClickable(true);
+            }
+        });
+        ImageButton shop = root.findViewById(R.id.shop);
+
+
+        shop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Créez une instance de l'API définie par votre interface
+                panierService = retrofitService.getRetrofit().create(PanierService.class);
+
+                // Effectuez l'appel réseau pour créer le panier
+                Call<Void> call = panierService.createPanier(jwtEmail);
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Intent intent = new Intent(view.getContext(), Panier.class);
+                            startActivity(intent);
+                        } else {
+                            showToast("Erreur requete");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        showToast("Erreur serveur");
+                    }
+                });
             }
         });
 
@@ -169,7 +196,16 @@ public class MyCompteActivity extends AppCompatActivity {
                 recreate();
             }
         });
-        String jwtEmail = SessionManager.getUserEmail(MyCompteActivity.this);
+        //Aide
+        Button aide = root.findViewById(R.id.aide);
+        aide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), Aide.class);
+                startActivity(intent);
+
+            }
+        });
         //Supprimer compte
         Button supprimer = root.findViewById(R.id.supprimer);
         supprimer.setOnClickListener(new View.OnClickListener() {

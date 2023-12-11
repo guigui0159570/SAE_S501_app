@@ -1,4 +1,4 @@
-package com.example.sae_s501.MonCompte;
+package com.example.sae_s501.model.MonCompte;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sae_s501.R;
+import com.example.sae_s501.databinding.ActivityAbonnementCompteBinding;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -30,18 +31,23 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class AbonneCompte extends AppCompatActivity {
-    private ConfigSpring configSpring = new ConfigSpring();
+public class AbonnementCompte extends AppCompatActivity {
+
+    private ActivityAbonnementCompteBinding binding;
+    private ConfigSpring configSpring =  new ConfigSpring();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_abonne_compte);
-        CompletableFuture<String> completableFuture = RequestInformationAbonne();
-        Create_Layout_Abonne(completableFuture);
+        binding = ActivityAbonnementCompteBinding.inflate(getLayoutInflater());
+        View root = binding.getRoot();
+        setContentView(root);
+
+        CompletableFuture<String> completableFuture = RequestInformationAbonnement();
+        Create_Layout_Abonnement(completableFuture);
 
     }
 
-    public void Create_Layout_Abonne(CompletableFuture<String> integerCompletableFuture){
+    public void Create_Layout_Abonnement(CompletableFuture<String> integerCompletableFuture){
 
         integerCompletableFuture.thenAccept(resultat -> {
             try {
@@ -52,7 +58,7 @@ public class AbonneCompte extends AppCompatActivity {
 
                             JsonElement jsonElement = JsonParser.parseString(resultat);
                             JsonArray jsonArray = jsonElement.getAsJsonArray();
-                            LinearLayout layoutPrincipal = findViewById(R.id.comptenuAbonne);
+                            LinearLayout layoutPrincipal = findViewById(R.id.comptenuAbonnement);
 
                             Log.d("123123123", String.valueOf(jsonArray.size()));
                             for (int i = 0 ; i< jsonArray.size() ; i ++){
@@ -130,62 +136,41 @@ public class AbonneCompte extends AppCompatActivity {
                                 textView.setText(pseudo);
                                 textView.setTextSize(20);
                                 textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                                final boolean[] isCoeurBlanc = {true};
-                                requestPresenceAbonnement(idElement.getAsLong()).thenAccept(resultat -> {
-                                    try {
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                try {
 
-                                                    Log.d("99654123", String.valueOf(resultat));
-                                                    // Créez le deuxième ImageView
-                                                    ImageView imageView2 = new ImageView(getBaseContext());
-                                                    imageView2.setLayoutParams(new LinearLayout.LayoutParams(
-                                                            200,
-                                                            200,
-                                                            1)); // Poids 1
-                                                    if (resultat) {
-                                                        imageView2.setImageResource(R.drawable.coeurnoir);
-                                                        isCoeurBlanc[0] = false;
-                                                    }else {
-                                                        imageView2.setImageResource(R.drawable.coeurblanc);
-                                                        isCoeurBlanc[0] = true;
-                                                    }
-                                                    imageView2.setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View view) {
-                                                            if (isCoeurBlanc[0]){
-                                                                imageView2.setImageResource(R.drawable.coeurnoir);
-                                                                sabonner(idElement.getAsLong());
-                                                                isCoeurBlanc[0] = false;
+                                final boolean[] isCoeurNoir = {true};
+                                // Créez le deuxième ImageView
+                                ImageView imageView2 = new ImageView(getBaseContext());
+                                imageView2.setLayoutParams(new LinearLayout.LayoutParams(
+                                        200,
+                                        200,
+                                        1)); // Poids 1
+                                imageView2.setImageResource(R.drawable.coeurnoir);
 
-                                                            }else {
-                                                                imageView2.setImageResource(R.drawable.coeurblanc);
-                                                                deleteAbonnement(idElement.getAsLong());
-                                                                isCoeurBlanc[0] = true;
-                                                            }
-                                                        }
-                                                    });
-
-                                                    // Ajoutez les éléments au LinearLayout enfant
-                                                    layoutEnfant.addView(imageView);
-                                                    layoutEnfant.addView(textView);
-                                                    layoutEnfant.addView(imageView2);
-
-                                                    // Ajoutez le LinearLayout enfant au LinearLayout principal
-                                                    layoutPrincipal.addView(layoutEnfant);
-                                                } catch (Exception e) {
-                                                    throw new RuntimeException(e);
-                                                }
-                                            }
-                                        });
-                                    } catch (Exception e) {
-                                        throw new RuntimeException(e);
+                                imageView2.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (isCoeurNoir[0]){
+                                            imageView2.setImageResource(R.drawable.coeurblanc);
+                                            deleteAbonnement(idElement.getAsLong());
+                                            isCoeurNoir[0] = false;
+                                        }else {
+                                            imageView2.setImageResource(R.drawable.coeurnoir);
+                                            sabonner(idElement.getAsLong());
+                                            isCoeurNoir[0] = true;
+                                        }
                                     }
                                 });
 
+                                // Ajoutez les éléments au LinearLayout enfant
+                                layoutEnfant.addView(imageView);
+                                layoutEnfant.addView(textView);
+                                layoutEnfant.addView(imageView2);
+
+                                // Ajoutez le LinearLayout enfant au LinearLayout principal
+                                layoutPrincipal.addView(layoutEnfant);
                             }
+
+
 
                         } catch (Exception e) {
                             throw new RuntimeException(e);
@@ -198,11 +183,12 @@ public class AbonneCompte extends AppCompatActivity {
         });
     }
 
-    public CompletableFuture<String> RequestInformationAbonne() {
+
+    public CompletableFuture<String> RequestInformationAbonnement() {
         OkHttpClient client = configSpring.creationClientSansSSL();
         ConfigSpring configSpring = new ConfigSpring();
         Request request = new Request.Builder()
-                .url("http://"+configSpring.Adresse()+":8080/abonneUser/"+configSpring.userEnCour()+"")
+                .url("http://"+configSpring.Adresse()+":8080/abonnementUser/"+configSpring.userEnCour()+"")
                 .build();
         CompletableFuture<String> futureInformation = new CompletableFuture<>();
         client.newCall(request).enqueue(new Callback() {
@@ -222,6 +208,7 @@ public class AbonneCompte extends AppCompatActivity {
         });
         return futureInformation;
     }
+
 
     public void deleteAbonnement(Long abonnementUserId) {
         OkHttpClient client = new OkHttpClient();
@@ -277,34 +264,4 @@ public class AbonneCompte extends AppCompatActivity {
     }
 
 
-    public CompletableFuture<Boolean> requestPresenceAbonnement(Long idAbonne) {
-        ConfigSpring configSpring = new ConfigSpring();
-        OkHttpClient client = configSpring.creationClientSansSSL();
-
-        CompletableFuture<Boolean> futureInformation = new CompletableFuture<>();
-
-        Request request = new Request.Builder()
-                .url("http://" + configSpring.Adresse() + ":8080/presenceAbonne/" + configSpring.userEnCour() + "/" + idAbonne)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                futureInformation.completeExceptionally(e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-                    Boolean result = Boolean.parseBoolean(responseData);
-                    futureInformation.complete(result);
-                } else {
-                    futureInformation.completeExceptionally(new RuntimeException("Request failed"));
-                }
-            }
-        });
-
-        return futureInformation;
-    }
 }

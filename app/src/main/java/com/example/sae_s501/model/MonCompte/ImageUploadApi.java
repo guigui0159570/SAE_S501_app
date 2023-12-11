@@ -1,4 +1,4 @@
-package com.example.sae_s501.MonCompte;
+package com.example.sae_s501.model.MonCompte;
 import com.google.gson.JsonObject;
 import okhttp3.RequestBody;
 import retrofit2.Call;

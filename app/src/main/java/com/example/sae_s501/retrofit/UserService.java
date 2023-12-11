@@ -43,6 +43,9 @@ public interface UserService {
     );
     @DELETE("/utilisateur/delete/{id}")
     Call<Void> deleteUtilisateur(@Path("id") Long id);
+    @FormUrlEncoded
+    @POST("/aide/mailAide")
+    Call<Void> envoieAide(@Field("email") String email,@Field("aide") String aide);
 
 
 

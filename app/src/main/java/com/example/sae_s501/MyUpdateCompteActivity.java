@@ -22,9 +22,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.sae_s501.MonCompte.ConfigSpring;
-import com.example.sae_s501.MonCompte.MonCompteViewModel;
-import com.example.sae_s501.MonCompte.UpdateUserService;
+import com.example.sae_s501.model.MonCompte.ConfigSpring;
+import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
+import com.example.sae_s501.model.MonCompte.UpdateUserService;
 
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
 import com.google.gson.JsonElement;
