@@ -1,7 +1,9 @@
 package com.example.sae_s501.retrofit;
 
 import com.example.sae_s501.Avis;
+import com.example.sae_s501.AvisDTO;
 import com.example.sae_s501.Publication;
+import com.example.sae_s501.Utilisateur;
 
 import java.util.List;
 
@@ -20,8 +22,8 @@ public interface FilActuService {
     @GET("/publication/getByFiltre")
     Call<List<Publication>> getAllPublicationByFiltre(@Query("filtre") String filtre);
 
-    @GET("/avis/get/pub/{id}")
-    Call<List<Avis>> getAllAvisByPublication(@Path(("id")) Long publication);
+    @GET("/publication/avis/get/pub/{id}")
+    Call<List<AvisDTO>> getAllAvisByPublication(@Path(("id")) Long publication);
 
     @GET("/publication/get/{id}")
     Call<Publication> getPublicationById(@Path(("id")) Long publication);
@@ -43,4 +45,6 @@ public interface FilActuService {
     @GET("fichiers/image/{nomFichier}")
     Call<ResponseBody> getImage(@Path("nomFichier") String nomFichier);
 
+    @GET("/getUtilisateur/{id}")
+    Call<Utilisateur> getUtilisateurById(@Path("id") Long id);
 }

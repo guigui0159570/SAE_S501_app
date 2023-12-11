@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -59,6 +62,65 @@ public class ProduitGratuit extends AppCompatActivity {
                     if (publication != null) {
                         TextView titre = view.findViewById(R.id.ajout_pub_titre);titre.setText(publication.getTitre());
                         TextView description = view.findViewById(R.id.charger_img); description.setText(publication.getDescription());
+                        TextView pseudo = view.findViewById(R.id.pseudo_pub_gratuit);
+
+                        if(publication.getProprietaire() != null){
+                            pseudo.setText(publication.getProprietaire().getPseudo());
+                        }else{
+                            pseudo.setText("Propriétaire non répertorié...");
+                        }
+                        Log.d("Id pub", ""+publicationId);
+                        Call<List<AvisDTO>> callAvis = filActuService.getAllAvisByPublication(publicationId);
+                        callAvis.enqueue(new Callback<List<AvisDTO>>() {
+                            @Override
+                            public void onResponse(@NonNull Call<List<AvisDTO>> call, @NonNull Response<List<AvisDTO>> response) {
+                                Log.d("CallAvis", "codeResponse: "+response.code());
+                                if (response.isSuccessful()){
+                                    Log.d("CallAvis", "dans le call des avis : "+response.body());
+                                    List<AvisDTO> les_avis = response.body();
+                                    LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_gratuit);
+                                    LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+                                    if(les_avis != null){
+                                        for (AvisDTO avis : les_avis){
+                                            Log.d("LogAvis", "avis utilisateur : "+avis.getUtilisateur());
+                                            Log.d("LogAvis", "avis commentaire : "+avis.getCommentaire());
+                                            Log.d(TAG, "onResponse: "+avis.getId());
+                                            Log.d("LogAvis", "avis etoiles : "+avis.getEtoile());
+                                            Log.d("LogAvis", "avis publication : "+avis.getPublication());
+
+                                            TextView pseudo_avis = new TextView(getApplicationContext());
+                                            TextView commentaire = new TextView(getApplicationContext());
+
+                                            Call<Utilisateur> utilisateurCall = filActuService.getUtilisateurById(avis.getUtilisateur());
+                                            utilisateurCall.enqueue(new Callback<Utilisateur>() {
+                                                @Override
+                                                public void onResponse(@NonNull Call<Utilisateur> call, @NonNull Response<Utilisateur> response) {
+                                                    if(response.isSuccessful()){
+                                                        Utilisateur utilisateur = response.body();
+                                                        assert utilisateur != null;
+                                                        pseudo_avis.setText(utilisateur.getPseudo());
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(@NonNull Call<Utilisateur> call, @NonNull Throwable t) {
+
+                                                }
+                                            });
+                                            commentaire.setText(avis.getCommentaire());
+                                            linearLayout.addView(pseudo_avis);linearLayout.addView(commentaire);
+                                            commentaires.addView(linearLayout);
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
+                                Toast.makeText(getApplicationContext(), "pas d'avis récupérés !", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                         Call<ResponseBody> callImage = filActuService.getImage(publication.getImage());
                         Log.d("IMAGE", publication.getImage());
 

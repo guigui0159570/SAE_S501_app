@@ -152,4 +152,12 @@ public class Publication {
         }
         return Math.round((float) sum /avis.size());
     }
+
+    public List<Avis> getAvis() {
+        return avis;
+    }
+
+    public void setAvis(List<Avis> avis) {
+        this.avis = avis;
+    }
 }

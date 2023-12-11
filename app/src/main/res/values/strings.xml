@@ -84,6 +84,15 @@
     <string name="anglais">Anglais</string>
     <string name="deconnexion">Deconnexion</string>
     <string name="supprimer_utilisateur" >Supprimer mon compte</string>
+    <string name="description_pub_gratuit" />
+    <string name="titre_pub_gratuit" />
+    <string name="pseudo_pub_gratuit" />
+    <string name="visualiser_img_gratuit">Visualiser l\'article</string>
+    <string name="telecharger_img_gratuit">Télécharger l\'article</string>
+    <string name="text_commentaires_gratuit">"Commentaires : "</string>
+    <string name="ajout_commentaire_gratuit">Ajouter un commentaire</string>
+    <string name="btn_validation_gratuit">Valider</string>
+    <string name="payer_img_payant">Ajouter au panier</string>
     <string name="adresse_de_l_admin">Adresse mail de l\'admin :</string>
     <string name="veuillez_d_crire_votre_probl_me">Veuillez décrire votre problème</string>
     <string name="d_crire_le_probl_me">Décrire le problème</string>

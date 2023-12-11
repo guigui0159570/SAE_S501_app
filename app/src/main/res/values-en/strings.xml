@@ -77,6 +77,7 @@
     <string name="anglais">French</string>
     <string name="deconnexion">Disconnection</string>
     <string name="supprimer_utilisateur" >Delete my account</string>
+    <string name="description_pub_gratuit" />
     <string name="adresse_de_l_admin">Admin email address :</string>
     <string name="veuillez_d_crire_votre_probl_me">Please describe your problem</string>
     <string name="d_crire_le_probl_me">Describe the problem</string>
