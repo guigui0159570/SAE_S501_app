@@ -37,6 +37,8 @@ import com.google.gson.JsonParser;
 import com.example.sae_s501.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.databinding.MoncompterespBinding;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Locale;
@@ -45,6 +47,7 @@ import java.util.concurrent.CompletableFuture;
 
 
 public class MyCompteActivity extends AppCompatActivity {
+    private ConfigSpring configSpring = new ConfigSpring();
     private MoncompterespBinding binding;
     private UpdatemoncompteBinding bindingUpdate;
 
@@ -57,7 +60,7 @@ public class MyCompteActivity extends AppCompatActivity {
         MonCompteViewModel monCompteViewModel = new ViewModelProvider(this).get(MonCompteViewModel.class);
 
         //Partie information
-        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.RequestInformation();
+        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this, configSpring.userEnCour());
         informationUser(stringCompletableFuture, root);
 
         //Partie fragment parametre
@@ -171,75 +174,88 @@ public class MyCompteActivity extends AppCompatActivity {
             }
         });
     }
-    public void informationUser(CompletableFuture<String> integerCompletableFuture, View root){
+
+    public void informationUser(CompletableFuture<String> integerCompletableFuture, View root) {
         integerCompletableFuture.thenAccept(resultat -> {
             try {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.d("8899989933333", String.valueOf(resultat));
                         try {
                             JsonParser parser = new JsonParser();
+                            Log.d("JSON_BEFORE_PARSE", resultat);
                             JsonObject jsonObject = parser.parse(resultat).getAsJsonObject();
-                            //Partie abonne
-                            JsonElement countAbonneElement = jsonObject.get("countAbonne");
-                            TextView textViewAbonne = root.findViewById(R.id.countAbonne);
-                            textViewAbonne.setText(String.valueOf(countAbonneElement).replaceAll("^\"|\"$", ""));
+                            Log.d("JSON_AFTER_PARSE", jsonObject.toString());
 
-                            //Partie abonnenement
-                            JsonElement countAbonnementElement = jsonObject.get("countAbonnement");
-                            TextView textViewAbonnement = root.findViewById(R.id.countAbonnement);
-                            textViewAbonnement.setText(String.valueOf(countAbonnementElement).replaceAll("^\"|\"$", ""));
+                            // Partie abonne
+                            try {
+                                JsonElement countAbonneElement = jsonObject.get("countAbonne");
+                                Log.d("7783333333", String.valueOf(countAbonneElement));
+                                TextView textViewAbonne = root.findViewById(R.id.countAbonne);
+                                textViewAbonne.setText(String.valueOf(countAbonneElement).replaceAll("^\"|\"$", ""));
+                            } catch (Exception e) {
+                                Log.e("Exception", "Erreur lors de la lecture de countAbonne", e);
+                            }
 
-                            //Partie pseudo
+                            // Partie abonnement
+                            try {
+                                JsonElement countAbonnementElement = jsonObject.get("countAbonnement");
+                                TextView textViewAbonnement = root.findViewById(R.id.countAbonnement);
+                                textViewAbonnement.setText(String.valueOf(countAbonnementElement).replaceAll("^\"|\"$", ""));
+                            } catch (Exception e) {
+                                Log.e("Exception", "Erreur lors de la lecture de countAbonnement", e);
+                            }
+
+                            // Partie pseudo
+
                             JsonElement pseudoElement = jsonObject.get("pseudo");
                             TextView textViewPseudo = root.findViewById(R.id.mon_compte);
                             String pseudo = String.valueOf(pseudoElement).replaceAll("^\"|\"$", "");
                             textViewPseudo.setText(pseudo);
 
-                            //Partie Description
-                            JsonElement descriptionElement = jsonObject.get("description");
+
+                            // Partie Description
                             TextView textViewDescription = root.findViewById(R.id.description);
-                            Gson gson = new Gson();
-                            String extractedString = gson.fromJson(descriptionElement, String.class);
-                            textViewDescription.setText(extractedString);
-
-                            //Partie photo
-                            ImageView imageViewPhoto = root.findViewById(R.id.photoProfil);
-                            JsonElement photoElement = jsonObject.get("photo");
-
-                            if (photoElement != null && !photoElement.isJsonNull()) {
-                                String base64ImageData = photoElement.getAsString();
-
-                                // Décodez la chaîne Base64 en un tableau de bytes
-                                byte[] decodedImageData = Base64.getDecoder().decode(base64ImageData);
-
-                                // Convertir le tableau de bytes en un Bitmap
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(decodedImageData, 0, decodedImageData.length);
-
-                                // Afficher le Bitmap dans l'ImageView
-
-                                imageViewPhoto.setImageBitmap(bitmap);
-                            }else {
-                                //creation image random
-                                String initials = String.valueOf(pseudo.charAt(0));
-                                int width = 200;
-                                int height = 200;
-
-                                int backgroundColor = ConfigSpring.couleurDefault;
-                                int textColor = Color.WHITE;
-
-                                MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
-                                Bitmap generatedImage = monCompteViewModel.generateInitialsImage(initials, width, height, backgroundColor, textColor);
-                                imageViewPhoto.setImageBitmap(generatedImage);
+                            JsonElement descriptionElement = jsonObject.get("description");
+                            if (!descriptionElement.isJsonNull()) {
+                                Log.d("TAG7", "run: ");
+                                String Description = descriptionElement.getAsString();
+                                String decodedDescription = URLDecoder.decode(Description, StandardCharsets.UTF_8.toString());
+                                textViewDescription.setText(decodedDescription);
                             }
+                            // Partie photo
+                            try {
+                                ImageView imageViewPhoto = root.findViewById(R.id.photoProfil);
+                                JsonElement photoElement = jsonObject.get("photo");
 
+                                if (photoElement != null && !photoElement.isJsonNull()) {
+                                    String photoElementAsString = photoElement.getAsString();
+                                    MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
+                                    monCompteViewModel.Imageprofil(getBaseContext(),imageViewPhoto, photoElementAsString);
+                                } else {
+                                    // Création image random
+                                    String initials = String.valueOf(pseudo.charAt(0));
+                                    int width = 200;
+                                    int height = 200;
+
+                                    int backgroundColor = ConfigSpring.couleurDefault;
+                                    int textColor = Color.WHITE;
+
+                                    MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
+                                    Bitmap generatedImage = monCompteViewModel.generateInitialsImage(initials, width, height, backgroundColor, textColor);
+                                    imageViewPhoto.setImageBitmap(generatedImage);
+                                }
+                            } catch (Exception e) {
+                                Log.e("Exception", "Erreur lors de la lecture de la photo", e);
+                            }
                         } catch (Exception e) {
-                            throw new RuntimeException(e);
+                            Log.e("Exception", "Erreur lors de l'analyse JSON", e);
                         }
                     }
                 });
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                Log.e("Exception", "Une autre exception s'est produite", e);
             }
         });
     }

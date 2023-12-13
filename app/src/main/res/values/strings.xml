@@ -18,6 +18,9 @@
     <string name="button_publier">Publier</string>
     <string name="description_pub">Description</string>
 
+    <string name="abonnement_text">Abonnements</string>
+    <string name="abonne_text">Abonnés</string>
+
     <string name="fil_actu_titre">Fil d\'actualité</string>
     <string name="edit_fil_actu">Rechercher</string>
 

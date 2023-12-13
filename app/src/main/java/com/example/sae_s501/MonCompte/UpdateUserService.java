@@ -12,7 +12,6 @@ import retrofit2.http.Path;
 
 public interface UpdateUserService {
 
-    @POST("/updateStringProfil/{user}")
-    Call<Void> envoyerString(@Path("user") Long user, @Body Map<String, String> requestBody);
+
 }
 
