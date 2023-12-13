@@ -1,6 +1,8 @@
 package com.example.sae_s501.MonCompte;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 
 import androidx.lifecycle.ViewModel;
 
+import com.example.sae_s501.model.MonCompte.ConfigSpring;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.UserService;
@@ -33,9 +36,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+
 
 
 public class MonCompteViewModel extends ViewModel {

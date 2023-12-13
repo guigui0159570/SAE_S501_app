@@ -29,10 +29,7 @@ import androidx.appcompat.widget.TooltipCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sae_s501.model.MonCompte.ConfigSpring;
-import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
-import com.example.sae_s501.model.MonCompte.UpdateUserService;
 
-import com.example.sae_s501.MonCompte.ConfigSpring;
 import com.example.sae_s501.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
 import com.example.sae_s501.retrofit.RetrofitService;
@@ -90,7 +87,6 @@ public class MyUpdateCompteActivity extends AppCompatActivity {
     private UpdatemoncompteBinding binding;
     private ConfigSpring configSpring = new ConfigSpring();
 
-    private static final int PICK_IMAGE_REQUEST = 1;
     private Map<Bitmap, String> bitmapTags = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

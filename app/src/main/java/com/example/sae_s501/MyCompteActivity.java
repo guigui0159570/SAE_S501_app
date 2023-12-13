@@ -34,13 +34,13 @@ import com.example.sae_s501.retrofit.PanierService;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
+import com.example.sae_s501.MonCompte.MonCompteViewModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.databinding.MoncompterespBinding;
 
 import java.net.URLDecoder;
