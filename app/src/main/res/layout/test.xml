@@ -23,154 +23,115 @@
             android:src="@drawable/inspire" />
     </LinearLayout>
 
-
     <LinearLayout
-        android:id="@+id/linearLayout_titre_inscription"
+        android:id="@+id/linearLayout_titre_connecter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="150sp"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/Inscription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_margin="1sp"
+            android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
-            android:lineSpacingExtra="9sp"
-            android:text="@string/Inscription"
+            android:lineSpacingExtra="10sp"
+            android:text="Inscription"
             android:textAppearance="@style/se_connecte" />
+
         <View
-            android:id="@+id/barre_haut"
+            android:id="@+id/ligneHaut"
             android:layout_width="310dp"
             android:layout_height="2dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="44dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="4dp"
             android:background="#D9D9D9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.475"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Inscription" />
 
-        <TextView
-            android:id="@+id/incrivez_vous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal|top"
-            android:lineSpacingExtra="3sp"
-            android:text="Inscrivez-vous !"
-            android:textAppearance="@style/connectez_v" />
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="367dp"
+            android:layout_height="525dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-
-            android:layout_marginLeft="35sp"
-            android:layout_marginRight="35sp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/pseudo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10sp"
+                android:gravity="center_horizontal"
                 android:lineSpacingExtra="9sp"
-                android:text="@string/pseudo"
-                android:textAppearance="@style/adresse_mai" />
-
+                android:layout_gravity="center"
+                android:text="Pseudo"
+                android:layout_marginBottom="10dp"
+                android:textAppearance="@style/adresse_mai"/>
 
             <EditText
                 android:id="@+id/editpseudo"
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="30dp"
+                android:hint="Pseudo"
+                android:inputType="textEmailAddress"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20sp"
-                android:hint="@string/editPseudo"
-                android:textColor="#00BA8D" />
+                android:layout_marginBottom="40dp"
+                android:paddingLeft="10dp"
+                android:textColor="#00BA8D"/>
 
             <TextView
                 android:id="@+id/adresse_mail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="8sp"
-                android:lineSpacingExtra="9sp"
-                android:text="@string/adresse_mail"
-                android:textAppearance="@style/adresse_mai"
-                android:textColor="@color/white" />
+                android:layout_marginBottom="10dp"
+                android:gravity="top"
+                android:text="Email"
+                android:textAppearance="@style/adresse_mai" />
 
             <EditText
                 android:id="@+id/editTextEmail"
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
-                android:layout_height="30dp"
+                android:layout_height="34dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20sp"
-                android:hint="@string/editEmail"
-                android:inputType="textEmailAddress" />
+                android:hint="Adresse e-mail"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp"
+                android:textColor="#00BA8D"/>
 
             <TextView
-                android:id="@+id/mdp"
+                android:id="@+id/adresse_mail3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="8sp"
-                android:text="@string/mdp"
+                android:layout_marginBottom="10dp"
+                android:gravity="top"
+                android:text="Email"
                 android:textAppearance="@style/adresse_mai" />
-
-            <EditText
-                android:id="@+id/editTextPasswordConfirm"
-                style="@style/CustomEditTextStyle"
-                android:layout_width="300dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20sp"
-                android:hint="@string/editMDP"
-                android:inputType="textPassword"
-                android:textColor="#00BA8D" />
-
-            <TextView
-                android:id="@+id/mdp2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8sp"
-                android:text="Confirmer mot de passe"
-                android:textAppearance="@style/adresse_mai" />
-
-            <EditText
-                android:id="@+id/editTextPassword"
-                style="@style/CustomEditTextStyle"
-                android:layout_width="300dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20sp"
-                android:hint="@string/ConfirmMDP"
-                android:inputType="textPassword"
-                android:textColor="#00BA8D" />
 
             <Button
-                android:id="@+id/btn_inscription"
+                android:id="@+id/sendEmail"
+                style="@style/CustomButtonStyle"
                 android:layout_width="153sp"
                 android:layout_height="30sp"
                 android:layout_gravity="center"
                 android:layout_margin="40sp"
-
                 android:background="@drawable/custom_button_background"
-                android:text="@string/btn_inscription"
+                android:text="@string/btn_valider"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
             <View
-                android:id="@+id/rectangle_3"
+                android:id="@+id/ligneBas"
                 android:layout_width="310dp"
                 android:layout_height="2dp"
                 android:layout_alignParentLeft="true"
@@ -183,32 +144,34 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.475"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Inscription" />
+                app:layout_constraintTop_toBottomOf="@+id/Inscription"
+                tools:ignore="DuplicateIds" />
 
             <TextView
-                android:id="@+id/nouveau"
-                android:layout_width="300dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:layout_margin="5sp"
-                android:layout_marginBottom="8dp"
-                android:clickable="true"
-                android:gravity="top"
-                android:lineSpacingExtra="3sp"
-                android:onClick="onInscriptionClick"
+                android:id="@+id/retour"
+                android:layout_width="389dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10sp"
+                android:gravity="center"
                 android:text="Vous avez déjà un compte ? : Se connecter"
                 android:textAppearance="@style/nouveau"
                 android:translationY="-1.74sp"
                 app:layout_constraintBottom_toBottomOf="@+id/rectangle_"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.903"
                 app:layout_constraintStart_toStartOf="parent" />
 
-
         </LinearLayout>
+
+
     </LinearLayout>
 
 
 
 
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
