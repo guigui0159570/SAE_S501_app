@@ -47,11 +47,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MesPublicationsFrag extends Fragment {
+public class MesPublicationsFragFiltre extends Fragment {
 
     private static final String TAG = "MesPublicationsFrag";
-    private static final String BASE_URL = Dictionnaire.getIpAddress();
     private RetrofitService retrofitService;
+    private String filterValue;
+
+    public void setFilterValue(String value) {
+        this.filterValue = value;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,8 +83,9 @@ public class MesPublicationsFrag extends Fragment {
             public void onResponse(Call<Long> call, Response<Long> response) {
                 if (response.isSuccessful()) {
                     Long userId = response.body();
+                    Log.d("userId", String.valueOf(userId));
                     if (userId != null) {
-                        Call<List<Publication>> callPublications = filActuService.getPublicationByUtilisateurId(userId);
+                        Call<List<Publication>> callPublications = filActuService.getPublicationFiltreByUtilisateurId(userId,filterValue);
                         callPublications.enqueue(new Callback<List<Publication>>() {
 
                             @Override
@@ -95,13 +100,13 @@ public class MesPublicationsFrag extends Fragment {
                                         for (Publication p : publications) {
 
                                             //Layout qui va contenir les autres layout
-                                            LinearLayout layoutConteneur = new LinearLayout(getContext());
+                                            LinearLayout layoutConteneur = new LinearLayout(requireContext());
                                             //Layout qui contient l'image du produit ainsi le titre et la description
-                                            LinearLayout layoutProduit = new LinearLayout(getContext());
+                                            LinearLayout layoutProduit = new LinearLayout(requireContext());
                                             //Layout qui contient le titre et la description
-                                            LinearLayout layoutTitreDes = new LinearLayout(getContext());
+                                            LinearLayout layoutTitreDes = new LinearLayout(requireContext());
                                             //Layout qui contient la partie personne ainsi que les étoiles de notation
-                                            LinearLayout layoutPersonnel = new LinearLayout(getContext());
+                                            LinearLayout layoutPersonnel = new LinearLayout(requireContext());
 
                                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -268,7 +273,7 @@ public class MesPublicationsFrag extends Fragment {
                                     if (publications.isEmpty()) {
                                         // Aucune publication, afficher un message
                                         TextView emptyTextView = new TextView(requireContext());
-                                        emptyTextView.setText("Vous n'avez pas de publication !");
+                                        emptyTextView.setText("Vous n'avez pas de publication avec ce filtre !");
                                         emptyTextView.setGravity(Gravity.CENTER);
                                         emptyTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                                         emptyTextView.setTextColor(Color.parseColor("#FFA500"));

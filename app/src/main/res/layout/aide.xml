@@ -1,143 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#17282D"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/adresse_mai3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:gravity="top"
-        android:text="Retour"
-        android:textAppearance="@style/adresse_mai"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="187dp"
-        tools:layout_editor_absoluteY="699dp" />
-
-    <TextView
-        android:id="@+id/adresse_mai2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:gravity="top"
-        android:text="Veuillez décrire votre problème"
-        android:textAppearance="@style/adresse_mai"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="442dp" />
-
-    <EditText
-        android:id="@+id/editTextPassword2"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="300dp"
-        android:layout_height="136dp"
-        android:layout_gravity="center"
-        android:hint="Décrire le problème"
-        android:inputType="textPassword"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="474dp" />
+    tools:context=".Aide">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="650sp"
+        android:gravity="center_horizontal">
 
-    <ImageView
-        android:id="@+id/inspire"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="140dp"
-        android:src="@drawable/inspire"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/inspire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="11dp"
+            android:src="@drawable/inspire" />
+    </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/Inscription"
-        android:layout_width="250dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="176dp"
-        android:layout_marginEnd="80dp"
+    <LinearLayout
+        android:id="@+id/linearLayout_titre_connecter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150sp"
         android:gravity="center_horizontal"
-        android:lineSpacingExtra="12sp"
-        android:text="Aide"
-        android:textAppearance="@style/se_connecte"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical">
 
-    <View
-        android:id="@+id/rectangle_3"
-        android:layout_width="310dp"
-        android:layout_height="2dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="44dp"
-        android:background="#D9D9D9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Inscription" />
+        <TextView
+            android:id="@+id/Inscription"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_margin="1sp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="10sp"
+            android:text="Aide"
+            android:textAppearance="@style/se_connecte" />
 
-    <View
-        android:id="@+id/rectangle_"
-        android:layout_width="310dp"
-        android:layout_height="2dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="420dp"
-        android:background="#D9D9D9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Inscription" />
+        <View
+            android:id="@+id/barreHaut"
+            android:layout_width="310dp"
+            android:layout_height="2dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="4dp"
+            android:background="#D9D9D9"
+            android:layout_marginBottom="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.475"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Inscription" />
 
-    <TextView
-        android:id="@+id/adresse_mai"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:gravity="top"
-        android:text="Veuillez saisir votre adresse mail"
-        android:textAppearance="@style/adresse_mai"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="344dp" />
+        <LinearLayout
+            android:layout_width="367dp"
+            android:layout_height="525dp"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="300dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:hint="  Adresse e-mail"
-        android:inputType="textEmailAddress"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="381dp" />
+            <TextView
+                android:id="@+id/adresse_admin_texte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10sp"
+                android:gravity="center_horizontal"
+                android:lineSpacingExtra="9sp"
+                android:text="@string/adresse_de_l_admin"
+                android:textAppearance="@style/adresse_mai" />
 
-    <Button
-        style="@style/CustomButtonStyle"
-        android:layout_width="193dp"
-        android:layout_height="28dp"
-        android:layout_gravity="center"
-        android:background="@drawable/custom_button_background"
-        android:gravity="center_vertical|center_horizontal"
-        android:onClick="onLoginClick"
-        android:text="Valider"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="109dp"
-        tools:layout_editor_absoluteY="637dp" />
+            <TextView
+                android:id="@+id/adresse_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:gravity="top"
+                android:text="3dinspire10@gmail.com"
+                android:textAppearance="@style/adresse_mai"
+                android:textColor="#00BA8D"
+                tools:layout_editor_absoluteX="208dp"
+                tools:layout_editor_absoluteY="344dp" />
+
+            <TextView
+                android:id="@+id/descriptionAide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginBottom="10dp"
+                android:gravity="top"
+                android:text="@string/veuillez_d_crire_votre_probl_me"
+                android:textAppearance="@style/adresse_mai" />
+
+            <EditText
+                android:id="@+id/editTextAide"
+                style="@style/CustomEditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="150sp"
+                android:layout_marginLeft="25sp"
+                android:layout_marginRight="25sp"
+                android:background="@color/white"
+                android:gravity="left"
+                android:hint="@string/d_crire_le_probl_me"
+                android:textColor="#00BA8D"
+                android:paddingLeft="10dp"
+                />
+
+            <Button
+                android:id="@+id/envoieAide"
+                android:layout_width="153sp"
+                android:layout_height="30sp"
+                android:layout_gravity="center"
+                android:layout_margin="40sp"
+                android:background="@drawable/custom_button_background"
+                android:onClick="onLoginClick"
+                android:text="@string/btn_valider"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/barreBas"
+                android:layout_width="310dp"
+                android:layout_height="2dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="#D9D9D9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.475"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Inscription"
+                tools:ignore="DuplicateIds" />
+
+            <TextView
+                android:id="@+id/retourMyAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/retour"
+                android:clickable="true"
+                android:textAppearance="@style/adresse_mai"
+                tools:layout_editor_absoluteX="187dp"
+                tools:layout_editor_absoluteY="699dp" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

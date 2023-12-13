@@ -1,182 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#17282D"
-    tools:context=".AjoutPublication"
-    >
+    tools:context=".AjoutPublication">
 
-
+    <!-- Gradient Background View -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/gradient_background" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background"
+        tools:ignore="MissingConstraints" />
 
+    <!-- Main Vertical LinearLayout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        tools:ignore="MissingConstraints">
+        tools:ignore="NotSibling">
 
+        <!-- Title TextView -->
         <TextView
             android:id="@+id/ajout_pub_titre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40sp"
-            android:text="Ma première réalisation"
-            android:textAppearance="@style/se_connecte"/>
+            android:text="@string/titre_pub_gratuit"
+            android:textAppearance="@style/se_connecte" />
 
-        <!--Contient attributs (avant description) -->
+        <!-- Image and Description LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="225sp"
             android:orientation="horizontal">
 
-            <!-- Image et lien pour changer image-->
+            <!-- Image LinearLayout -->
             <LinearLayout
                 android:layout_width="180sp"
                 android:layout_height="220sp"
                 android:orientation="vertical"
+                android:layout_gravity="center"
                 tools:ignore="ExtraText">
 
                 <ImageView
                     android:id="@+id/imageViewPub"
-
+                    android:layout_gravity="center"
                     android:layout_width="150sp"
                     android:layout_height="150sp"
-                    android:layout_marginLeft="25sp"
                     android:layout_marginTop="25sp"
-                    android:background="@color/transparent"
+                    android:background="@color/transparent" />
 
-                    />
+            </LinearLayout>
 
+            <!-- Text and Profile Image LinearLayout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal">
+
+                <!-- Profile Info -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="15dp"
+                    android:paddingTop="30dp"
+                    android:layout_marginBottom="15dp">
+
+                    <ImageView
+                        android:id="@+id/img_profil_gratuit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="25dp" />
+
+                    <TextView
+                        android:id="@+id/pseudo_pub_gratuit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/pseudo_pub_gratuit"
+                        android:layout_marginBottom="15dp" />
+                </LinearLayout>
+
+                <!-- Description -->
                 <TextView
                     android:id="@+id/charger_img"
                     android:layout_width="wrap_content"
                     android:layout_height="35sp"
-                    android:layout_marginLeft="25sp"
+                    android:layout_marginStart="25dp"
+                    android:clickable="true"
+                    android:layout_gravity="left"
+                    android:text="@string/description_pub_gratuit"
+                    android:textSize="17sp"
+                    tools:ignore="RtlHardcoded" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Lower Part Layout -->
+        <!-- Layout qui contient toute la partie basse-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <!-- Layout qui contient la visualisation de l'image -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="25dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    app:srcCompat="@drawable/eye_1"/>
+
+                <TextView
+                    android:id="@+id/visualiser_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35sp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:onClick="chargerImage"
-                    android:text="Description produit"
+                    android:textColor="#0000FF"
+                    android:text="@string/visualiser_img_gratuit"
                     android:textSize="17sp" />
 
             </LinearLayout>
 
-            <!-- Titre, copyright et valeur monétaire-->
-
+            <!-- Layout qui contient le téléchargement de l'image -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200sp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="25dp"
+                android:gravity="center_vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50sp">
-
-                    <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/checkbox_gratuit"
-                        android:layout_width="100sp"
-                        android:layout_height="50sp"
-                        android:layout_gravity="center"
-                        android:paddingRight="5sp"
-                        android:text="@string/checkbox_gratuit"
-                        android:textColor="@color/white" />
-
-
-
-                </LinearLayout>
-
-                <RatingBar
-                    android:id="@+id/ratingBar4"
-                    android:layout_width="250dp"
+                <ImageView
+                    android:id="@+id/imageView15"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
-                    android:layout_marginTop="90sp" />
+                    android:layout_marginEnd="15dp"
+                    app:srcCompat="@drawable/free_shipping_1"/>
+
+                <TextView
+                    android:id="@+id/telecharger_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35sp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:textColor="#0000FF"
+                    android:text="@string/telecharger_img_gratuit"
+                    android:textSize="17sp" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/imageViewUtilisateur"
-                android:layout_width="130sp"
-                android:layout_height="80sp"
-                android:layout_marginLeft="-720sp"
-                android:layout_marginTop="60sp"
-                android:background="@color/transparent"></ImageView>
 
-            <TextView
-                android:id="@+id/nom_utilisateur"
-                android:layout_width="wrap_content"
-                android:layout_height="35sp"
-                android:layout_marginLeft="400dp"
-                android:layout_marginTop="80sp"
-                android:clickable="true"
-                android:gravity="center"
-                android:onClick="chargerImage"
-                android:text="Nom d'utilisateur"
-                android:textSize="17sp" />>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView12"
-                android:layout_width="wrap_content"
+            <RatingBar
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/eye_1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="60sp"/>
-
-            <TextView
-                android:id="@+id/visualiser_img"
-                android:layout_width="wrap_content"
-                android:layout_height="35sp"
-                android:clickable="true"
-                android:gravity="center"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="-32sp"
-                android:textColor="#8383B5"
-                android:onClick="chargerImage"
-                android:text="Visualiser image"
-                android:textSize="17sp" />
-
-            <ImageView
-                android:id="@+id/imageView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/free_shipping_1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30sp"/>
-
-            <TextView
-                android:id="@+id/telecharger_img"
-                android:layout_width="wrap_content"
-                android:layout_height="35sp"
-                android:clickable="true"
-                android:gravity="center"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="-30sp"
-                android:textColor="#0000FF"
-                android:onClick="chargerImage"
-                android:text="Télécharger article"
-                android:textSize="17sp" />
+                android:numStars="5"
+                android:stepSize="1"
+                android:layout_marginStart="25dp"/>
 
             <TextView
                 android:id="@+id/commentaires_pers"
                 android:layout_width="wrap_content"
                 android:layout_height="35sp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="80sp"                android:clickable="true"
+                android:layout_marginStart="25dp"
                 android:gravity="center"
-                android:onClick="chargerImage"
-                android:text="Commentaires : "
+                android:text="@string/text_commentaires_gratuit"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp">
+
+                <LinearLayout
+                    android:id="@+id/layout_to_commentaire_gratuit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                </LinearLayout>
+            </ScrollView>
+
 
 
 
@@ -185,29 +203,29 @@
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="40sp"
-                android:hint="Ajouter un commentaire"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/ajout_commentaire_gratuit"
                 android:inputType="textEmailAddress" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="19dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="300dp"
+                android:layout_marginStart="300dp"
                 android:layout_marginTop="-30sp"
                 android:background="@drawable/sent_1"
                 tools:ignore="MissingConstraints"/>
-
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"/>
-
-
         </LinearLayout>
+
     </LinearLayout>
 
+    <!-- Bottom Fragment -->
+    <fragment
+        android:id="@+id/bottomFragment"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:name="com.example.sae_s501.ToolBarreFragment"
+        android:gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

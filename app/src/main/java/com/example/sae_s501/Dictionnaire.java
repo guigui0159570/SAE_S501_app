@@ -5,4 +5,3 @@ public class Dictionnaire {
         return "http://172.24.0.1:8080/";
     }
 }
-

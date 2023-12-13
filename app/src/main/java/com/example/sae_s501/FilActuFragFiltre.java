@@ -9,13 +9,12 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,12 +35,7 @@ import com.example.sae_s501.retrofit.FilActuService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.zip.Inflater;
 
-import okhttp3.Credentials;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,13 +43,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FilActuFragment extends Fragment {
+public class FilActuFragFiltre extends Fragment {
 
     private static final String TAG = "FilActuFragment";
     private static final String BASE_URL = Dictionnaire.getIpAddress();
+    private String filterValue;
 
-
-
+    public void setFilterValue(String value) {
+        this.filterValue = value;
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateFragment : creation du fragment");
@@ -69,7 +65,7 @@ public class FilActuFragment extends Fragment {
     // Ajoutez cette méthode pour effectuer l'appel réseau depuis votre fragment
     private void loadData(View view) {
 
-
+        Log.d(TAG, "loadData: "+ filterValue);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(Authentification.createAuthenticatedClient(getActivity()))
@@ -78,7 +74,7 @@ public class FilActuFragment extends Fragment {
 
         FilActuService filActuService = retrofit.create(FilActuService.class);
 
-        Call<List<Publication>> call = filActuService.getAllPublication();
+        Call<List<Publication>> call = filActuService.getAllPublicationByFiltre(filterValue);
         call.enqueue(new Callback<List<Publication>>() {
 
             @Override
@@ -92,13 +88,13 @@ public class FilActuFragment extends Fragment {
 
                         for (Publication p : publications) {
                             //Layout qui va contenir les autres layout
-                            LinearLayout layoutConteneur = new LinearLayout(getContext());
+                            LinearLayout layoutConteneur = new LinearLayout(requireContext());
                             //Layout qui contient l'image du produit ainsi le titre et la description
-                            LinearLayout layoutProduit = new LinearLayout(getContext());
+                            LinearLayout layoutProduit = new LinearLayout(requireContext());
                             //Layout qui contient le titre et la description
-                            LinearLayout layoutTitreDes = new LinearLayout(getContext());
+                            LinearLayout layoutTitreDes = new LinearLayout(requireContext());
                             //Layout qui contient la partie personne ainsi que les étoiles de notation
-                            LinearLayout layoutPersonnel = new LinearLayout(getContext());
+                            LinearLayout layoutPersonnel = new LinearLayout(requireContext());
 
                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -119,23 +115,25 @@ public class FilActuFragment extends Fragment {
                             layoutPersonnel.setLayoutParams(layoutParams);
 
                             //Param layoutConteneur
-                            layoutConteneur.setId(p.getId().intValue());
+                            layoutConteneur.setId(View.generateViewId());
                             layoutConteneur.setOrientation(LinearLayout.VERTICAL);
                             layoutConteneur.setVisibility(View.VISIBLE);
 
-
-                            if(p.getGratuit()){
-                                layoutConteneur.setOnClickListener(view -> {
-                                    Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
-                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuit.class));
-                                });
-                            }else {
-                                layoutConteneur.setOnClickListener(view -> {
-                                    Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
-                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayant.class));
-                                });
-                            }
-
+                            layoutConteneur.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent;
+                                    if(p.getGratuit()){
+                                        // ne fonctionne pas, à voir via le conteneur
+                                        //Toast.makeText(requireContext(), p.getGratuit().toString(), Toast.LENGTH_SHORT).show();
+                                        intent = new Intent(getActivity(), ProduitGratuit.class);
+                                    }else{
+                                        intent = new Intent(getActivity(), ProduitPayant.class);
+                                    }
+                                    intent.putExtra("id", layoutConteneur.getId());
+                                    startActivity(intent);
+                                }
+                            });
 
 
                             //Param layoutProduit
@@ -148,7 +146,7 @@ public class FilActuFragment extends Fragment {
                             layoutTitreDes.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
                             layoutTitreDes.setId(View.generateViewId());
                             //mettre l'element image produit
-                            ImageView img_produit = new ImageView(getContext());
+                            ImageView img_produit = new ImageView(requireContext());
 
                             Call<ResponseBody> callImage = filActuService.getImage(p.getImage());
                             Log.d("IMAGE", p.getImage());
@@ -186,14 +184,14 @@ public class FilActuFragment extends Fragment {
 
 
                             String titre = p.getTitre();
-                            TextView titreText = new TextView(getContext());
+                            TextView titreText = new TextView(requireContext());
                             titreText.setId(View.generateViewId());titreText.setText(titre);
                             titreText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                             titreText.setTextColor(Color.parseColor("#00BA8D"));
                             titreText.setLayoutParams(params_elt);
 
                             String description = p.getDescription();
-                            TextView desText = new TextView(getContext());
+                            TextView desText = new TextView(requireContext());
                             desText.setId(View.generateViewId());
                             desText.setText(description);
 
@@ -202,7 +200,7 @@ public class FilActuFragment extends Fragment {
 
                             Boolean gratuit = p.getGratuit();
                             String prix = String.valueOf(p.getPrix());
-                            TextView prixText = new TextView(getContext());
+                            TextView prixText = new TextView(requireContext());
                             prixText.setId(View.generateViewId());
                             if(gratuit) {
                                 prixText.setText("    Gratuit");
@@ -224,7 +222,7 @@ public class FilActuFragment extends Fragment {
                             //mettre image utilisateur
                             if(p.getProprietaire() != null){
                                 Utilisateur pseudo = p.getProprietaire();
-                                TextView pseudoText = new TextView(getContext());
+                                TextView pseudoText = new TextView(requireContext());
                                 pseudoText.setId(View.generateViewId());
                                 pseudoText.setText(pseudo.getPseudo());
                                 pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
@@ -245,7 +243,16 @@ public class FilActuFragment extends Fragment {
                         }
                     } else {
                         Log.e(TAG, "Error response: " + response.errorBody());
-                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
+                    }
+                    if (publications.isEmpty()) {
+                        // Aucune publication, afficher un message
+                        TextView emptyTextView = new TextView(requireContext());
+                        emptyTextView.setText("Aucune publication ne correspond à ce filtre !");
+                        emptyTextView.setGravity(Gravity.CENTER);
+                        emptyTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                        emptyTextView.setTextColor(Color.parseColor("#FFA500"));
+                        layout.addView(emptyTextView);
                     }
                 }
             }
@@ -253,14 +260,8 @@ public class FilActuFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<List<Publication>> call, @NonNull Throwable t) {
                 Log.e(TAG, "Failure: " + t.getMessage());
-                Toast.makeText(getContext(), "Erreur lors de la communication avec le serveur", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Erreur lors de la communication avec le serveur", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public static void loadView(View view, long id, Intent intent){
-        Log.d("ID de la pub", ""+id);
-        intent.putExtra("id", id);
-        view.getContext().startActivity(intent);
     }
 }

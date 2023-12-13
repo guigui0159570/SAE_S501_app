@@ -1,9 +1,6 @@
 package com.example.sae_s501.MonCompte;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
@@ -38,6 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class MonCompteViewModel extends ViewModel {
@@ -75,9 +73,9 @@ public class MonCompteViewModel extends ViewModel {
                 }
             }
         });
-
         return futureInformation;
     }
+
     public Bitmap generateInitialsImage(String initials, int width, int height, int backgroundColor, int textColor) {
         // Créer une image vide avec le fond coloré
         Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);

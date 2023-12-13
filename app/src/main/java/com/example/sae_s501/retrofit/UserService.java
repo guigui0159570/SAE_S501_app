@@ -13,6 +13,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -45,6 +46,11 @@ public interface UserService {
             @Part("tags") List<String> tags,
             @Part("email") String email
     );
+    @DELETE("/utilisateur/delete/{id}")
+    Call<Void> deleteUtilisateur(@Path("id") Long id);
+    @FormUrlEncoded
+    @POST("/aide/mailAide")
+    Call<Void> envoieAide(@Field("email") String email,@Field("aide") String aide);
 
     @GET("/abonneUser/{id}")
     Call<List<Map>> getAbonneUtilisateur(@Path("id") long id);

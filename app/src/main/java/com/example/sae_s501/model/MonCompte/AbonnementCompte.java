@@ -1,8 +1,7 @@
-package com.example.sae_s501.MonCompte;
+package com.example.sae_s501.model.MonCompte;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -11,25 +10,16 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.example.sae_s501.MyUpdateCompteActivity;
 import com.example.sae_s501.R;
 import com.example.sae_s501.databinding.ActivityAbonnementCompteBinding;
-import com.example.sae_s501.databinding.UpdatemoncompteBinding;
-import com.example.sae_s501.model.Utilisateur;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Base64;

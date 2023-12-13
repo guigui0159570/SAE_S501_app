@@ -1,5 +1,6 @@
 package com.example.sae_s501;
 
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,7 +48,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MesPublicationsFrag extends Fragment {
+public class PublicationPanier extends Fragment {
 
     private static final String TAG = "MesPublicationsFrag";
     private static final String BASE_URL = Dictionnaire.getIpAddress();
@@ -95,13 +96,13 @@ public class MesPublicationsFrag extends Fragment {
                                         for (Publication p : publications) {
 
                                             //Layout qui va contenir les autres layout
-                                            LinearLayout layoutConteneur = new LinearLayout(getContext());
+                                            LinearLayout layoutConteneur = new LinearLayout(requireContext());
                                             //Layout qui contient l'image du produit ainsi le titre et la description
-                                            LinearLayout layoutProduit = new LinearLayout(getContext());
+                                            LinearLayout layoutProduit = new LinearLayout(requireContext());
                                             //Layout qui contient le titre et la description
-                                            LinearLayout layoutTitreDes = new LinearLayout(getContext());
+                                            LinearLayout layoutTitreDes = new LinearLayout(requireContext());
                                             //Layout qui contient la partie personne ainsi que les étoiles de notation
-                                            LinearLayout layoutPersonnel = new LinearLayout(getContext());
+                                            LinearLayout layoutPersonnel = new LinearLayout(requireContext());
 
                                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -205,11 +206,7 @@ public class MesPublicationsFrag extends Fragment {
                                             }
                                             prixText.setLayoutParams(params_elt);
 
-                                            int nbTelechargement = p.getNb_telechargement();
-                                            TextView textnbTelechargement = new TextView(requireContext());
-                                            textnbTelechargement.setId(View.generateViewId());
-                                            textnbTelechargement.setText("Téléchargement : " + nbTelechargement+ "   ");
-                                            textnbTelechargement.setLayoutParams(params_elt);
+
 
                                             //Param layoutPersonnel
                                             layoutPersonnel.setOrientation(LinearLayout.HORIZONTAL);
@@ -227,7 +224,6 @@ public class MesPublicationsFrag extends Fragment {
                                                 pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
                                                 layoutPersonnel.addView(pseudoText);
                                                 layoutPersonnel.addView(prixText);
-                                                layoutPersonnel.addView(textnbTelechargement);
 
 
                                             }

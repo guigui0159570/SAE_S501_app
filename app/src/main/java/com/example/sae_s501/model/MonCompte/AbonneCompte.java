@@ -1,4 +1,4 @@
-package com.example.sae_s501.MonCompte;
+package com.example.sae_s501.model.MonCompte;
 
 import androidx.appcompat.app.AppCompatActivity;
 
