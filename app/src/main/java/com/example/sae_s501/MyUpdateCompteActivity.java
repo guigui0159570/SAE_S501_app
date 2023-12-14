@@ -30,7 +30,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sae_s501.model.MonCompte.ConfigSpring;
 
-import com.example.sae_s501.MonCompte.MonCompteViewModel;
+import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
@@ -95,7 +95,7 @@ public class MyUpdateCompteActivity extends AppCompatActivity {
         View root = binding.getRoot();
         setContentView(root);
         MonCompteViewModel monCompteViewModel = new ViewModelProvider(this).get(MonCompteViewModel.class);
-        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this, configSpring.userEnCour());
+        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this, configSpring.userEnCour(this));
         informationUserForUpdate(stringCompletableFuture, root);
         Button updatePhoto = root.findViewById(R.id.galerie);
 
@@ -197,7 +197,7 @@ public class MyUpdateCompteActivity extends AppCompatActivity {
         // Vérifier si les parties du fichier ne sont pas null
         if (imagePart != null) {
             // Envoi de la requête au serveur avec les données multipart et l'identifiant du propriétaire
-            Call<Void> call = userService.handleFileUpload(imagePart, configSpring.userEnCour());
+            Call<Void> call = userService.handleFileUpload(imagePart, configSpring.userEnCour(this));
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
@@ -240,7 +240,7 @@ public class MyUpdateCompteActivity extends AppCompatActivity {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageBytes);
 
         // Définir le nom du fichier en ajoutant le préfixe et l'identifiant de l'utilisateur
-        String fileName = "imagephotoprofil" + configSpring.userEnCour() + ".jpg";
+        String fileName = "imagephotoprofil" + configSpring.userEnCour(this) + ".jpg";
 
         // Créer la partie Multipart avec le nom du fichier
         return MultipartBody.Part.createFormData(partName, fileName, requestFile);
@@ -376,7 +376,7 @@ public class MyUpdateCompteActivity extends AppCompatActivity {
         requestBody.put("description", description);
         requestBody.put("pseudo", pseudo);
         // Créer la requête
-        Call<Void> call = userService.envoyerString(configSpring.userEnCour(),requestBody);
+        Call<Void> call = userService.envoyerString(configSpring.userEnCour(this),requestBody);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

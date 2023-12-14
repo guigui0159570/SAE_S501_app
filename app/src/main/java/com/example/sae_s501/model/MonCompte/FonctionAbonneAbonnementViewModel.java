@@ -2,8 +2,11 @@ package com.example.sae_s501.model.MonCompte;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
+import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.RetrofitService;
+import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
 
 import java.io.FileNotFoundException;
@@ -29,7 +32,7 @@ public class FonctionAbonneAbonnementViewModel {
 
 
         ConfigSpring configSpring = new ConfigSpring();
-        Call<List<Map>> call = userService.getAbonneUtilisateur(configSpring.userEnCour());
+        Call<List<Map>> call = userService.getAbonneUtilisateur(configSpring.userEnCour(context));
         CompletableFuture<String> futureInformation = new CompletableFuture<>();
         call.enqueue(new Callback<List<Map>>() {
             @Override
@@ -61,7 +64,7 @@ public class FonctionAbonneAbonnementViewModel {
 
 
         ConfigSpring configSpring = new ConfigSpring();
-        Call<List<Map>> call = userService.getAbonnementUtilisateur(configSpring.userEnCour());
+        Call<List<Map>> call = userService.getAbonnementUtilisateur(configSpring.userEnCour(context));
         CompletableFuture<String> futureInformation = new CompletableFuture<>();
         call.enqueue(new Callback<List<Map>>() {
             @Override
@@ -92,7 +95,7 @@ public class FonctionAbonneAbonnementViewModel {
         UserService userService = retrofitService.getRetrofit().create(UserService.class);
 
         ConfigSpring configSpring = new ConfigSpring();
-        Call<Void> call = userService.desabonnement(configSpring.userEnCour(),abonnementUserId);
+        Call<Void> call = userService.desabonnement(configSpring.userEnCour(context),abonnementUserId);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -120,7 +123,7 @@ public class FonctionAbonneAbonnementViewModel {
         UserService userService = retrofitService.getRetrofit().create(UserService.class);
 
         ConfigSpring configSpring = new ConfigSpring();
-        Call<Void> call = userService.abonnement(configSpring.userEnCour(),abonnementUserId);
+        Call<Void> call = userService.abonnement(configSpring.userEnCour(context),abonnementUserId);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -148,7 +151,7 @@ public class FonctionAbonneAbonnementViewModel {
         UserService userService = retrofitService.getRetrofit().create(UserService.class);
 
         ConfigSpring configSpring = new ConfigSpring();
-        Call<Boolean> call = userService.presenceAbonne(configSpring.userEnCour(),idAbonne);
+        Call<Boolean> call = userService.presenceAbonne(configSpring.userEnCour(context),idAbonne);
 
         CompletableFuture<Boolean> futureInformation = new CompletableFuture<>();
 
@@ -175,4 +178,6 @@ public class FonctionAbonneAbonnementViewModel {
 
         return futureInformation;
     }
+
+
 }

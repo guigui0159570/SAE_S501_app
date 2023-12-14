@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.sae_s501.MonCompte.MonCompteViewModel;
+import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.databinding.ActivityCompteUtilisateurBinding;
 import com.example.sae_s501.databinding.MoncompterespBinding;
 import com.example.sae_s501.model.MonCompte.ConfigSpring;

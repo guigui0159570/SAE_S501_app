@@ -24,9 +24,15 @@
             <EditText
                 android:id="@+id/mon_compteupdate"
                 android:layout_width="0dp"
+                android:background="@color/white"
+                android:layout_gravity="center"
+                android:hint="@string/pseudo"
+                android:textColorHint="#00BA8D"
+                android:inputType="text"
                 android:layout_height="58dp"
                 android:layout_weight="3"
                 android:gravity="center"
+                android:textColor="#00BA8D"
                 android:textAppearance="@style/mon_compte" />
 
         </LinearLayout>
@@ -76,7 +82,10 @@
                 android:id="@+id/description_update"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/white"
+                android:hint="@string/description_pub"
+                android:background="@color/white"
+                android:gravity="left"
+                android:textColor="#00BA8D"
                 android:layout_margin="15dp"/>
         </LinearLayout>
 

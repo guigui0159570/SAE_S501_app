@@ -43,6 +43,7 @@ public interface UserService {
             @Part("publique") RequestBody publique,
             @Part("prix") RequestBody prix,
             @Part MultipartBody.Part image,
+            @Part MultipartBody.Part files,
             @Part("tags") List<String> tags,
             @Part("email") String email
     );

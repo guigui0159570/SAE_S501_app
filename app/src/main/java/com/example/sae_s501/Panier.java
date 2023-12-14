@@ -3,6 +3,8 @@ package com.example.sae_s501;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,11 +28,12 @@ import retrofit2.Response;
 public class Panier extends AppCompatActivity {
     private PanierService panierService;
     private RetrofitService retrofitService;
+    private Button button_achat;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.panierresp);
         String jwtEmail = SessionManager.getUserEmail(this);
-
+        button_achat = findViewById(R.id.button_panier);
 
         getPrixByUtiId(jwtEmail); /* recupere prix du panier */
 
@@ -47,6 +50,13 @@ public class Panier extends AppCompatActivity {
 
         retour_panier.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                Intent intent = new Intent(Panier.this, MyCompteActivity.class);
+                startActivity(intent);
+            }
+        });
+        button_achat.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                showConfirmationPanier(jwtEmail);
                 Intent intent = new Intent(Panier.this, MyCompteActivity.class);
                 startActivity(intent);
             }
@@ -76,6 +86,51 @@ public class Panier extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Float> call, Throwable t) {
+                showToast("Erreur de réseau: " + t.getMessage());            }
+        });
+    }
+
+    private void showConfirmationPanier(String email) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation");
+        builder.setMessage("Êtes-vous sûr de vouloir effectuer cet achat ?");
+
+        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // L'utilisateur a confirmé, procédez à l'achat
+                achatPanier(email);
+            }
+        });
+
+        builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showToast("Achat annulé");
+            }
+        });
+
+        builder.show();
+    }
+
+    private void achatPanier(String email) {
+
+        retrofitService = new RetrofitService(this);
+        panierService = retrofitService.getRetrofit().create(PanierService.class);
+
+        Call<Void> call = panierService.paiementPanier(email);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    showToast("Achat validé ! ");
+                } else {
+                    showToast("Erreur: Achat refusé");                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 showToast("Erreur de réseau: " + t.getMessage());            }
         });
     }

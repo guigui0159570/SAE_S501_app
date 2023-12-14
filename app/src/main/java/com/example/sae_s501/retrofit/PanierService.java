@@ -5,6 +5,7 @@ import com.example.sae_s501.Publication;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -21,5 +22,16 @@ public interface PanierService {
     @GET("/panier/getPrix")
     Call<Float> getPrixByUtiId(@Query("email") String email);
 
+    @POST("/panier/ajoutPublication")
+    Call<String> ajoutPublicationPanier(@Query("email") String email, @Query("idPub") Long idPub);
+
+    @GET("/panier/getPublication")
+    Call<List<Publication>> getPublicationsPanier(@Query("email") String email);
+
+    @DELETE("/panier/delete/{id}")
+    Call<Void> deletePublication(@Path("id") Long id,@Query("email") String email);
+
+    @POST("/panier/paiement")
+    Call<Void> paiementPanier(@Query("email") String email);
 
 }

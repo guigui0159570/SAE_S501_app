@@ -20,7 +20,7 @@ import com.example.sae_s501.AjoutPublication;
 import com.example.sae_s501.CompteUtilisateur;
 import com.example.sae_s501.MesPublications;
 import com.example.sae_s501.R;
-import com.example.sae_s501.MonCompte.MonCompteViewModel;
+import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.authentification.JwtResponse;

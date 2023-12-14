@@ -34,7 +34,7 @@ import com.example.sae_s501.retrofit.PanierService;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
-import com.example.sae_s501.MonCompte.MonCompteViewModel;
+import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -79,7 +79,7 @@ public class MyCompteActivity extends AppCompatActivity {
         FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
 
         //Partie information
-        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this, configSpring.userEnCour());
+        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this, configSpring.userEnCour(this));
         informationUser(stringCompletableFuture, root);
 
         //Partie fragment parametre

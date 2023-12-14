@@ -84,6 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="15dp"
+                    android:textColor="#FFA500"
                     android:textSize="20dp"/>
             </LinearLayout>
 
@@ -110,12 +111,14 @@
                             android:id="@+id/countAbonne"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:textSize="20dp"/>
                         <TextView
                             android:id="@+id/AbonneView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/abonne_text"
+                            android:textColor="#FFA500"
                             android:textSize="20dp"/>
                     </LinearLayout>
 
@@ -135,12 +138,14 @@
                             android:id="@+id/countAbonnement"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:textSize="20dp"/>
                         <TextView
                             android:id="@+id/AbonnementView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/abonnement_text"
+                            android:textColor="#FFA500"
                             android:textSize="20dp"/>
                     </LinearLayout>
                 </LinearLayout>
