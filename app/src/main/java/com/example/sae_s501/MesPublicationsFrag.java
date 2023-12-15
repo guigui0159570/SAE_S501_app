@@ -352,5 +352,5 @@ public class MesPublicationsFrag extends Fragment {
             }
         });
     }
-    
+
 }

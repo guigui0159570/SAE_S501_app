@@ -47,12 +47,7 @@ public class ProduitPayant extends AppCompatActivity {
         setContentView(R.layout.produit_payantresp);
         long publicationId = getIntent().getLongExtra("id", 0);
         View rootView = findViewById(android.R.id.content);
-        if(rootView != null){
-            loadPublication(rootView, publicationId);
-        }else{
-            Toast.makeText(getApplicationContext(), "La view est null !!!", Toast.LENGTH_SHORT).show();
-        }
-
+        loadPublication(rootView, publicationId);
     }
 
     private void loadPublication(View view, long publicationId) {
@@ -73,11 +68,8 @@ public class ProduitPayant extends AppCompatActivity {
                     Publication publication = response.body();
                     if (publication != null) {
                         TextView titre = view.findViewById(R.id.ajout_pub_titre_payant);titre.setText(publication.getTitre());
-                        TextView description = view.findViewById(R.id.charger_img_payant);
+                        TextView description = view.findViewById(R.id.description_payant); description.setText(publication.getDescription());
                         TextView pseudo = view.findViewById(R.id.pseudo_pub_payant);
-                        if(description !=null && pseudo!=null){
-                            description.setText(publication.getDescription());
-                        }
 
 
                         if(publication.getProprietaire() != null){
@@ -186,7 +178,7 @@ public class ProduitPayant extends AppCompatActivity {
         Log.d(TAG, "loadPublication: debut recuperation des objets");
         EditText commentaire = view.findViewById(R.id.editText_commentaire_payant);
         RatingBar etoiles = view.findViewById(R.id.notation_payant);
-        Button ajout_commentaire = view.findViewById(R.id.ajout_commentaire_payant);
+        Button ajout_commentaire = view.findViewById(R.id.button_commentaire_payant);
         Log.d(TAG, "loadPublication: fin recuperation des objets");
 
         String jwtEmail = SessionManager.getUserEmail(ProduitPayant.this.getApplicationContext());
@@ -198,41 +190,41 @@ public class ProduitPayant extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "user id : "+response.body());
                     Long userId = response.body();
-                    if (userId != null && ajout_commentaire != null) {
-                        ajout_commentaire.setOnClickListener(view1 ->  {
-                                if(commentaire.getText() != null){
-                                    FilActuService.AvisRequestBody requestBody = new FilActuService.AvisRequestBody(
-                                            commentaire.getText().toString(),
-                                            etoiles.getNumStars(),
-                                            publicationId,
-                                            userId
-                                    );
-                                    Log.d("RequestBody", ""+requestBody.getCommentaire());
-                                    Log.d("RequestBody", ""+requestBody.getEtoile());
-                                    Log.d("RequestBody", ""+requestBody.getPublication());
-                                    Log.d("RequestBody", ""+requestBody.getUtilisateur());
-                                    Call<Void> voidCall = filActuService.saveAvis(commentaire.getText().toString(), etoiles.getNumStars(), publicationId, userId);
-                                    voidCall.enqueue(new Callback<Void>() {
-                                        @Override
-                                        public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                                            Log.d(TAG, "onResponse: "+response.code());
-                                            if (response.isSuccessful()){
-                                                Toast.makeText(ProduitPayant.this.getApplicationContext(), "Commentaire ajouté", Toast.LENGTH_SHORT).show();
-                                            }
+                    if (userId != null) {
+                        ajout_commentaire.setOnClickListener(view1 -> {
+                            if(commentaire.getText() != null){
+                                FilActuService.AvisRequestBody requestBody = new FilActuService.AvisRequestBody(
+                                        commentaire.getText().toString(),
+                                        etoiles.getNumStars(),
+                                        publicationId,
+                                        userId
+                                );
+                                Log.d("RequestBody", ""+requestBody.getCommentaire());
+                                Log.d("RequestBody", ""+requestBody.getEtoile());
+                                Log.d("RequestBody", ""+requestBody.getPublication());
+                                Log.d("RequestBody", ""+requestBody.getUtilisateur());
+                                Call<Void> voidCall = filActuService.saveAvis(commentaire.getText().toString(), etoiles.getNumStars(), publicationId, userId);
+                                voidCall.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                                        Log.d(TAG, "onResponse: "+response.code());
+                                        if (response.isSuccessful()){
+                                            Toast.makeText(ProduitPayant.this.getApplicationContext(), "Commentaire ajouté", Toast.LENGTH_SHORT).show();
                                         }
+                                    }
 
-                                        @Override
-                                        public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                                    @Override
+                                    public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
 
-                                        }
-                                    });
-                                    commentaire.setText("");
-                                    etoiles.setRating(0);
-                                }else{
-                                    Toast.makeText(ProduitPayant.this.getApplicationContext(), "Commentaire manquant", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                            });
+                                    }
+                                });
+                                commentaire.setText("");
+                                etoiles.setRating(0);
+                            }else{
+                                Toast.makeText(ProduitPayant.this.getApplicationContext(), "Commentaire manquant", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        });
                     }
                 }
             }
