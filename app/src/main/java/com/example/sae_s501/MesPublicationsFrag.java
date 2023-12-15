@@ -104,14 +104,6 @@ public class MesPublicationsFrag extends Fragment {
                                                 LinearLayout layoutTitreDes = new LinearLayout(getContext());
                                                 //Layout qui contient la partie personne ainsi que les étoiles de notation
                                                 LinearLayout layoutPersonnel = new LinearLayout(getContext());
-                                            //Layout qui va contenir les autres layout
-                                            LinearLayout layoutConteneur = new LinearLayout(getContext());
-                                            //Layout qui contient l'image du produit ainsi le titre et la description
-                                            LinearLayout layoutProduit = new LinearLayout(getContext());
-                                            //Layout qui contient le titre et la description
-                                            LinearLayout layoutTitreDes = new LinearLayout(getContext());
-                                            //Layout qui contient la partie personne ainsi que les étoiles de notation
-                                            LinearLayout layoutPersonnel = new LinearLayout(getContext());
 
                                                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -239,35 +231,7 @@ public class MesPublicationsFrag extends Fragment {
                                                     layoutPersonnel.addView(prixText);
                                                     layoutPersonnel.addView(textnbTelechargement);
 
-                                            // Accéder aux valeurs de l'objet
-                                            //mettre image utilisateur
-                                            if(p.getProprietaire() != null){
-                                                Utilisateur pseudo = p.getProprietaire();
-                                                TextView pseudoText = new TextView(requireContext());
-                                                pseudoText.setId(View.generateViewId());
-                                                pseudoText.setText(pseudo.getPseudo());
-                                                pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
-                                                layoutPersonnel.addView(pseudoText);
-                                                layoutPersonnel.addView(prixText);
-                                                layoutPersonnel.addView(textnbTelechargement);
 
-
-                                            }
-                                            ImageView supp = new ImageView(requireContext());
-                                            supp.setId(View.generateViewId());
-                                            supp.setImageResource(R.drawable.poubelle);
-
-                                            RelativeLayout.LayoutParams clickableImageParams = new RelativeLayout.LayoutParams(
-                                                    dpToPx(32),
-                                                    dpToPx(32)
-                                            );
-                                            clickableImageParams.setMargins(0, 0, dpToPx(20), dpToPx(20));
-                                            supp.setLayoutParams(clickableImageParams);
-
-                                            supp.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    DeleteConfirmation(p.getId());
                                                 }
                                                 ImageView supp = new ImageView(requireContext());
                                                 supp.setId(View.generateViewId());
@@ -388,4 +352,5 @@ public class MesPublicationsFrag extends Fragment {
             }
         });
     }
+    
 }

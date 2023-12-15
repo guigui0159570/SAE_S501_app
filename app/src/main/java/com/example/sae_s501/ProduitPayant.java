@@ -199,9 +199,7 @@ public class ProduitPayant extends AppCompatActivity {
                     Log.d(TAG, "user id : "+response.body());
                     Long userId = response.body();
                     if (userId != null && ajout_commentaire != null) {
-                        ajout_commentaire.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                        ajout_commentaire.setOnClickListener(view1 ->  {
                                 if(commentaire.getText() != null){
                                     FilActuService.AvisRequestBody requestBody = new FilActuService.AvisRequestBody(
                                             commentaire.getText().toString(),
@@ -234,8 +232,7 @@ public class ProduitPayant extends AppCompatActivity {
                                     Toast.makeText(ProduitPayant.this.getApplicationContext(), "Commentaire manquant", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                            }
-                        });
+                            });
                     }
                 }
             }
