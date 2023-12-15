@@ -220,6 +220,7 @@ public class ProduitGratuit extends AppCompatActivity {
                                 });
                                 commentaire.setText("");
                                 etoiles.setRating(0);
+                                recreate();
                             }else{
                                 Toast.makeText(ProduitGratuit.this.getApplicationContext(), "Commentaire manquant", Toast.LENGTH_SHORT).show();
                                 return;
