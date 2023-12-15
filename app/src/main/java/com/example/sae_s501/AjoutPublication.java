@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -74,6 +76,7 @@ public class AjoutPublication extends AppCompatActivity {
     private RetrofitService retrofitService;
     private String imagePath;
     private String filePath;
+    private MultipartBody.Part filePart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,6 +233,8 @@ public class AjoutPublication extends AppCompatActivity {
                 TextView fichierAjoute = findViewById(R.id.fichierajoute);
                 fichierAjoute.setText(R.string.fichierajoute);
                 fileAdded = true;
+                Bitmap fileBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                filePart = prepareFilePart("file", fileBitmap);
                 File file = new File(Uri.parse(data.getDataString()).getPath());
                 filePath = file.getAbsolutePath();
                 Log.d("FICHIER CHEMIN", filePath);
@@ -271,8 +276,6 @@ public class AjoutPublication extends AppCompatActivity {
             return;
         }
 
-        MultipartBody.Part filePart = prepareFilePart("file", new File(filePath));
-
         // Vérifiez si les parties du fichier ne sont pas null
         if (imagePart != null && filePart != null) {
 
@@ -284,6 +287,7 @@ public class AjoutPublication extends AppCompatActivity {
                     createRequestBody(String.valueOf(publique)),
                     createRequestBody(String.valueOf(prix)),
                     imagePart,
+                    filePart,
                     tags,
                     jwtEmail
             );
@@ -364,13 +368,49 @@ public class AjoutPublication extends AppCompatActivity {
         return MultipartBody.Part.createFormData(partName, "image.jpg", requestFile);
     }
 
-    // Créez une MultipartBody.Part à partir d'un fichier
+    // Modification of the method prepareFilePart to accept Bitmap for files
+    private MultipartBody.Part prepareFilePart(String partName, Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] fileBytes = byteArrayOutputStream.toByteArray();
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), fileBytes);
+
+        return MultipartBody.Part.createFormData(partName, "file.png", requestFile);
+    }
+/*
+    private MultipartBody.Part prepareFilePart2(String partName, File file) {
+        try {
+            // Charger le modèle 3D en utilisant les fonctionnalités natives de Java
+            byte[] fileBytes = Files.readAllBytes(file.toPath());
+
+            // Déterminer le type de média en fonction de l'extension du fichier
+            String mediaType = getMediaType(file.getName());
+
+            // Créer le RequestBody
+            RequestBody requestFile = RequestBody.create(MediaType.parse(mediaType), fileBytes);
+
+            // Utiliser le nom du fichier original comme le dernier argument
+            return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null; // Gérer les erreurs de chargement de fichier
+        }
+    }
+
+    private String getMediaType(String fileName) {
+        // Logique pour déterminer le type de média en fonction de l'extension du fichier
+        // Exemple simple : renvoyer "model/obj" si l'extension est ".obj"
+        return "model/obj";
+    }*/
+
+  /*  // Créez une MultipartBody.Part à partir d'un fichier
     private MultipartBody.Part prepareFilePart(String partName, File file) {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
-
+*/
 
 
     // Créez un RequestBody à partir d'une chaîne

@@ -1,7 +1,9 @@
-package com.example.sae_s501.MonCompte;
+package com.example.sae_s501.model.MonCompte;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,29 +16,45 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sae_s501.AjoutPublication;
+import com.example.sae_s501.CompteUtilisateur;
+import com.example.sae_s501.MesPublications;
 import com.example.sae_s501.R;
+import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
+import com.example.sae_s501.model.Utilisateur;
+import com.example.sae_s501.authentification.Authentification;
+import com.example.sae_s501.authentification.JwtResponse;
+import com.example.sae_s501.authentification.LoginRequest;
+import com.example.sae_s501.retrofit.AuthService;
+import com.example.sae_s501.retrofit.RetrofitService;
+import com.example.sae_s501.retrofit.UserService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
-import okhttp3.Call;
-import okhttp3.Callback;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 public class AbonneCompte extends AppCompatActivity {
     private ConfigSpring configSpring = new ConfigSpring();
+    private FonctionAbonneAbonnementViewModel FAAVM = new FonctionAbonneAbonnementViewModel(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_abonne_compte);
-        CompletableFuture<String> completableFuture = RequestInformationAbonne();
+        CompletableFuture<String> completableFuture = FAAVM.RequestInformationAbonne();
         Create_Layout_Abonne(completableFuture);
 
     }
@@ -54,7 +72,6 @@ public class AbonneCompte extends AppCompatActivity {
                             JsonArray jsonArray = jsonElement.getAsJsonArray();
                             LinearLayout layoutPrincipal = findViewById(R.id.comptenuAbonne);
 
-                            Log.d("123123123", String.valueOf(jsonArray.size()));
                             for (int i = 0 ; i< jsonArray.size() ; i ++){
 
                                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
@@ -66,10 +83,7 @@ public class AbonneCompte extends AppCompatActivity {
                                 //Partie pseudo
                                 JsonElement pseudoElement = jsonObject.get("pseudo");
                                 Log.d("456456", String.valueOf(pseudoElement));
-                                TextView textViewPseudo = new TextView(getBaseContext());
                                 String pseudo = String.valueOf(pseudoElement).replaceAll("^\"|\"$", "");
-                                textViewPseudo.setText(pseudo);
-
 
 
 
@@ -86,40 +100,39 @@ public class AbonneCompte extends AppCompatActivity {
                                 layoutEnfant.setGravity(Gravity.CENTER);
                                 layoutEnfant.setWeightSum(4);
 
-
-                                //Partie photo
                                 ImageView imageView = new ImageView(getBaseContext());
-                                JsonElement photoElement = jsonObject.get("photo");
-                                imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                                        250, 250, 1));
-                                if (photoElement != null && !photoElement.isJsonNull()) {
-                                    String base64ImageData = photoElement.getAsString();
 
-                                    // Décodez la chaîne Base64 en un tableau de bytes
-                                    byte[] decodedImageData = Base64.getDecoder().decode(base64ImageData);
+                                // Partie photo
+                                try {
+                                    //Partie photo
 
-                                    // Convertir le tableau de bytes en un Bitmap
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedImageData, 0, decodedImageData.length);
+                                    JsonElement photoElement = jsonObject.get("photo");
+                                    imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                                            250, 250, 1));
 
-                                    // Afficher le Bitmap dans l'ImageView
+                                    if (photoElement != null && !photoElement.isJsonNull()) {
+                                        String photoElementAsString = photoElement.getAsString();
+                                        MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
+                                        monCompteViewModel.Imageprofil(getBaseContext(),imageView, photoElementAsString);
+                                    } else {
+                                        // Création image random
+                                        String initials = String.valueOf(pseudo.charAt(0));
+                                        int width = 200;
+                                        int height = 200;
 
-                                    imageView.setImageBitmap(bitmap);
-                                }else {
-                                    //creation image random
-                                    String initials = String.valueOf(pseudo.charAt(0));
-                                    int width = 200;
-                                    int height = 200;
+                                        int backgroundColor = ConfigSpring.couleurDefault;
+                                        int textColor = Color.WHITE;
 
-                                    int backgroundColor = ConfigSpring.couleurDefault;
-                                    int textColor = Color.WHITE;
+                                        MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
+                                        Bitmap generatedImage = monCompteViewModel.generateInitialsImage(initials, width, height, backgroundColor, textColor);
+                                        imageView.setImageBitmap(generatedImage);
+                                    }
 
-                                    MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
-                                    Bitmap generatedImage = monCompteViewModel.generateInitialsImage(initials, width, height, backgroundColor, textColor);
-                                    imageView.setImageBitmap(generatedImage);
+                                } catch (Exception e) {
+                                    Log.e("Exception", "Erreur lors de la lecture de la photo", e);
                                 }
 
-
-
+                                redirectionProfilUti(imageView, idElement);
 
                                 // Créez le premier TextView
                                 TextView textView = new TextView(getBaseContext());
@@ -130,15 +143,16 @@ public class AbonneCompte extends AppCompatActivity {
                                 textView.setText(pseudo);
                                 textView.setTextSize(20);
                                 textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+
+                                redirectionProfilUti(textView, idElement);
                                 final boolean[] isCoeurBlanc = {true};
-                                requestPresenceAbonnement(idElement.getAsLong()).thenAccept(resultat -> {
+                                FAAVM.requestPresenceAbonnement(idElement.getAsLong()).thenAccept(resultat -> {
                                     try {
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
                                                 try {
 
-                                                    Log.d("99654123", String.valueOf(resultat));
                                                     // Créez le deuxième ImageView
                                                     ImageView imageView2 = new ImageView(getBaseContext());
                                                     imageView2.setLayoutParams(new LinearLayout.LayoutParams(
@@ -157,12 +171,12 @@ public class AbonneCompte extends AppCompatActivity {
                                                         public void onClick(View view) {
                                                             if (isCoeurBlanc[0]){
                                                                 imageView2.setImageResource(R.drawable.coeurnoir);
-                                                                sabonner(idElement.getAsLong());
+                                                                FAAVM.sabonner(idElement.getAsLong());
                                                                 isCoeurBlanc[0] = false;
 
                                                             }else {
                                                                 imageView2.setImageResource(R.drawable.coeurblanc);
-                                                                deleteAbonnement(idElement.getAsLong());
+                                                                FAAVM.deleteAbonneOrAbonnement(idElement.getAsLong());
                                                                 isCoeurBlanc[0] = true;
                                                             }
                                                         }
@@ -185,6 +199,8 @@ public class AbonneCompte extends AppCompatActivity {
                                     }
                                 });
 
+
+
                             }
 
                         } catch (Exception e) {
@@ -198,113 +214,15 @@ public class AbonneCompte extends AppCompatActivity {
         });
     }
 
-    public CompletableFuture<String> RequestInformationAbonne() {
-        OkHttpClient client = configSpring.creationClientSansSSL();
-        ConfigSpring configSpring = new ConfigSpring();
-        Request request = new Request.Builder()
-                .url("http://"+configSpring.Adresse()+":8080/abonneUser/"+configSpring.userEnCour()+"")
-                .build();
-        CompletableFuture<String> futureInformation = new CompletableFuture<>();
-        client.newCall(request).enqueue(new Callback() {
+    public void redirectionProfilUti(View eltClicable, JsonElement idUtilisateur){
+        eltClicable.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                futureInformation.completeExceptionally(e);
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-                    futureInformation.complete(responseData);
-                } else {
-                    futureInformation.completeExceptionally(new RuntimeException("Request failed"));
-                }
+            public void onClick(View view) {
+                Log.d("99999999999", "onClick: ");
+                Intent intent = new Intent(getBaseContext(), CompteUtilisateur.class);
+                intent.putExtra("userId", idUtilisateur.getAsLong());
+                startActivity(intent);
             }
         });
-        return futureInformation;
-    }
-
-    public void deleteAbonnement(Long abonnementUserId) {
-        OkHttpClient client = new OkHttpClient();
-        ConfigSpring configSpring = new ConfigSpring();
-
-        Request request = new Request.Builder()
-                .url("http://" + configSpring.Adresse() + ":8080/desabonnemnt/" + configSpring.userEnCour() + "/" + abonnementUserId)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-                    System.out.println("Response Data: " + responseData);
-                } else {
-                    throw new RuntimeException("Request failed");
-                }
-            }
-        });
-    }
-
-
-    public void sabonner(Long abonnementUserId) {
-        OkHttpClient client = new OkHttpClient();
-        ConfigSpring configSpring = new ConfigSpring();
-
-        Request request = new Request.Builder()
-                .url("http://" + configSpring.Adresse() + ":8080/abonnenement/" + configSpring.userEnCour() + "/" + abonnementUserId)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-                    System.out.println("Response Data: " + responseData);
-                } else {
-                    throw new RuntimeException("Request failed");
-                }
-            }
-        });
-    }
-
-
-    public CompletableFuture<Boolean> requestPresenceAbonnement(Long idAbonne) {
-        ConfigSpring configSpring = new ConfigSpring();
-        OkHttpClient client = configSpring.creationClientSansSSL();
-
-        CompletableFuture<Boolean> futureInformation = new CompletableFuture<>();
-
-        Request request = new Request.Builder()
-                .url("http://" + configSpring.Adresse() + ":8080/presenceAbonne/" + configSpring.userEnCour() + "/" + idAbonne)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                futureInformation.completeExceptionally(e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseData = response.body().string();
-                    Boolean result = Boolean.parseBoolean(responseData);
-                    futureInformation.complete(result);
-                } else {
-                    futureInformation.completeExceptionally(new RuntimeException("Request failed"));
-                }
-            }
-        });
-
-        return futureInformation;
     }
 }

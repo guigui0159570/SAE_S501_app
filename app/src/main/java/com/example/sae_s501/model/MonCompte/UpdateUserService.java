@@ -1,4 +1,4 @@
-package com.example.sae_s501.MonCompte;
+package com.example.sae_s501.model.MonCompte;
 import android.graphics.Bitmap;
 
 import java.util.Map;
@@ -12,7 +12,6 @@ import retrofit2.http.Path;
 
 public interface UpdateUserService {
 
-    @POST("/updateStringProfil/{user}")
-    Call<Void> envoyerString(@Path("user") Long user, @Body Map<String, String> requestBody);
+
 }
 

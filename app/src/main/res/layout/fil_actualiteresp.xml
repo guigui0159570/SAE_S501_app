@@ -14,7 +14,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="100sp"
@@ -25,23 +25,25 @@
             android:id="@+id/fil_actu_titre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35sp"
+            android:layout_marginTop="30dp"
             android:text="@string/fil_actu_titre"
             android:textAppearance="@style/se_connecte"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <ImageView
-            android:id="@+id/cloche_actu"
-            android:layout_width="50sp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="50sp"
-            android:clickable="true"
-            android:src="@drawable/cloche"
-            app:layout_constraintStart_toEndOf="@+id/fil_actu_titre"
             app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
+
+
+        <!--
+                <ImageView
+                    android:id="@+id/cloche_actu"
+                    android:layout_width="50sp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="50sp"
+                    android:clickable="true"
+                    android:src="@drawable/cloche"
+                    app:layout_constraintStart_toEndOf="@+id/fil_actu_titre"
+                    app:layout_constraintTop_toTopOf="parent" /> -->
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/fil_actu_research"

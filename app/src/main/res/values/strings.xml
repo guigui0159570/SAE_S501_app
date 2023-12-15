@@ -8,7 +8,6 @@
     <string name="nouveau"> Vous êtes nouveau ? : <u> S’inscrire </u></string>
     <string name="panier">Panier</string>
     <string name="cout_total_text"> Coût total : </string>
-    <string name="cout_total">00.00 €</string>
     <string name="button_panier">Acheter</string>
     <string name="ajout_pub_titre">Ajouter publication</string>
     <string name="charger_img"><u>Charger une image</u></string>
@@ -17,6 +16,9 @@
     <string name="checkbox_payant">Entrez le prix</string>
     <string name="button_publier">Publier</string>
     <string name="description_pub">Description</string>
+
+    <string name="abonnement_text">Abonnements</string>
+    <string name="abonne_text">Abonnés</string>
 
     <string name="fil_actu_titre">Fil d\'actualité</string>
     <string name="edit_fil_actu">Rechercher</string>
@@ -94,4 +96,8 @@
     <string name="ajout_commentaire_gratuit">Ajouter un commentaire</string>
     <string name="btn_validation_gratuit">Valider</string>
     <string name="payer_img_payant">Ajouter au panier</string>
+    <string name="adresse_de_l_admin">Adresse mail de l\'admin :</string>
+    <string name="veuillez_d_crire_votre_probl_me">Veuillez décrire votre problème</string>
+    <string name="d_crire_le_probl_me">Décrire le problème</string>
+    <string name="retour">Retour</string>
 </resources>

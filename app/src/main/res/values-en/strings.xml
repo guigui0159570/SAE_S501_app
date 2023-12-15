@@ -7,9 +7,8 @@
     <string name="mdp">Password</string>
     <string name="mot_de_pass"><u>Forgot password ? </u></string>
     <string name="nouveau">" Are you new? : <u> Register </u>"</string>
-    <string name="panier">Basket</string>
+    <string name="panier">Shop</string>
     <string name="cout_total_text">Total cost :</string>
-    <string name="cout_total">00.00 €</string>
     <string name="button_panier">Buy</string>
     <string name="ajout_pub_titre">Add a post</string>
     <string name="charger_img"><u>Load an image</u></string>
@@ -72,6 +71,7 @@
     <string name="fichierajoute"><i> : 3D File Added</i></string>
     <string name="fichier_pas_ajoute"><i> : No files added</i></string>
     <string name="motcle_pub">Keywords : (example : #word) </string>
+    <string name="abonne_text">Subscribers</string>
     <string name="mon_compte">My Account</string>
     <string name="aides">Help</string>
     <string name="modifier_profil">Edit Profile</string>
@@ -79,6 +79,14 @@
     <string name="deconnexion">Disconnection</string>
     <string name="supprimer_utilisateur" >Delete my account</string>
     <string name="description_pub_gratuit" />
+    <string name="adresse_de_l_admin">Admin email address :</string>
+    <string name="veuillez_d_crire_votre_probl_me">Please describe your problem</string>
+    <string name="d_crire_le_probl_me">Describe the problem</string>
+    <string name="retour">Back</string>
+
+
+
+    <string name="abonnement_text">Subscriptions</string>
 
 
 </resources>

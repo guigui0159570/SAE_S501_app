@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.sae_s501.authentification.Authentification;
+import com.example.sae_s501.retrofit.SessionManager;
+
 import java.util.Locale;
 
 
@@ -64,6 +66,8 @@ public class Connexion extends AppCompatActivity {
                           new Authentification.AuthCallback() {
                               @Override
                               public void onAuthSuccess() {
+                                  SessionManager.retrieveUserId(Connexion.this);
+
                                   // L'authentification a réussi, vous pouvez effectuer des actions ici
                                   Intent intent = new Intent(getBaseContext(), MesPublications.class);
                                   startActivity(intent);

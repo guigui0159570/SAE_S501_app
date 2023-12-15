@@ -71,6 +71,7 @@ public class ProduitGratuit extends AppCompatActivity {
                         TextView description = view.findViewById(R.id.charger_img); description.setText(publication.getDescription());
                         TextView pseudo = view.findViewById(R.id.pseudo_pub_gratuit);
 
+
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
                         }else{

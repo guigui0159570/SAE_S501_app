@@ -1,19 +1,24 @@
-package com.example.sae_s501.MonCompte;
+package com.example.sae_s501.model.MonCompte;
 
-import android.graphics.Bitmap;
+import android.content.Context;
 import android.graphics.Color;
-import android.location.Address;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.example.sae_s501.retrofit.FilActuService;
+import com.example.sae_s501.retrofit.RetrofitService;
+import com.example.sae_s501.retrofit.SessionManager;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Arrays;
-import java.util.List;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ConfigSpring {
 
@@ -24,14 +29,17 @@ public class ConfigSpring {
     }
 
     public String Adresse(){
-        return "172.24.0.1";
+        return "10.6.2.252";
     }
 
-    public Long userEnCour(){
-        return 102L;
+
+    public Long userEnCour(Context context) {
+        Log.d("USER ID", SessionManager.getUserId(context).toString());
+        return SessionManager.getUserId(context);
     }
 
-    public int couleurProfilPhoto (){
+
+        public int couleurProfilPhoto (){
 
 
 
@@ -75,4 +83,5 @@ public class ConfigSpring {
                 .build();
         return client;
     }
+
 }
