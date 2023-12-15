@@ -91,6 +91,7 @@ public class FilActuFragment extends Fragment {
                         layout.removeAllViews();
 
                         for (Publication p : publications) {
+                            Log.d(TAG, "Fils de pute: "+p.getId());
                             //Layout qui va contenir les autres layout
                             LinearLayout layoutConteneur = new LinearLayout(getContext());
                             //Layout qui contient l'image du produit ainsi le titre et la description
