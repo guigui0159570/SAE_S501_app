@@ -18,9 +18,11 @@
     <!-- Main Vertical LinearLayout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:textColor="@color/white"
+        tools:ignore="NotSibling">
 
         <!-- Title TextView -->
         <TextView
@@ -34,13 +36,13 @@
         <!-- Image and Description LinearLayout -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="225sp"
             android:orientation="horizontal">
 
             <!-- Image LinearLayout -->
             <LinearLayout
                 android:layout_width="180sp"
-                android:layout_height="wrap_content"
+                android:layout_height="220sp"
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 tools:ignore="ExtraText">
@@ -83,6 +85,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:textSize="25sp"
+                        android:textColor="#FFA500"
                         android:text="@string/pseudo_pub_gratuit"
                         android:layout_marginBottom="15dp" />
                 </LinearLayout>
@@ -94,6 +98,7 @@
                     android:layout_height="35sp"
                     android:layout_marginStart="25dp"
                     android:clickable="true"
+                    android:textColor="@color/white"
                     android:layout_gravity="left"
                     android:text="@string/description_pub_gratuit"
                     android:textSize="17sp"
@@ -108,8 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="center_vertical"
-            >
+            android:layout_gravity="center_vertical">
 
             <!-- Layout qui contient la visualisation de l'image -->
             <LinearLayout
@@ -167,6 +171,7 @@
 
             <RatingBar
                 android:id="@+id/notation_gratuit"
+
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:numStars="5"
@@ -185,22 +190,16 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="100sp"
-                app:layout_constraintTop_toBottomOf="@+id/commentaires_pers"
-                app:layout_constraintBottom_toTopOf="@+id/editTextCommentaire"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                app:layout_constraintEnd_toEndOf="parent">
+                android:layout_height="wrap_content"
+                android:minHeight="100dp">
 
                 <LinearLayout
                     android:id="@+id/layout_to_commentaire_gratuit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbarAlwaysDrawVerticalTrack="true"
                     android:orientation="vertical">
                 </LinearLayout>
             </ScrollView>
-
 
 
 
@@ -213,8 +212,10 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
                 android:hint="@string/ajout_commentaire_gratuit"
+                android:textColorHint="#00BA8D"
                 android:inputType="text"
-                android:textColor="@color/black"/>
+                android:textColor="#00BA8D"
+                />
 
             <Button
                 android:id="@+id/button2"
