@@ -3,6 +3,7 @@ package com.example.sae_s501;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -26,6 +27,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;
+import com.example.sae_s501.retrofit.PanierService;
+import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 
 import java.io.InputStream;
@@ -40,12 +43,21 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProduitPayant extends AppCompatActivity {
+    private TextView panier;
+    private RetrofitService retrofitService;
+    private PanierService panierService;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.produit_payantresp);
+        panier = findViewById(R.id.ajouter_panier);
+        String jwtEmail = SessionManager.getUserEmail(this);
+
+
         long publicationId = getIntent().getLongExtra("id", 0);
+        Log.d("publicationId", String.valueOf(publicationId));
         View rootView = findViewById(android.R.id.content);
         if(rootView != null){
             loadPublication(rootView, publicationId);
@@ -53,6 +65,48 @@ public class ProduitPayant extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "La view est null !!!", Toast.LENGTH_SHORT).show();
         }
 
+        panier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    ajoutPanier(jwtEmail,publicationId);
+            }
+        });
+
+    }
+
+    private void ajoutPanier(String email, Long idPub) {
+        retrofitService = new RetrofitService(this);
+        panierService = retrofitService.getRetrofit().create(PanierService.class);
+
+        Call<Void> call = panierService.ajoutPublicationPanier(email, idPub);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    showToast("Ce produit a été ajouté au panier");
+                } else {
+                    if (response.code() == 404) {
+                        showToast("Utilisateur non trouvé");
+                    } else if (response.code() == 400) {
+                        showToast("La publication est déjà dans le panier ou vous êtes le propriétaire");
+                    } else {
+                        showToast("Erreur de requête: " + response.code());
+                        Log.d("PANIER", String.valueOf(response.code()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                showToast("Erreur de réseau: " + t.getMessage());
+                Log.d("PANIER", t.getMessage());
+            }
+        });
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void loadPublication(View view, long publicationId) {
@@ -196,6 +250,7 @@ public class ProduitPayant extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<Long> call, @NonNull Response<Long> response) {
                 if (response.isSuccessful()) {
+
                     Log.d(TAG, "user id : "+response.body());
                     Long userId = response.body();
                     if (userId != null && ajout_commentaire != null) {

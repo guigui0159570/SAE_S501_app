@@ -3,6 +3,7 @@ package com.example.sae_s501;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -210,6 +211,9 @@ public class ProduitGratuit extends AppCompatActivity {
                                         Log.d(TAG, "onResponse: "+response.code());
                                         if (response.isSuccessful()){
                                             Toast.makeText(ProduitGratuit.this.getApplicationContext(), "Commentaire ajouté", Toast.LENGTH_SHORT).show();
+                                            Intent intent = getIntent();
+                                            finish();
+                                            startActivity(intent);
                                         }
                                     }
 
