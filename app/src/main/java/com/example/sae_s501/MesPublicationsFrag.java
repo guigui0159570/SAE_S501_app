@@ -124,9 +124,21 @@ public class MesPublicationsFrag extends Fragment {
                                                 layoutPersonnel.setLayoutParams(layoutParams);
 
                                                 //Param layoutConteneur
-                                                layoutConteneur.setId(View.generateViewId());
+                                                layoutConteneur.setId(p.getId().intValue());
                                                 layoutConteneur.setOrientation(LinearLayout.VERTICAL);
                                                 layoutConteneur.setVisibility(View.VISIBLE);
+
+                                                if(p.getGratuit()){
+                                                    layoutConteneur.setOnClickListener(view -> {
+                                                        Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
+                                                        loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuit.class));
+                                                    });
+                                                }else {
+                                                    layoutConteneur.setOnClickListener(view -> {
+                                                        Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
+                                                        loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayant.class));
+                                                    });
+                                                }
 
 
                                                 //Param layoutProduit
@@ -353,4 +365,9 @@ public class MesPublicationsFrag extends Fragment {
         });
     }
 
+    public static void loadView(View view, long id, Intent intent){
+        Log.d("ID de la pub", ""+id);
+        intent.putExtra("id", id);
+        view.getContext().startActivity(intent);
+    }
 }
