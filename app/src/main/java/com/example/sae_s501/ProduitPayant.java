@@ -203,7 +203,7 @@ public class ProduitPayant extends AppCompatActivity {
                                 Log.d("RequestBody", ""+requestBody.getEtoile());
                                 Log.d("RequestBody", ""+requestBody.getPublication());
                                 Log.d("RequestBody", ""+requestBody.getUtilisateur());
-                                Call<Void> voidCall = filActuService.saveAvis(commentaire.getText().toString(), etoiles.getNumStars(), publicationId, userId);
+                                Call<Void> voidCall = filActuService.saveAvis(commentaire.getText().toString(), (int) etoiles.getRating(), publicationId, userId);
                                 voidCall.enqueue(new Callback<Void>() {
                                     @Override
                                     public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
