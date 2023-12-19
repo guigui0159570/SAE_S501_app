@@ -83,7 +83,11 @@
 
         </activity>
 
+        <activity android:name=".MesPubProdGratuit" android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"> </activity>
 
+        <activity android:name=".MesPubProdPayant" android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"> </activity>
     </application>
 
 

@@ -131,12 +131,12 @@ public class MesPublicationsFrag extends Fragment {
                                                 if(p.getGratuit()){
                                                     layoutConteneur.setOnClickListener(view -> {
                                                         Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
-                                                        loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuit.class));
+                                                        loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdGratuit.class));
                                                     });
                                                 }else {
                                                     layoutConteneur.setOnClickListener(view -> {
                                                         Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
-                                                        loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayant.class));
+                                                        loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdPayant.class));
                                                     });
                                                 }
 

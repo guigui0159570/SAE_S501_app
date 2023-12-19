@@ -191,43 +191,17 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="100sp"
-                app:layout_constraintTop_toBottomOf="@+id/commentaires_pers"
-                app:layout_constraintBottom_toTopOf="@+id/editTextCommentaire"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp">
+                android:layout_marginStart="25sp"
+                android:layout_marginEnd="25sp">
 
                 <LinearLayout
                     android:id="@+id/layout_to_commentaire_gratuit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="25sp">
                 </LinearLayout>
             </ScrollView>
-
-
-
-
-            <EditText
-                android:id="@+id/editTextCommentaire"
-                style="@style/CustomEditTextStyle"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
-                android:hint="@string/ajout_commentaire_gratuit"
-                android:textColorHint="#00BA8D"
-                android:inputType="text"
-                android:textColor="#00BA8D"
-                />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="19dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="300dp"
-                android:layout_marginTop="-30sp"
-                android:background="@drawable/sent_1"
-                tools:ignore="MissingConstraints"/>
         </LinearLayout>
 
     </LinearLayout>

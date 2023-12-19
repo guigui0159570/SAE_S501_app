@@ -3,6 +3,7 @@ package com.example.sae_s501;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -26,6 +27,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;
+import com.example.sae_s501.retrofit.PanierService;
+import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 
 import java.io.InputStream;
@@ -39,22 +42,33 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MesPubProdGratuit extends AppCompatActivity {
+public class MesPubProdPayant extends AppCompatActivity {
+    private RetrofitService retrofitService;
+    private PanierService panierService;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mes_pub_prod_gratuit);
+        setContentView(R.layout.mes_pub_prod_payant);
+        String jwtEmail = SessionManager.getUserEmail(this);
+
+
         long publicationId = getIntent().getLongExtra("id", 0);
+        Log.d("publicationId", String.valueOf(publicationId));
         View rootView = findViewById(android.R.id.content);
-        loadPublication(rootView, publicationId);
+        if(rootView != null){
+            loadPublication(rootView, publicationId);
+        }else{
+            Toast.makeText(getApplicationContext(), "La view est null !!!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadPublication(View view, long publicationId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Dictionnaire.getIpAddress())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(Authentification.createAuthenticatedClient(MesPubProdGratuit.this.getApplicationContext()))
+                .client(Authentification.createAuthenticatedClient(MesPubProdPayant.this.getApplicationContext()))
                 .build();
 
         FilActuService filActuService = retrofit.create(FilActuService.class);
@@ -67,16 +81,13 @@ public class MesPubProdGratuit extends AppCompatActivity {
                     // Traitement des données de la publication ici
                     Publication publication = response.body();
                     if (publication != null) {
-                        TextView titre = view.findViewById(R.id.ajout_pub_titre);titre.setText(publication.getTitre());
-                        TextView description = view.findViewById(R.id.charger_img); description.setText(publication.getDescription());
-                        TextView pseudo = view.findViewById(R.id.pseudo_pub_gratuit);
-                        Log.d(TAG, "loadPublication: debut recuperation des objets");
-                        RatingBar etoiles = view.findViewById(R.id.notation_gratuit);
-                        Log.d(TAG, "loadPublication: fin recuperation des objets");
+                        TextView titre = view.findViewById(R.id.ajout_pub_titre_payant);titre.setText(publication.getTitre());
+                        TextView description = view.findViewById(R.id.description_payant); description.setText(publication.getDescription());
+                        TextView pseudo = view.findViewById(R.id.pseudo_pub_payant);
+                        RatingBar etoiles = view.findViewById(R.id.notation_payant);
 
-                        Log.d("Notation", ""+publication.notation_publication());
-                        etoiles.setNumStars(publication.notation_publication());
-
+                        etoiles.setRating(publication.notation_publication());
+                        etoiles.setEnabled(true);
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
@@ -92,11 +103,11 @@ public class MesPubProdGratuit extends AppCompatActivity {
                                 if (response.isSuccessful()){
                                     Log.d("CallAvis", "dans le call des avis : "+response.body());
                                     List<AvisDTO> les_avis = response.body();
-                                    LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_gratuit);
+                                    LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_payant);
                                     commentaires.setOrientation(LinearLayout.VERTICAL);
                                     if(les_avis != null){
                                         for (AvisDTO avis : les_avis){
-                                            LinearLayout linearLayout = new LinearLayout(MesPubProdGratuit.this.getApplicationContext());
+                                            LinearLayout linearLayout = new LinearLayout(MesPubProdPayant.this.getApplicationContext());
                                             LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
                                                     LinearLayout.LayoutParams.WRAP_CONTENT,
                                                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -104,8 +115,8 @@ public class MesPubProdGratuit extends AppCompatActivity {
                                             params_elt.setMargins(0, 0, 0, 25);
                                             linearLayout.setLayoutParams(params_elt);
                                             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                                            TextView pseudo_avis = new TextView(MesPubProdGratuit.this.getApplicationContext());
-                                            TextView commentaire = new TextView(MesPubProdGratuit.this.getApplicationContext());
+                                            TextView pseudo_avis = new TextView(MesPubProdPayant.this.getApplicationContext());
+                                            TextView commentaire = new TextView(MesPubProdPayant.this.getApplicationContext());
 
                                             Call<Utilisateur> utilisateurCall = filActuService.getUtilisateurById(avis.getUtilisateur());
                                             utilisateurCall.enqueue(new Callback<Utilisateur>() {
@@ -134,7 +145,7 @@ public class MesPubProdGratuit extends AppCompatActivity {
 
                             @Override
                             public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
-                                Toast.makeText(MesPubProdGratuit.this.getApplicationContext(), "pas d'avis récupérés !", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MesPubProdPayant.this.getApplicationContext(), "pas d'avis récupérés !", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -156,7 +167,7 @@ public class MesPubProdGratuit extends AppCompatActivity {
                                         int desiredWidth = img_produit.getWidth();
                                         int desiredHeight = img_produit.getHeight();
                                         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
-                                        Drawable drawable = new BitmapDrawable(MesPubProdGratuit.this.getResources(), resizedBitmap);
+                                        Drawable drawable = new BitmapDrawable(MesPubProdPayant.this.getResources(), resizedBitmap);
                                         img_produit.setImageDrawable(drawable);
                                     }
                                 } else {
@@ -180,6 +191,5 @@ public class MesPubProdGratuit extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
-
     }
 }

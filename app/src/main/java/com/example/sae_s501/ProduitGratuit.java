@@ -211,9 +211,9 @@ public class ProduitGratuit extends AppCompatActivity {
                                         Log.d(TAG, "onResponse: "+response.code());
                                         if (response.isSuccessful()){
                                             Toast.makeText(ProduitGratuit.this.getApplicationContext(), "Commentaire ajouté", Toast.LENGTH_SHORT).show();
-                                            Intent intent = getIntent();
-                                            finish();
-                                            startActivity(intent);
+                                            etoiles.setRating(0);
+                                            commentaire.setText("");
+                                            recreate();
                                         }
                                     }
 
