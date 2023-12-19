@@ -174,7 +174,6 @@ public class FilActuFragment extends Fragment {
                                         Log.e("IMAGE", "Erreur lors de la récupération de l'image. Code de réponse : " + response.code());
                                     }
                                 }
-
                                 @Override
                                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                                     // Gestion des erreurs
@@ -183,8 +182,6 @@ public class FilActuFragment extends Fragment {
                             });
                             layoutProduit.addView(img_produit);
                             layoutProduit.addView(layoutTitreDes);
-
-
 
                             String titre = p.getTitre();
                             TextView titreText = new TextView(getContext());
@@ -231,7 +228,6 @@ public class FilActuFragment extends Fragment {
                                 pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
                                 layoutPersonnel.addView(pseudoText);
                                 layoutPersonnel.addView(prixText);
-
                             }
 
                             //Ajout des layout

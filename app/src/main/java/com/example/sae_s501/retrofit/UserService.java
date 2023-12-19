@@ -24,14 +24,12 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface UserService {
-    /* register */
 
     @FormUrlEncoded
     @POST("/api/auth/register/save")
     Call<Utilisateur> registerUser(@Field("pseudo") String pseudo,
                                    @Field("email") String email,
                                    @Field("password") String password);
-
 
     /* creation pub*/
     @Multipart

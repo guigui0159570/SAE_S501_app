@@ -111,6 +111,7 @@ public class Inscription extends AppCompatActivity {
                                 showToast("Erreur d'authentification : Accès non autorisé.");
                             } else if (response.code() == 403) {
                                 showToast("Erreur d'autorisation : Accès interdit.");
+                                showToast("Erreur " +response.message());
                             } else if (response.code() == 404) {
                                 showToast("Erreur : Cette adresse mail est déjà utilisée !");
                             } else if (response.code() == 409) {

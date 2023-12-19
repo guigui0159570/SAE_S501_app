@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.SessionManager;
+import com.example.sae_s501.visualisation.Visualiser;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -72,6 +73,11 @@ public class ProduitGratuit extends AppCompatActivity {
                         TextView description = view.findViewById(R.id.charger_img); description.setText(publication.getDescription());
                         TextView pseudo = view.findViewById(R.id.pseudo_pub_gratuit);
 
+
+                        View visulaiser = findViewById(R.id.visualiser_img);
+                        visulaiser.setOnClickListener(view -> {
+                            loadView(view, publication.getFichier(), new Intent(ProduitGratuit.this, Visualiser.class));
+                        });
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
@@ -238,5 +244,10 @@ public class ProduitGratuit extends AppCompatActivity {
 
             }
         });
+    }
+    public static void loadView(View view, String fichier, Intent intent){
+        Log.d("Fichier", ""+fichier);
+        intent.putExtra("fichier", fichier);
+        view.getContext().startActivity(intent);
     }
 }
