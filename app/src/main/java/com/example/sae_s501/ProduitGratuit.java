@@ -43,6 +43,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProduitGratuit extends AppCompatActivity {
 
+    private ImageView retour;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,15 @@ public class ProduitGratuit extends AppCompatActivity {
         long publicationId = getIntent().getLongExtra("id", 0);
         View rootView = findViewById(android.R.id.content);
         loadPublication(rootView, publicationId);
+        retour = findViewById(R.id.close);
+
+        retour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProduitGratuit.this, FilActu.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadPublication(View view, long publicationId) {
@@ -93,6 +104,7 @@ public class ProduitGratuit extends AppCompatActivity {
                                 if (response.isSuccessful()){
                                     Log.d("CallAvis", "dans le call des avis : "+response.body());
                                     List<AvisDTO> les_avis = response.body();
+                                    Log.d("AVIS", "Nombre d'avis récupérés : " + (les_avis != null ? les_avis.size() : 0));
                                     LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_gratuit);
                                     commentaires.setOrientation(LinearLayout.VERTICAL);
                                     if(les_avis != null){
@@ -120,6 +132,7 @@ public class ProduitGratuit extends AppCompatActivity {
                                                         commentaire.setText(avis.getCommentaire());
                                                         linearLayout.addView(pseudo_avis);linearLayout.addView(commentaire);
                                                         commentaires.addView(linearLayout);
+
                                                     }
                                                 }
 

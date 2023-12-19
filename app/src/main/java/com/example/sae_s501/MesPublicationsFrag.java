@@ -238,7 +238,7 @@ public class MesPublicationsFrag extends Fragment {
                                                     TextView pseudoText = new TextView(requireContext());
                                                     pseudoText.setId(View.generateViewId());
                                                     pseudoText.setText(pseudo.getPseudo());
-                                                    pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+                                                    pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
                                                     layoutPersonnel.addView(pseudoText);
                                                     layoutPersonnel.addView(prixText);
                                                     layoutPersonnel.addView(textnbTelechargement);
