@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.util.proto.ProtoOutputStream;
 import android.view.View;
@@ -32,6 +33,9 @@ import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
 import com.example.sae_s501.visualisation.Visualiser;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,7 @@ public class ProduitGratuit extends AppCompatActivity {
     private UserService userService;
     private RetrofitService retrofitService;
 
+    private String fichier;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,35 +77,73 @@ public class ProduitGratuit extends AppCompatActivity {
         telechargement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UserService userService1 = retrofitService.getRetrofit().create(UserService.class);
+
+                // Effectuer la requête de téléchargement
+                Call<ResponseBody> call = userService1.downloadFile(fichier);
+
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            // Traitement réussi, enregistrez le fichier localement
+                            saveFileLocally(response.body());
+                        } else {
+                            // Traitement en cas d'échec
+                            showToast("Échec du téléchargement. Code : " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                        // Traitement en cas d'échec de la requête
+                        showToast("Erreur lors de la requête : " + t.getMessage());
+                    }
+                });
             }
         });
     }
 
-//    private void telechargerPublication(Long idPublication) {
-//
-//        userService = retrofitService.getRetrofit().create(UserService.class);
-//        Call<Void> call = userService.telechargementByIdPub(idPublication);
-//
-//        call.enqueue(new Callback<Void>() {
-//            @Override
-//            public void onResponse(Call<Void> call, Response<Void> response) {
-//                if (response.isSuccessful()) {
-//                    // Traitement en cas de succès
-//                    showToast("Téléchargement réussi");
-//                } else {
-//                    // Traitement en cas d'échec
-//                    showToast("Échec du téléchargement. Code : " + response.code());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Void> call, Throwable t) {
-//                // Traitement en cas d'échec de la requête
-//                showToast("Erreur lors de la requête : " + t.getMessage());
-//            }
-//        });
-//
-//    }
+    private void saveFileLocally(ResponseBody body) {
+        try {
+            // Vérifier si le stockage externe est disponible
+            if (isExternalStorageWritable()) {
+                // Obtenez le répertoire de téléchargement externe
+                File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+                // Créez le fichier local dans le répertoire de téléchargement
+                String fileName = fichier;
+                File file = new File(downloadFolder, fileName);
+
+                // Vérifiez si le fichier existe déjà
+                if (file.exists()) {
+                    showToast("Le fichier est déjà enregistré localement : " + file.getAbsolutePath());
+                    return;
+                }
+
+
+                // Créez le flux de sortie pour écrire dans le fichier local
+                FileOutputStream outputStream = new FileOutputStream(file);
+                outputStream.write(body.bytes());
+                outputStream.close();
+
+                // Le fichier a été enregistré localement avec succès
+                showToast("Fichier enregistré localement : " + file.getAbsolutePath());
+            } else {
+                // Le stockage externe n'est pas disponible
+                showToast("Le stockage externe n'est pas disponible.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Une exception s'est produite lors de l'enregistrement du fichier
+            showToast("Erreur lors de l'enregistrement du fichier localement.");
+        }
+    }
+
+    private boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -124,7 +167,8 @@ public class ProduitGratuit extends AppCompatActivity {
                         TextView titre = view.findViewById(R.id.ajout_pub_titre);titre.setText(publication.getTitre());
                         TextView description = view.findViewById(R.id.charger_img); description.setText(publication.getDescription());
                         TextView pseudo = view.findViewById(R.id.pseudo_pub_gratuit);
-
+                        fichier =  publication.getFichier();
+                        Log.d("FICHIER", publication.getFichier());
 
                         View visulaiser = findViewById(R.id.visualiser_img);
                         visulaiser.setOnClickListener(view -> {

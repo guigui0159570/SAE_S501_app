@@ -46,6 +46,8 @@ public interface UserService {
             @Part("email") String email
     );
 
+    @GET("/fichiers/model/{nomFichier}")
+    Call<ResponseBody> downloadFile(@Path("nomFichier") String nomFichier);
 
     @DELETE("/utilisateur/delete/{id}")
     Call<Void> deleteUtilisateur(@Path("id") Long id);
