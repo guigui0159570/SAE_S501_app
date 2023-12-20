@@ -20,18 +20,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Inscription extends AppCompatActivity {
-
-
     private EditText editTextPseudo;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private EditText editTextConfirmationPassword;
     private Button buttonEnvoyer;
-
     private UserService userService;
     private RetrofitServiceRegister retrofitService;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

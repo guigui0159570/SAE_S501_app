@@ -71,7 +71,7 @@ public class AbonneCompte extends AppCompatActivity {
                             JsonElement jsonElement = JsonParser.parseString(resultat);
                             JsonArray jsonArray = jsonElement.getAsJsonArray();
                             LinearLayout layoutPrincipal = findViewById(R.id.comptenuAbonne);
-
+                            Log.d("7777777", "zzzzzz");
                             for (int i = 0 ; i< jsonArray.size() ; i ++){
 
                                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();

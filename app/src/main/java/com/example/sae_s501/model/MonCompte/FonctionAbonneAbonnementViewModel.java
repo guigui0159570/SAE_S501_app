@@ -27,6 +27,8 @@ public class FonctionAbonneAbonnementViewModel {
     }
 
     public CompletableFuture<String> RequestInformationAbonne() {
+        Log.d("gooooooooood", "OK");
+
         RetrofitService retrofitService = new RetrofitService(context);
         UserService userService = retrofitService.getRetrofit().create(UserService.class);
 
@@ -40,6 +42,8 @@ public class FonctionAbonneAbonnementViewModel {
                 if (response.isSuccessful()) {
                     String responseData = String.valueOf(response.body());
                     futureInformation.complete(responseData);
+                    Log.d("gooooooooood", "OK");
+
                 } else {
                     futureInformation.completeExceptionally(new RuntimeException("Request failed"));
                 }
@@ -72,6 +76,7 @@ public class FonctionAbonneAbonnementViewModel {
                 if (response.isSuccessful()) {
                     String responseData = String.valueOf(response.body());
                     futureInformation.complete(responseData);
+                    Log.d("gooooooooood", "OK");
                 } else {
                     futureInformation.completeExceptionally(new RuntimeException("Request failed"));
                 }

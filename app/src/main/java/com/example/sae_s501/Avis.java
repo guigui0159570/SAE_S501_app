@@ -50,5 +50,6 @@ public class Avis {
     public void setPublication(Publication publication) {
         this.publication = publication;
     }
+
 }
 

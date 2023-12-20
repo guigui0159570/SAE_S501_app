@@ -85,9 +85,6 @@ public class MesPubProdGratuit extends AppCompatActivity {
                         RatingBar etoiles = view.findViewById(R.id.notation_gratuit);
                         Log.d(TAG, "loadPublication: fin recuperation des objets");
 
-                        Log.d("Notation", ""+publication.notation_publication());
-                        etoiles.setNumStars(publication.notation_publication());
-
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
@@ -106,7 +103,11 @@ public class MesPubProdGratuit extends AppCompatActivity {
                                     LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_gratuit);
                                     commentaires.setOrientation(LinearLayout.VERTICAL);
                                     if(les_avis != null){
+                                        int note = 0;
+                                        int nb = 0;
                                         for (AvisDTO avis : les_avis){
+                                            note += avis.getEtoile();
+                                            nb += 1;
                                             LinearLayout linearLayout = new LinearLayout(MesPubProdGratuit.this.getApplicationContext());
                                             LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
                                                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -139,6 +140,9 @@ public class MesPubProdGratuit extends AppCompatActivity {
                                                 }
                                             });
                                         }
+                                        Log.d("Notation", "notation : " + note/nb);
+                                        etoiles.setRating(Math.round(note/nb));
+                                        etoiles.setIsIndicator(true);
                                     }
                                 }
                             }
