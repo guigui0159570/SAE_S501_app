@@ -203,7 +203,7 @@ public class MyUpdateCompteActivity extends AppCompatActivity {
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
                         showToast("Publication réussie !");
-                        Intent intent = new Intent(MyUpdateCompteActivity.this, MesPublications.class);
+                        Intent intent = new Intent(MyUpdateCompteActivity.this, MyCompteActivity.class);
                         startActivity(intent);
                         // Réinitialiser les champs après une publication réussie
                         resetFields();

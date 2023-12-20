@@ -319,11 +319,13 @@ public class MyCompteActivity extends AppCompatActivity {
                                 ImageView imageViewPhoto = root.findViewById(R.id.photoProfil);
                                 JsonElement photoElement = jsonObject.get("photo");
 
-                                if (photoElement != null && !photoElement.isJsonNull()) {
+                                if (!photoElement.isJsonNull()) {
+                                    Log.d("gggggggggggg", "777 ");
                                     String photoElementAsString = photoElement.getAsString();
                                     MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
                                     monCompteViewModel.Imageprofil(getBaseContext(),imageViewPhoto, photoElementAsString);
                                 } else {
+                                    Log.d("fffffffffffffff", "777 ");
                                     // Création image random
                                     String initials = String.valueOf(pseudo.charAt(0));
                                     int width = 200;
