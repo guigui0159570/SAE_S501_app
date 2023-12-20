@@ -47,11 +47,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MesPublicationsFrag extends Fragment {
+public class PubCompteUti extends Fragment {
 
     private static final String TAG = "MesPublicationsFrag";
     private static final String BASE_URL = Dictionnaire.getIpAddress();
     private RetrofitService retrofitService;
+    private Long userId;
+    public void setFilterValue(Long value) {
+        this.userId = value;
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,15 +76,7 @@ public class MesPublicationsFrag extends Fragment {
 
         FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
 
-        String jwtEmail = SessionManager.getUserEmail(requireActivity());
 
-        Call<Long> callUserId = filActuService.getUtilisateurIdByEmail(jwtEmail);
-        callUserId.enqueue(new Callback<Long>() {
-            @Override
-            public void onResponse(Call<Long> call, Response<Long> response) {
-                if (response.isSuccessful()) {
-                    Long userId = response.body();
-                    if (userId != null) {
                         Call<List<Publication>> callPublications = filActuService.getPublicationByUtilisateurId(userId);
                         callPublications.enqueue(new Callback<List<Publication>>() {
 
@@ -245,24 +242,7 @@ public class MesPublicationsFrag extends Fragment {
 
 
                                                 }
-                                                ImageView supp = new ImageView(requireContext());
-                                                supp.setId(View.generateViewId());
-                                                supp.setImageResource(R.drawable.poubelle);
 
-                                                RelativeLayout.LayoutParams clickableImageParams = new RelativeLayout.LayoutParams(
-                                                        dpToPx(32),
-                                                        dpToPx(32)
-                                                );
-                                                clickableImageParams.setMargins(0, 0, dpToPx(20), dpToPx(20));
-                                                supp.setLayoutParams(clickableImageParams);
-
-                                                supp.setOnClickListener(new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View view) {
-                                                        DeleteConfirmation(p.getId());
-                                                    }
-                                                });
-                                                layoutPersonnel.addView(supp);
 
                                                 //Ajout des layout
                                                 layoutConteneur.addView(layoutProduit);
@@ -299,20 +279,8 @@ public class MesPublicationsFrag extends Fragment {
                                 Toast.makeText(requireContext(), "Erreur lors de la communication avec le serveur", Toast.LENGTH_SHORT).show();
                             }
                         });
-                    } else {
-                        Log.e(TAG, "Error: User ID is null");
                     }
-                } else {
-                    Log.e(TAG, "Error response: " + response.errorBody());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Long> call, Throwable t) {
-                Log.e(TAG, "Failure: " + t.getMessage());
-            }
-        });
-    }
     private int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
         return Math.round(dp * density);

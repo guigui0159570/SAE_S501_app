@@ -181,7 +181,11 @@ public class FilActuFragFiltre extends Fragment {
                             layoutProduit.addView(img_produit);
                             layoutProduit.addView(layoutTitreDes);
 
-
+                            int nbTelechargement = p.getNb_telechargement();
+                            TextView textnbTelechargement = new TextView(requireContext());
+                            textnbTelechargement.setId(View.generateViewId());
+                            textnbTelechargement.setText("Téléchargement : " + nbTelechargement+ "   ");
+                            textnbTelechargement.setLayoutParams(params_elt);
 
                             String titre = p.getTitre();
                             TextView titreText = new TextView(requireContext());
@@ -203,11 +207,11 @@ public class FilActuFragFiltre extends Fragment {
                             TextView prixText = new TextView(requireContext());
                             prixText.setId(View.generateViewId());
                             if(gratuit) {
-                                prixText.setText("    Gratuit");
+                                prixText.setText("    Gratuit      ");
 
                             }
                             else{
-                                prixText.setText("    Prix : " + prix);
+                                prixText.setText("    Prix : " + prix+"      ");
 
                             }
                             prixText.setLayoutParams(params_elt);
@@ -228,6 +232,8 @@ public class FilActuFragFiltre extends Fragment {
                                 pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
                                 layoutPersonnel.addView(pseudoText);
                                 layoutPersonnel.addView(prixText);
+                                layoutPersonnel.addView(textnbTelechargement);
+
 
                             }
 

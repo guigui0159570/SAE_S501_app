@@ -1,5 +1,6 @@
 package com.example.sae_s501.retrofit;
 
+import com.example.sae_s501.Avis;
 import com.example.sae_s501.AvisDTO;
 import com.example.sae_s501.Publication;
 import com.example.sae_s501.Utilisateur;
@@ -99,4 +100,7 @@ public interface FilActuService {
             this.utilisateur = utilisateur;
         }
     }
+
+    @GET("/fichiers/model/{nomFichier}")
+    Call<ResponseBody> getFichier(@Path("nomFichier") String nomFichier);
 }

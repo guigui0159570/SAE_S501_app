@@ -71,7 +71,7 @@ public class AbonneCompte extends AppCompatActivity {
                             JsonElement jsonElement = JsonParser.parseString(resultat);
                             JsonArray jsonArray = jsonElement.getAsJsonArray();
                             LinearLayout layoutPrincipal = findViewById(R.id.comptenuAbonne);
-
+                            Log.d("7777777", "zzzzzz");
                             for (int i = 0 ; i< jsonArray.size() ; i ++){
 
                                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
@@ -218,7 +218,6 @@ public class AbonneCompte extends AppCompatActivity {
         eltClicable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("99999999999", "onClick: ");
                 Intent intent = new Intent(getBaseContext(), CompteUtilisateur.class);
                 intent.putExtra("userId", idUtilisateur.getAsLong());
                 startActivity(intent);

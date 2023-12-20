@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#17282D"
-    tools:context=".AjoutPublication">
+    tools:context=".ProduitGratuit">
 
     <!-- Gradient Background View -->
     <View
@@ -14,6 +14,17 @@
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_background"
         tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/custom_button_return"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"/>
 
     <!-- Main Vertical LinearLayout -->
     <LinearLayout
@@ -136,7 +147,7 @@
                     android:layout_height="35sp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:textColor="#0000FF"
+                    android:textColor="#FFA500"
                     android:text="@string/visualiser_img_gratuit"
                     android:textSize="17sp" />
 
@@ -163,7 +174,7 @@
                     android:layout_height="35sp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:textColor="#0000FF"
+                    android:textColor="#FFA500"
                     android:text="@string/telecharger_img_gratuit"
                     android:textSize="17sp" />
             </LinearLayout>

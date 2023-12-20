@@ -24,6 +24,7 @@
                 android:layout_height="55dp"
                 android:layout_weight="3"
                 android:gravity="center"
+                android:textColor="#FFA500"
                 android:text="@string/abonnement_text"
                 android:textSize="30dp"/>
 

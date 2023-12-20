@@ -57,8 +57,7 @@ public class Panier extends AppCompatActivity {
         button_achat.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 showConfirmationPanier(jwtEmail);
-                Intent intent = new Intent(Panier.this, MyCompteActivity.class);
-                startActivity(intent);
+
             }
         });
     }
@@ -100,6 +99,7 @@ public class Panier extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // L'utilisateur a confirmé, procédez à l'achat
                 achatPanier(email);
+
             }
         });
 
@@ -125,6 +125,8 @@ public class Panier extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     showToast("Achat validé ! ");
+                    Intent intent = new Intent(Panier.this, MyCompteActivity.class);
+                    startActivity(intent);
                 } else {
                     showToast("Erreur: Achat refusé");                }
             }

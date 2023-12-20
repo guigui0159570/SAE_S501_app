@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Utilisateur implements Serializable {
+    @SerializedName("id")
+    private Long id;
     @SerializedName("pseudo")
     private String pseudo;
 
@@ -14,7 +16,8 @@ public class Utilisateur implements Serializable {
     @SerializedName("password")
     private String password;
 
-    public Utilisateur(String pseudo, String email, String password) {
+    public Utilisateur(Long id,String pseudo, String email, String password) {
+        this.id = id;
         this.pseudo = pseudo;
         this.email = email;
         this.password = password;
@@ -23,6 +26,14 @@ public class Utilisateur implements Serializable {
     public Utilisateur(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPseudo() {

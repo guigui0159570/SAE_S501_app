@@ -22,7 +22,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.connexionresp);
-        // SessionManager.deleteToken(this);
+//        if (!isSessionCheckPerformed()) {
+//            // Effectuer la vérification de session
+//
+//            // Mettre à jour la variable pour indiquer que la vérification a été effectuée
+//            setSessionCheckPerformed(true);
+//        }
         SessionManager.isSessionValid(this);
     }
 
@@ -39,7 +44,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void OnClickConnexion(View view) {
+        Intent intent = new Intent(this, AjoutPublication.class);
+        startActivity(intent);
+    }
 
     private boolean isSessionCheckPerformed() {
         // Utiliser les préférences partagées pour vérifier si la vérification de session a déjà été effectuée

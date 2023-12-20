@@ -46,6 +46,7 @@ public class ProduitPayant extends AppCompatActivity {
     private TextView panier;
     private RetrofitService retrofitService;
     private PanierService panierService;
+    private ImageView retour;
 
 
     @Override
@@ -55,6 +56,7 @@ public class ProduitPayant extends AppCompatActivity {
         panier = findViewById(R.id.ajouter_panier);
         String jwtEmail = SessionManager.getUserEmail(this);
 
+        retour = findViewById(R.id.close);
 
         long publicationId = getIntent().getLongExtra("id", 0);
         Log.d("publicationId", String.valueOf(publicationId));
@@ -64,7 +66,13 @@ public class ProduitPayant extends AppCompatActivity {
         }else{
             Toast.makeText(getApplicationContext(), "La view est null !!!", Toast.LENGTH_SHORT).show();
         }
-
+        retour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProduitPayant.this, FilActu.class);
+                startActivity(intent);
+            }
+        });
         panier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +141,14 @@ public class ProduitPayant extends AppCompatActivity {
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
+                            pseudo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getApplicationContext(), CompteUtilisateur.class);
+                                    intent.putExtra("userId",publication.getProprietaire().getId());
+                                    startActivity(intent);
+                                }
+                            });
                         }else{
                             pseudo.setText("Propriétaire non répertorié...");
                         }
@@ -177,6 +193,7 @@ public class ProduitPayant extends AppCompatActivity {
 
                                                 @Override
                                                 public void onFailure(@NonNull Call<Utilisateur> call, @NonNull Throwable t) {
+                                                    Toast.makeText(ProduitPayant.this.getApplicationContext(), "onFailure", Toast.LENGTH_SHORT).show();
 
                                                 }
                                             });
@@ -188,6 +205,7 @@ public class ProduitPayant extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
                                 Toast.makeText(ProduitPayant.this.getApplicationContext(), "pas d'avis récupérés !", Toast.LENGTH_SHORT).show();
+                                Log.e("DEBUG", "Failed to get comments: " + t.getMessage());
                             }
                         });
 
