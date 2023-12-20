@@ -85,11 +85,12 @@
                     android:layout_height="match_parent"
                     android:layout_margin="15dp"
                     android:textColor="#FFA500"
-                    android:textSize="20dp"/>
+                    android:textSize="17dp"/>
             </LinearLayout>
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/LayoutAbo"
             android:layout_width="match_parent"
             android:layout_height="100dp">
 
@@ -165,7 +166,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/LayoutAbo"
+                app:layout_constraintBottom_toTopOf="@+id/bottomFragment">
 
+                <FrameLayout
+                    android:id="@+id/fragment_moncompte_pub"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </ScrollView>
 
         </LinearLayout>
         <fragment
@@ -183,6 +196,7 @@
         android:orientation="vertical">
 
     </LinearLayout>
+
     <fragment
         android:layout_marginTop="250dp"
         android:layout_width="match_parent"

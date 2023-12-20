@@ -63,6 +63,7 @@ public class MyCompteActivity extends AppCompatActivity {
     private FilActuService filActuService;
     private PanierService panierService;
     private String jwtEmail;
+    private Long jwtId;
 
     private UpdatemoncompteBinding bindingUpdate;
 
@@ -74,12 +75,16 @@ public class MyCompteActivity extends AppCompatActivity {
         setContentView(root);
         MonCompteViewModel monCompteViewModel = new ViewModelProvider(this).get(MonCompteViewModel.class);
         jwtEmail = SessionManager.getUserEmail(this);
+        jwtId = SessionManager.getUserId(this);
 
         retrofitService = new RetrofitService(this);
         FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
-
+        //Frag publication mon compte
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_moncompte_pub, new MesPublicationsFrag())
+                .commit();
         //Partie information
-        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this, configSpring.userEnCour(this));
+        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this,jwtId);
         informationUser(stringCompletableFuture, root);
 
         //Partie fragment parametre

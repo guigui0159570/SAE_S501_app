@@ -27,8 +27,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;
-import com.example.sae_s501.retrofit.PanierService;
-import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 
 import java.io.InputStream;
@@ -42,86 +40,32 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ProduitPayant extends AppCompatActivity {
-    private TextView panier;
-    private RetrofitService retrofitService;
-    private PanierService panierService;
+public class MesPubProdGratuit extends AppCompatActivity {
     private ImageView retour;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.produit_payantresp);
-        panier = findViewById(R.id.ajouter_panier);
-        String jwtEmail = SessionManager.getUserEmail(this);
-
-        retour = findViewById(R.id.close);
-
+        setContentView(R.layout.mes_pub_prod_gratuit);
         long publicationId = getIntent().getLongExtra("id", 0);
-        Log.d("publicationId", String.valueOf(publicationId));
         View rootView = findViewById(android.R.id.content);
-        if(rootView != null){
-            loadPublication(rootView, publicationId);
-        }else{
-            Toast.makeText(getApplicationContext(), "La view est null !!!", Toast.LENGTH_SHORT).show();
-        }
+        loadPublication(rootView, publicationId);
+        retour = findViewById(R.id.close);
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProduitPayant.this, FilActu.class);
+                Intent intent = new Intent(MesPubProdGratuit.this, MesPublications.class);
                 startActivity(intent);
             }
         });
-        panier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    ajoutPanier(jwtEmail,publicationId);
-            }
-        });
-
-    }
-
-    private void ajoutPanier(String email, Long idPub) {
-        retrofitService = new RetrofitService(this);
-        panierService = retrofitService.getRetrofit().create(PanierService.class);
-
-        Call<Void> call = panierService.ajoutPublicationPanier(email, idPub);
-
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    showToast("Ce produit a été ajouté au panier");
-                } else {
-                    if (response.code() == 404) {
-                        showToast("Utilisateur non trouvé");
-                    } else if (response.code() == 400) {
-                        showToast("La publication est déjà dans le panier ou vous êtes le propriétaire");
-                    } else {
-                        showToast("Erreur de requête: " + response.code());
-                        Log.d("PANIER", String.valueOf(response.code()));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                showToast("Erreur de réseau: " + t.getMessage());
-                Log.d("PANIER", t.getMessage());
-            }
-        });
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void loadPublication(View view, long publicationId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Dictionnaire.getIpAddress())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(Authentification.createAuthenticatedClient(ProduitPayant.this.getApplicationContext()))
+                .client(Authentification.createAuthenticatedClient(MesPubProdGratuit.this.getApplicationContext()))
                 .build();
 
         FilActuService filActuService = retrofit.create(FilActuService.class);
@@ -134,21 +78,19 @@ public class ProduitPayant extends AppCompatActivity {
                     // Traitement des données de la publication ici
                     Publication publication = response.body();
                     if (publication != null) {
-                        TextView titre = view.findViewById(R.id.ajout_pub_titre_payant);titre.setText(publication.getTitre());
-                        TextView description = view.findViewById(R.id.description_payant); description.setText(publication.getDescription());
-                        TextView pseudo = view.findViewById(R.id.pseudo_pub_payant);
+                        TextView titre = view.findViewById(R.id.ajout_pub_titre);titre.setText(publication.getTitre());
+                        TextView description = view.findViewById(R.id.charger_img); description.setText(publication.getDescription());
+                        TextView pseudo = view.findViewById(R.id.pseudo_pub_gratuit);
+                        Log.d(TAG, "loadPublication: debut recuperation des objets");
+                        RatingBar etoiles = view.findViewById(R.id.notation_gratuit);
+                        Log.d(TAG, "loadPublication: fin recuperation des objets");
+
+                        Log.d("Notation", ""+publication.notation_publication());
+                        etoiles.setNumStars(publication.notation_publication());
 
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
-                            pseudo.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(getApplicationContext(), CompteUtilisateur.class);
-                                    intent.putExtra("userId",publication.getProprietaire().getId());
-                                    startActivity(intent);
-                                }
-                            });
                         }else{
                             pseudo.setText("Propriétaire non répertorié...");
                         }
@@ -161,11 +103,11 @@ public class ProduitPayant extends AppCompatActivity {
                                 if (response.isSuccessful()){
                                     Log.d("CallAvis", "dans le call des avis : "+response.body());
                                     List<AvisDTO> les_avis = response.body();
-                                    LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_payant);
+                                    LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_gratuit);
                                     commentaires.setOrientation(LinearLayout.VERTICAL);
                                     if(les_avis != null){
                                         for (AvisDTO avis : les_avis){
-                                            LinearLayout linearLayout = new LinearLayout(ProduitPayant.this.getApplicationContext());
+                                            LinearLayout linearLayout = new LinearLayout(MesPubProdGratuit.this.getApplicationContext());
                                             LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
                                                     LinearLayout.LayoutParams.WRAP_CONTENT,
                                                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -173,8 +115,8 @@ public class ProduitPayant extends AppCompatActivity {
                                             params_elt.setMargins(0, 0, 0, 25);
                                             linearLayout.setLayoutParams(params_elt);
                                             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                                            TextView pseudo_avis = new TextView(ProduitPayant.this.getApplicationContext());
-                                            TextView commentaire = new TextView(ProduitPayant.this.getApplicationContext());
+                                            TextView pseudo_avis = new TextView(MesPubProdGratuit.this.getApplicationContext());
+                                            TextView commentaire = new TextView(MesPubProdGratuit.this.getApplicationContext());
 
                                             Call<Utilisateur> utilisateurCall = filActuService.getUtilisateurById(avis.getUtilisateur());
                                             utilisateurCall.enqueue(new Callback<Utilisateur>() {
@@ -193,7 +135,6 @@ public class ProduitPayant extends AppCompatActivity {
 
                                                 @Override
                                                 public void onFailure(@NonNull Call<Utilisateur> call, @NonNull Throwable t) {
-                                                    Toast.makeText(ProduitPayant.this.getApplicationContext(), "onFailure", Toast.LENGTH_SHORT).show();
 
                                                 }
                                             });
@@ -204,8 +145,7 @@ public class ProduitPayant extends AppCompatActivity {
 
                             @Override
                             public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
-                                Toast.makeText(ProduitPayant.this.getApplicationContext(), "pas d'avis récupérés !", Toast.LENGTH_SHORT).show();
-                                Log.e("DEBUG", "Failed to get comments: " + t.getMessage());
+                                Toast.makeText(MesPubProdGratuit.this.getApplicationContext(), "pas d'avis récupérés !", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -227,7 +167,7 @@ public class ProduitPayant extends AppCompatActivity {
                                         int desiredWidth = img_produit.getWidth();
                                         int desiredHeight = img_produit.getHeight();
                                         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
-                                        Drawable drawable = new BitmapDrawable(ProduitPayant.this.getResources(), resizedBitmap);
+                                        Drawable drawable = new BitmapDrawable(MesPubProdGratuit.this.getResources(), resizedBitmap);
                                         img_produit.setImageDrawable(drawable);
                                     }
                                 } else {
@@ -252,65 +192,5 @@ public class ProduitPayant extends AppCompatActivity {
             }
         });
 
-        Log.d(TAG, "loadPublication: debut recuperation des objets");
-        EditText commentaire = view.findViewById(R.id.editText_commentaire_payant);
-        RatingBar etoiles = view.findViewById(R.id.notation_payant);
-        Button ajout_commentaire = view.findViewById(R.id.button_commentaire_payant);
-        Log.d(TAG, "loadPublication: fin recuperation des objets");
-
-        String jwtEmail = SessionManager.getUserEmail(ProduitPayant.this.getApplicationContext());
-
-        Call<Long> callUserId = filActuService.getUtilisateurIdByEmail(jwtEmail);
-        callUserId.enqueue(new Callback<Long>() {
-            @Override
-            public void onResponse(@NonNull Call<Long> call, @NonNull Response<Long> response) {
-                if (response.isSuccessful()) {
-
-                    Log.d(TAG, "user id : "+response.body());
-                    Long userId = response.body();
-                    if (userId != null) {
-                        ajout_commentaire.setOnClickListener(view1 -> {
-                            if(commentaire.getText() != null){
-                                FilActuService.AvisRequestBody requestBody = new FilActuService.AvisRequestBody(
-                                        commentaire.getText().toString(),
-                                        etoiles.getNumStars(),
-                                        publicationId,
-                                        userId
-                                );
-                                Log.d("RequestBody", ""+requestBody.getCommentaire());
-                                Log.d("RequestBody", ""+requestBody.getEtoile());
-                                Log.d("RequestBody", ""+requestBody.getPublication());
-                                Log.d("RequestBody", ""+requestBody.getUtilisateur());
-                                Call<Void> voidCall = filActuService.saveAvis(commentaire.getText().toString(), (int) etoiles.getRating(), publicationId, userId);
-                                voidCall.enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                                        Log.d(TAG, "onResponse: "+response.code());
-                                        if (response.isSuccessful()){
-                                            Toast.makeText(ProduitPayant.this.getApplicationContext(), "Commentaire ajouté", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-
-                                    }
-                                });
-                                commentaire.setText("");
-                                etoiles.setRating(0);
-                                recreate();
-                            }else{
-                                Toast.makeText(ProduitPayant.this.getApplicationContext(), "Commentaire manquant", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                        });
-                    }
-                }
-            }
-            @Override
-            public void onFailure(@NonNull Call<Long> call, @NonNull Throwable t) {
-
-            }
-        });
     }
 }

@@ -39,7 +39,7 @@
             android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
             android:lineSpacingExtra="10sp"
-            android:text="Aide"
+            android:text="@string/aide"
             android:textAppearance="@style/se_connecte" />
 
         <View

@@ -213,7 +213,6 @@
         android:layout_marginEnd="128dp"
         android:background="@drawable/custom_button_background"
         android:gravity="center_vertical|center_horizontal"
-        android:onClick="onInscriptionClick"
         android:text="@string/s_inscrire"
         android:textAlignment="center"
         android:textSize="12sp"

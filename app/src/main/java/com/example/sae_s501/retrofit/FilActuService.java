@@ -9,8 +9,10 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -47,4 +49,58 @@ public interface FilActuService {
 
     @GET("/getUtilisateur/{id}")
     Call<Utilisateur> getUtilisateurById(@Path("id") Long id);
+
+    @POST("/publication/avis/save")
+    Call<Void> saveAvis(@Query("commentaire") String commentaire, @Query("etoile") int etoile,
+                        @Query("publication") long publication, @Query("utilisateur") long utilisateur);
+
+
+    class AvisRequestBody {
+        String commentaire;
+        int etoile;
+        long publication;
+        long utilisateur;
+
+        public AvisRequestBody(String commentaire, int etoile, long publication, long utilisateur) {
+            this.commentaire = commentaire;
+            this.etoile = etoile;
+            this.publication = publication;
+            this.utilisateur = utilisateur;
+        }
+
+        public String getCommentaire() {
+            return commentaire;
+        }
+
+        public void setCommentaire(String commentaire) {
+            this.commentaire = commentaire;
+        }
+
+        public int getEtoile() {
+            return etoile;
+        }
+
+        public void setEtoile(int etoile) {
+            this.etoile = etoile;
+        }
+
+        public long getPublication() {
+            return publication;
+        }
+
+        public void setPublication(long publication) {
+            this.publication = publication;
+        }
+
+        public long getUtilisateur() {
+            return utilisateur;
+        }
+
+        public void setUtilisateur(long utilisateur) {
+            this.utilisateur = utilisateur;
+        }
+    }
+
+    @GET("/fichiers/model/{nomFichier}")
+    Call<ResponseBody> getFichier(@Path("nomFichier") String nomFichier);
 }

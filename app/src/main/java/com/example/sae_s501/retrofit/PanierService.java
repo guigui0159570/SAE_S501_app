@@ -22,8 +22,9 @@ public interface PanierService {
     @GET("/panier/getPrix")
     Call<Float> getPrixByUtiId(@Query("email") String email);
 
+    @FormUrlEncoded
     @POST("/panier/ajoutPublication")
-    Call<String> ajoutPublicationPanier(@Query("email") String email, @Query("idPub") Long idPub);
+    Call<Void> ajoutPublicationPanier(@Field("email") String email, @Field("idPub") Long idPub);
 
     @GET("/panier/getPublication")
     Call<List<Publication>> getPublicationsPanier(@Query("email") String email);

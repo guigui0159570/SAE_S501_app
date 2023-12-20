@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#17282D"
-    tools:context=".AjoutPublication"
+    tools:context=".ProduitPayant"
     >
 
 
@@ -13,7 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background" />
-
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/custom_button_return"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -80,16 +89,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:textColor="#FFA500"
+                        android:textSize="25sp"
                         android:text="@string/pseudo_pub_gratuit"
                         android:layout_marginBottom="15dp"/>
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/charger_img"
+                    android:id="@+id/description_payant"
                     android:layout_width="wrap_content"
                     android:layout_height="35sp"
                     android:layout_marginStart="25dp"
                     android:clickable="true"
+                    android:textColor="@color/white"
                     android:layout_gravity="left"
                     android:text="@string/description_pub_gratuit"
                     android:textSize="17sp"
@@ -126,7 +138,7 @@
                     android:layout_height="35sp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:textColor="#0000FF"
+                    android:textColor="#FFA500"
                     android:text="@string/visualiser_img_gratuit"
                     android:textSize="17sp" />
 
@@ -148,49 +160,77 @@
                     app:srcCompat="@drawable/free_shipping_1"/>
 
                 <TextView
-                    android:id="@+id/telecharger_img"
+                    android:id="@+id/ajouter_panier"
                     android:layout_width="wrap_content"
                     android:layout_height="35sp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:textColor="#0000FF"
+                    android:textColor="#FFA500"
                     android:text="@string/payer_img_payant"
                     android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/prix_produit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50sp"/>
             </LinearLayout>
 
 
             <RatingBar
+                android:id="@+id/notation_payant"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:numStars="5"
-                android:stepSize="0.5"
+                android:stepSize="1"
                 android:layout_marginStart="25dp"/>
+
+
 
             <TextView
                 android:id="@+id/commentaires_pers"
                 android:layout_width="wrap_content"
                 android:layout_height="35sp"
-                android:layout_marginTop="80sp"
+                android:layout_marginTop="15sp"
                 android:layout_marginStart="25dp"
                 android:gravity="center"
                 android:text="@string/text_commentaires_gratuit"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="100sp"
+                app:layout_constraintTop_toBottomOf="@+id/commentaires_pers"
+                app:layout_constraintBottom_toTopOf="@+id/editTextCommentaire"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/layout_to_commentaire_payant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:orientation="vertical">
+                </LinearLayout>
+            </ScrollView>
 
 
             <EditText
-                android:id="@+id/editTextCommentaire"
+                android:id="@+id/editText_commentaire_payant"
                 style="@style/CustomEditTextStyle"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
                 android:hint="@string/ajout_commentaire_gratuit"
-                android:inputType="textEmailAddress" />
+                android:textColorHint="#00BA8D"
+                android:inputType="text"
+                android:textColor="#00BA8D"/>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/button_commentaire_payant"
                 android:layout_width="19dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="300dp"
@@ -198,15 +238,6 @@
                 android:background="@drawable/sent_1"
                 tools:ignore="MissingConstraints"/>
 
-            <Button
-                android:id="@+id/btn_valider_payant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_validation_gratuit"
-                android:layout_gravity="center"
-                android:layout_marginTop="75dp"
-                style="@style/CustomButtonStyle"
-                tools:ignore="MissingConstraints" />
         </LinearLayout>
 
     </LinearLayout>
