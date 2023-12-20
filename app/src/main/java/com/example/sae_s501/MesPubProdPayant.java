@@ -86,9 +86,6 @@ public class MesPubProdPayant extends AppCompatActivity {
                         TextView pseudo = view.findViewById(R.id.pseudo_pub_payant);
                         RatingBar etoiles = view.findViewById(R.id.notation_payant);
 
-                        etoiles.setRating(publication.notation_publication());
-                        etoiles.setEnabled(true);
-
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
                         }else{
@@ -105,8 +102,14 @@ public class MesPubProdPayant extends AppCompatActivity {
                                     List<AvisDTO> les_avis = response.body();
                                     LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_payant);
                                     commentaires.setOrientation(LinearLayout.VERTICAL);
-                                    if(les_avis != null){
-                                        for (AvisDTO avis : les_avis){
+                                    if(les_avis != null) {
+                                        int note = 0;
+                                        int nb = 0;
+                                        for (AvisDTO avis : les_avis) {
+                                            note += avis.getEtoile();
+                                            nb += 1;
+                                            //finir la fonction
+
                                             LinearLayout linearLayout = new LinearLayout(MesPubProdPayant.this.getApplicationContext());
                                             LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
                                                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -123,12 +126,13 @@ public class MesPubProdPayant extends AppCompatActivity {
                                                 @SuppressLint("SetTextI18n")
                                                 @Override
                                                 public void onResponse(@NonNull Call<Utilisateur> call, @NonNull Response<Utilisateur> response) {
-                                                    if(response.isSuccessful()){
+                                                    if (response.isSuccessful()) {
                                                         Utilisateur utilisateur = response.body();
                                                         assert utilisateur != null;
-                                                        pseudo_avis.setText(utilisateur.getPseudo()+" : ");
+                                                        pseudo_avis.setText(utilisateur.getPseudo() + " : ");
                                                         commentaire.setText(avis.getCommentaire());
-                                                        linearLayout.addView(pseudo_avis);linearLayout.addView(commentaire);
+                                                        linearLayout.addView(pseudo_avis);
+                                                        linearLayout.addView(commentaire);
                                                         commentaires.addView(linearLayout);
                                                     }
                                                 }
@@ -139,6 +143,9 @@ public class MesPubProdPayant extends AppCompatActivity {
                                                 }
                                             });
                                         }
+                                        Log.d("Notation", "notation : " + note/nb);
+                                        etoiles.setRating(Math.round(note/nb));
+                                        etoiles.setIsIndicator(true);
                                     }
                                 }
                             }

@@ -145,14 +145,6 @@ public class Publication {
         this.prix = prix;
     }
 
-    public Integer notation_publication(){
-        int sum = 0;
-        for(Avis i : avis){
-            sum += i.getEtoile();
-        }
-        return Math.round((float) sum /avis.size());
-    }
-
     public List<Avis> getAvis() {
         return avis;
     }
