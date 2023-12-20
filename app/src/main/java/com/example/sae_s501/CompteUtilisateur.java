@@ -38,9 +38,18 @@ public class CompteUtilisateur extends AppCompatActivity {
         binding = ActivityCompteUtilisateurBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         Intent intent = getIntent();
         if (intent != null) {
             long userId = intent.getLongExtra("userId", 0);
+            //Frag publication autre compte
+            PubCompteUti pubCompteUti = new PubCompteUti();
+            pubCompteUti.setFilterValue(userId);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_autrecompte_pub, pubCompteUti)
+                    .commit();
+
             if (userId != 0) {
                 informationUser(monCompteViewModel.requestInformation(this,userId), binding.getRoot());
             }

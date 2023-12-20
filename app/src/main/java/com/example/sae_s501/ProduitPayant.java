@@ -141,6 +141,14 @@ public class ProduitPayant extends AppCompatActivity {
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
+                            pseudo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getApplicationContext(), CompteUtilisateur.class);
+                                    intent.putExtra("userId",publication.getProprietaire().getId());
+                                    startActivity(intent);
+                                }
+                            });
                         }else{
                             pseudo.setText("Propriétaire non répertorié...");
                         }

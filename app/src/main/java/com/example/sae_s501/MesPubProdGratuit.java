@@ -3,6 +3,7 @@ package com.example.sae_s501;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -40,6 +41,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MesPubProdGratuit extends AppCompatActivity {
+    private ImageView retour;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +51,14 @@ public class MesPubProdGratuit extends AppCompatActivity {
         long publicationId = getIntent().getLongExtra("id", 0);
         View rootView = findViewById(android.R.id.content);
         loadPublication(rootView, publicationId);
+        retour = findViewById(R.id.close);
+        retour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MesPubProdGratuit.this, MesPublications.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadPublication(View view, long publicationId) {

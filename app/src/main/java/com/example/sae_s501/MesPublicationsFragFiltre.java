@@ -233,6 +233,14 @@ public class MesPublicationsFragFiltre extends Fragment {
                                                 layoutPersonnel.addView(pseudoText);
                                                 layoutPersonnel.addView(prixText);
                                                 layoutPersonnel.addView(textnbTelechargement);
+                                                pseudoText.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        Intent intent = new Intent(getContext(), CompteUtilisateur.class);
+                                                        intent.putExtra("userId",p.getProprietaire().getId());
+                                                        startActivity(intent);
+                                                    }
+                                                });
 
 
                                             }

@@ -218,7 +218,6 @@ public class AbonneCompte extends AppCompatActivity {
         eltClicable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("99999999999", "onClick: ");
                 Intent intent = new Intent(getBaseContext(), CompteUtilisateur.class);
                 intent.putExtra("userId", idUtilisateur.getAsLong());
                 startActivity(intent);

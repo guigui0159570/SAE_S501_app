@@ -79,7 +79,10 @@ public class MyCompteActivity extends AppCompatActivity {
 
         retrofitService = new RetrofitService(this);
         FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
-
+        //Frag publication mon compte
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_moncompte_pub, new MesPublicationsFrag())
+                .commit();
         //Partie information
         CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this,jwtId);
         informationUser(stringCompletableFuture, root);

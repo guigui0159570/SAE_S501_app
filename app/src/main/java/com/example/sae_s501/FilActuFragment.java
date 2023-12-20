@@ -31,6 +31,7 @@ import com.caverock.androidsvg.SVGParseException;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
+import com.google.gson.JsonElement;
 
 
 import java.io.IOException;
@@ -183,6 +184,13 @@ public class FilActuFragment extends Fragment {
                             layoutProduit.addView(img_produit);
                             layoutProduit.addView(layoutTitreDes);
 
+
+                            int nbTelechargement = p.getNb_telechargement();
+                            TextView textnbTelechargement = new TextView(requireContext());
+                            textnbTelechargement.setId(View.generateViewId());
+                            textnbTelechargement.setText("Téléchargement : " + nbTelechargement+ "   ");
+                            textnbTelechargement.setLayoutParams(params_elt);
+
                             String titre = p.getTitre();
                             TextView titreText = new TextView(getContext());
                             titreText.setId(View.generateViewId());titreText.setText(titre);
@@ -203,11 +211,11 @@ public class FilActuFragment extends Fragment {
                             TextView prixText = new TextView(getContext());
                             prixText.setId(View.generateViewId());
                             if(gratuit) {
-                                prixText.setText("    Gratuit");
+                                prixText.setText("    Gratuit      ");
 
                             }
                             else{
-                                prixText.setText("    Prix : " + prix);
+                                prixText.setText("    Prix : " + prix+"      ");
 
                             }
                             prixText.setLayoutParams(params_elt);
@@ -228,6 +236,16 @@ public class FilActuFragment extends Fragment {
                                 pseudoText.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue));
                                 layoutPersonnel.addView(pseudoText);
                                 layoutPersonnel.addView(prixText);
+                                layoutPersonnel.addView(textnbTelechargement);
+
+                                pseudoText.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getContext(), CompteUtilisateur.class);
+                                        intent.putExtra("userId",p.getProprietaire().getId());
+                                        startActivity(intent);
+                                    }
+                                });
                             }
 
                             //Ajout des layout

@@ -45,14 +45,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MesPubProdPayant extends AppCompatActivity {
     private RetrofitService retrofitService;
     private PanierService panierService;
-
+    private ImageView retour;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mes_pub_prod_payant);
         String jwtEmail = SessionManager.getUserEmail(this);
-
+        retour = findViewById(R.id.close);
+        retour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MesPubProdPayant.this, MesPublications.class);
+                startActivity(intent);
+            }
+        });
 
         long publicationId = getIntent().getLongExtra("id", 0);
         Log.d("publicationId", String.valueOf(publicationId));

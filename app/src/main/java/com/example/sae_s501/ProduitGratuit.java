@@ -27,7 +27,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;
+import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
+import com.example.sae_s501.retrofit.UserService;
 import com.example.sae_s501.visualisation.Visualiser;
 
 import java.io.InputStream;
@@ -44,6 +46,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProduitGratuit extends AppCompatActivity {
 
     private ImageView retour;
+    private TextView telechargement;
+    private UserService userService;
+    private RetrofitService retrofitService;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +59,8 @@ public class ProduitGratuit extends AppCompatActivity {
         View rootView = findViewById(android.R.id.content);
         loadPublication(rootView, publicationId);
         retour = findViewById(R.id.close);
+        telechargement = findViewById(R.id.telecharger_img);
+        retrofitService = new RetrofitService(this);
 
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,8 +69,41 @@ public class ProduitGratuit extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        telechargement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
     }
 
+//    private void telechargerPublication(Long idPublication) {
+//
+//        userService = retrofitService.getRetrofit().create(UserService.class);
+//        Call<Void> call = userService.telechargementByIdPub(idPublication);
+//
+//        call.enqueue(new Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {
+//                if (response.isSuccessful()) {
+//                    // Traitement en cas de succès
+//                    showToast("Téléchargement réussi");
+//                } else {
+//                    // Traitement en cas d'échec
+//                    showToast("Échec du téléchargement. Code : " + response.code());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {
+//                // Traitement en cas d'échec de la requête
+//                showToast("Erreur lors de la requête : " + t.getMessage());
+//            }
+//        });
+//
+//    }
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
     private void loadPublication(View view, long publicationId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Dictionnaire.getIpAddress())
@@ -92,6 +133,14 @@ public class ProduitGratuit extends AppCompatActivity {
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
+                            pseudo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getApplicationContext(), CompteUtilisateur.class);
+                                    intent.putExtra("userId",publication.getProprietaire().getId());
+                                    startActivity(intent);
+                                }
+                            });
                         }else{
                             pseudo.setText("Propriétaire non répertorié...");
                         }

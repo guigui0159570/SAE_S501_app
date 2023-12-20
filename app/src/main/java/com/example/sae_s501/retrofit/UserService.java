@@ -45,6 +45,8 @@ public interface UserService {
             @Part("tags") List<String> tags,
             @Part("email") String email
     );
+
+
     @DELETE("/utilisateur/delete/{id}")
     Call<Void> deleteUtilisateur(@Path("id") Long id);
     @FormUrlEncoded
@@ -78,6 +80,8 @@ public interface UserService {
 
     @GET("/imageProfil/{nomFichier}")
     Call<ResponseBody> getImageProfil(@Path("nomFichier") String nomFichier);
+
+
 
 }
 
