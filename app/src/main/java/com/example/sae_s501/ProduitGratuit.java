@@ -3,6 +3,8 @@ package com.example.sae_s501;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,6 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -50,11 +53,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProduitGratuit extends AppCompatActivity {
 
     private ImageView retour;
-    private TextView telechargement;
+    private ImageView signaler;
     private UserService userService;
     private RetrofitService retrofitService;
 
-    private String fichier;
+    private long id;
+    private String jwtEmail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,8 +68,11 @@ public class ProduitGratuit extends AppCompatActivity {
         View rootView = findViewById(android.R.id.content);
         loadPublication(rootView, publicationId);
         retour = findViewById(R.id.close);
-        telechargement = findViewById(R.id.telecharger_img);
         retrofitService = new RetrofitService(this);
+        signaler = findViewById(R.id.signaler);
+
+
+        jwtEmail = SessionManager.getUserEmail(this);
 
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,76 +81,54 @@ public class ProduitGratuit extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        telechargement.setOnClickListener(new View.OnClickListener() {
+
+        signaler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserService userService1 = retrofitService.getRetrofit().create(UserService.class);
-
-                // Effectuer la requête de téléchargement
-                Call<ResponseBody> call = userService1.downloadFile(fichier);
-
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                        if (response.isSuccessful()) {
-                            // Traitement réussi, enregistrez le fichier localement
-                            saveFileLocally(response.body());
-                        } else {
-                            // Traitement en cas d'échec
-                            showToast("Échec du téléchargement. Code : " + response.code());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                        // Traitement en cas d'échec de la requête
-                        showToast("Erreur lors de la requête : " + t.getMessage());
-                    }
-                });
+                SignalerConfirmation(jwtEmail,id);
             }
         });
     }
 
-    private void saveFileLocally(ResponseBody body) {
-        try {
-            // Vérifier si le stockage externe est disponible
-            if (isExternalStorageWritable()) {
-                // Obtenez le répertoire de téléchargement externe
-                File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-                // Créez le fichier local dans le répertoire de téléchargement
-                String fileName = fichier;
-                File file = new File(downloadFolder, fileName);
+    private void SignalerConfirmation(String jwt,Long id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation")
+                .setMessage("Voulez-vous vraiment signaler cette publication ?")
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                // Vérifiez si le fichier existe déjà
-                if (file.exists()) {
-                    showToast("Le fichier est déjà enregistré localement : " + file.getAbsolutePath());
-                    return;
-                }
+                        userService = retrofitService.getRetrofit().create(UserService.class);
 
+                        Call<Void> aideMail = userService.signalement(jwt,id);
 
-                // Créez le flux de sortie pour écrire dans le fichier local
-                FileOutputStream outputStream = new FileOutputStream(file);
-                outputStream.write(body.bytes());
-                outputStream.close();
-
-                // Le fichier a été enregistré localement avec succès
-                showToast("Fichier enregistré localement : " + file.getAbsolutePath());
-            } else {
-                // Le stockage externe n'est pas disponible
-                showToast("Le stockage externe n'est pas disponible.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Une exception s'est produite lors de l'enregistrement du fichier
-            showToast("Erreur lors de l'enregistrement du fichier localement.");
-        }
+                        aideMail.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    showToast("Cette publication a été signalé auprès d'un admin.");
+                                }
+                                else{
+                                    Log.d("ERREUR REQUETE", "ERREUR REQUETE" + response);
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                showToast("Erreur lors de la communication avec le serveur");
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
-    private boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
-    }
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -167,8 +152,7 @@ public class ProduitGratuit extends AppCompatActivity {
                         TextView titre = view.findViewById(R.id.ajout_pub_titre);titre.setText(publication.getTitre());
                         TextView description = view.findViewById(R.id.charger_img); description.setText(publication.getDescription());
                         TextView pseudo = view.findViewById(R.id.pseudo_pub_gratuit);
-                        fichier =  publication.getFichier();
-                        Log.d("FICHIER", publication.getFichier());
+                        id =  publication.getId();
 
                         View visulaiser = findViewById(R.id.visualiser_img);
                         visulaiser.setOnClickListener(view -> {
@@ -177,14 +161,20 @@ public class ProduitGratuit extends AppCompatActivity {
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
-                            pseudo.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(getApplicationContext(), CompteUtilisateur.class);
-                                    intent.putExtra("userId",publication.getProprietaire().getId());
-                                    startActivity(intent);
-                                }
-                            });
+                            if(!Objects.equals(publication.getProprietaire().getEmail(), jwtEmail)) {
+                                pseudo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getApplicationContext(), CompteUtilisateur.class);
+                                        intent.putExtra("userId", publication.getProprietaire().getId());
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                            else {
+                                Intent intent = new Intent(getApplicationContext(), MyCompteActivity.class);
+                                startActivity(intent);
+                            }
                         }else{
                             pseudo.setText("Propriétaire non répertorié...");
                         }

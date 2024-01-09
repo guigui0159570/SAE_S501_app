@@ -3,6 +3,8 @@ package com.example.sae_s501;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,10 +32,12 @@ import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.PanierService;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
+import com.example.sae_s501.retrofit.UserService;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -47,6 +51,10 @@ public class ProduitPayant extends AppCompatActivity {
     private RetrofitService retrofitService;
     private PanierService panierService;
     private ImageView retour;
+    private ImageView signaler;
+    private UserService userService;
+    private long id;
+    private String jwtEmail;
 
 
     @Override
@@ -54,8 +62,9 @@ public class ProduitPayant extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.produit_payantresp);
         panier = findViewById(R.id.ajouter_panier);
-        String jwtEmail = SessionManager.getUserEmail(this);
-
+        signaler = findViewById(R.id.signaler);
+        retrofitService = new RetrofitService(this);
+        jwtEmail = SessionManager.getUserEmail(this);
         retour = findViewById(R.id.close);
 
         long publicationId = getIntent().getLongExtra("id", 0);
@@ -66,6 +75,12 @@ public class ProduitPayant extends AppCompatActivity {
         }else{
             Toast.makeText(getApplicationContext(), "La view est null !!!", Toast.LENGTH_SHORT).show();
         }
+        signaler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SignalerConfirmation(jwtEmail,id);
+            }
+        });
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +96,43 @@ public class ProduitPayant extends AppCompatActivity {
         });
 
     }
+    private void SignalerConfirmation(String jwt,Long id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation")
+                .setMessage("Voulez-vous vraiment signaler cette publication ?")
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
+                        userService = retrofitService.getRetrofit().create(UserService.class);
+
+                        Call<Void> aideMail = userService.signalement(jwt,id);
+
+                        aideMail.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    showToast("Cette publication a été signalé auprès d'un admin.");
+                                }
+                                else{
+                                    Log.d("ERREUR REQUETE", "ERREUR REQUETE" + response);
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                showToast("Erreur lors de la communication avec le serveur");
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
     private void ajoutPanier(String email, Long idPub) {
         retrofitService = new RetrofitService(this);
         panierService = retrofitService.getRetrofit().create(PanierService.class);
@@ -137,18 +188,26 @@ public class ProduitPayant extends AppCompatActivity {
                         TextView titre = view.findViewById(R.id.ajout_pub_titre_payant);titre.setText(publication.getTitre());
                         TextView description = view.findViewById(R.id.description_payant); description.setText(publication.getDescription());
                         TextView pseudo = view.findViewById(R.id.pseudo_pub_payant);
-
+                        id =  publication.getId();
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
-                            pseudo.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(getApplicationContext(), CompteUtilisateur.class);
-                                    intent.putExtra("userId",publication.getProprietaire().getId());
-                                    startActivity(intent);
-                                }
-                            });
+                            if(!Objects.equals(publication.getProprietaire().getEmail(), jwtEmail)) {
+                                pseudo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getApplicationContext(), CompteUtilisateur.class);
+                                        intent.putExtra("userId", publication.getProprietaire().getId());
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                            else {
+                                Intent intent = new Intent(getApplicationContext(), MyCompteActivity.class);
+                                startActivity(intent);
+
+                            }
+
                         }else{
                             pseudo.setText("Propriétaire non répertorié...");
                         }

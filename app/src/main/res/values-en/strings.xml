@@ -56,7 +56,7 @@
     <string name="fil_actu_titre">News</string>
     <string name="edit_fil_actu">To research</string>
     <string name="btn_inscription">Register</string>
-    <string name="btn_valider">To validate</string>
+    <string name="btn_valider">Validate</string>
     <string name="text_connexion_mail">E-mail address :</string>
     <string name="edit_connexion_mail">E-mail address</string>
     <string name="text_connexion_mdp">Password :</string>
@@ -83,8 +83,16 @@
     <string name="veuillez_d_crire_votre_probl_me">Please describe your problem</string>
     <string name="d_crire_le_probl_me">Describe the problem</string>
     <string name="retour">Back</string>
+    <string name="achats">My Purchases</string>
 
-
+    <string name="titre_pub_gratuit" />
+    <string name="pseudo_pub_gratuit" />
+    <string name="visualiser_img_gratuit">View article</string>
+    <string name="telecharger_img_gratuit">Download the article</string>
+    <string name="text_commentaires_gratuit">"Comments: "</string>
+    <string name="ajout_commentaire_gratuit">Add a comment</string>
+    <string name="btn_validation_gratuit">Validate</string>
+    <string name="payer_img_payant">Add to Cart</string>
     <string name="aide">Help</string>
 
     <string name="abonnement_text">Subscriptions</string>

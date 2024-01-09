@@ -132,10 +132,12 @@ public class MesPublicationsFragFiltre extends Fragment {
                                             layoutConteneur.setVisibility(View.VISIBLE);
 
 
+
                                             //Param layoutProduit
                                             layoutProduit.setOrientation(LinearLayout.HORIZONTAL);
                                             layoutProduit.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
                                             layoutProduit.setId(View.generateViewId());
+
 
                                             //Param layoutTitreDes
                                             layoutTitreDes.setOrientation(LinearLayout.VERTICAL);
@@ -361,4 +363,6 @@ public class MesPublicationsFragFiltre extends Fragment {
             }
         });
     }
+
+
 }
