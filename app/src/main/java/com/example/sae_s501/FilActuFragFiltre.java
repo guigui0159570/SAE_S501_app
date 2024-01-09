@@ -1,5 +1,6 @@
 package com.example.sae_s501;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.PictureDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -18,10 +20,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -90,11 +95,11 @@ public class FilActuFragFiltre extends Fragment {
                             //Layout qui va contenir les autres layout
                             LinearLayout layoutConteneur = new LinearLayout(requireContext());
                             //Layout qui contient l'image du produit ainsi le titre et la description
-                            LinearLayout layoutProduit = new LinearLayout(requireContext());
+                            LinearLayout layoutProduit = new LinearLayout(getContext());
                             //Layout qui contient le titre et la description
-                            LinearLayout layoutTitreDes = new LinearLayout(requireContext());
+                            LinearLayout layoutTitreDes = new LinearLayout(getContext());
                             //Layout qui contient la partie personne ainsi que les étoiles de notation
-                            LinearLayout layoutPersonnel = new LinearLayout(requireContext());
+                            LinearLayout layoutPersonnel = new LinearLayout(getContext());
 
                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -115,25 +120,21 @@ public class FilActuFragFiltre extends Fragment {
                             layoutPersonnel.setLayoutParams(layoutParams);
 
                             //Param layoutConteneur
-                            layoutConteneur.setId(View.generateViewId());
+                            layoutConteneur.setId(p.getId().intValue());
                             layoutConteneur.setOrientation(LinearLayout.VERTICAL);
                             layoutConteneur.setVisibility(View.VISIBLE);
 
-                            layoutConteneur.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent;
-                                    if(p.getGratuit()){
-                                        // ne fonctionne pas, à voir via le conteneur
-                                        //Toast.makeText(requireContext(), p.getGratuit().toString(), Toast.LENGTH_SHORT).show();
-                                        intent = new Intent(getActivity(), ProduitGratuit.class);
-                                    }else{
-                                        intent = new Intent(getActivity(), ProduitPayant.class);
-                                    }
-                                    intent.putExtra("id", layoutConteneur.getId());
-                                    startActivity(intent);
-                                }
-                            });
+                            if(p.getGratuit()){
+                                layoutConteneur.setOnClickListener(view -> {
+                                    Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
+                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuit.class));
+                                });
+                            }else {
+                                layoutConteneur.setOnClickListener(view -> {
+                                    Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
+                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayant.class));
+                                });
+                            }
 
 
                             //Param layoutProduit
@@ -145,6 +146,7 @@ public class FilActuFragFiltre extends Fragment {
                             layoutTitreDes.setOrientation(LinearLayout.VERTICAL);
                             layoutTitreDes.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
                             layoutTitreDes.setId(View.generateViewId());
+
                             //mettre l'element image produit
                             ImageView img_produit = new ImageView(requireContext());
 
@@ -154,21 +156,23 @@ public class FilActuFragFiltre extends Fragment {
                             callImage.enqueue(new Callback<ResponseBody>() {
                                 @Override
                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    if (response.isSuccessful()) {
-                                        ResponseBody body = response.body();
-                                        Log.d("IMAGE", String.valueOf(body));
-                                        if (body != null) {
-                                            InputStream inputStream = body.byteStream();
-                                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                                            int desiredWidth = 400;
-                                            int desiredHeight = 400;
-                                            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
-                                            Drawable drawable = new BitmapDrawable(getResources(), resizedBitmap);
-                                            img_produit.setImageDrawable(drawable);
+                                    if (getActivity() != null && getContext() != null){
+                                        if (response.isSuccessful()) {
+                                            ResponseBody body = response.body();
+                                            Log.d("IMAGE", String.valueOf(body));
+                                            if (body != null) {
+                                                InputStream inputStream = body.byteStream();
+                                                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                                                int desiredWidth = 400;
+                                                int desiredHeight = 400;
+                                                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
+                                                Drawable drawable = new BitmapDrawable(getResources(), resizedBitmap);
+                                                img_produit.setImageDrawable(drawable);
 
+                                            }
+                                        } else {
+                                            Log.e("IMAGE", "Erreur lors de la récupération de l'image. Code de réponse : " + response.code());
                                         }
-                                    } else {
-                                        Log.e("IMAGE", "Erreur lors de la récupération de l'image. Code de réponse : " + response.code());
                                     }
                                 }
 
@@ -181,11 +185,6 @@ public class FilActuFragFiltre extends Fragment {
                             layoutProduit.addView(img_produit);
                             layoutProduit.addView(layoutTitreDes);
 
-                            int nbTelechargement = p.getNb_telechargement();
-                            TextView textnbTelechargement = new TextView(requireContext());
-                            textnbTelechargement.setId(View.generateViewId());
-                            textnbTelechargement.setText("Téléchargement : " + nbTelechargement+ "   ");
-                            textnbTelechargement.setLayoutParams(params_elt);
 
                             String titre = p.getTitre();
                             TextView titreText = new TextView(requireContext());
@@ -216,6 +215,12 @@ public class FilActuFragFiltre extends Fragment {
                             }
                             prixText.setLayoutParams(params_elt);
 
+                            int nbTelechargement = p.getNb_telechargement();
+                            TextView textnbTelechargement = new TextView(requireContext());
+                            textnbTelechargement.setId(View.generateViewId());
+                            textnbTelechargement.setText("Téléchargement : " + nbTelechargement+ "   ");
+                            textnbTelechargement.setLayoutParams(params_elt);
+
                             //Param layoutPersonnel
                             layoutPersonnel.setOrientation(LinearLayout.HORIZONTAL);
                             layoutPersonnel.setGravity(LinearLayout.TEXT_ALIGNMENT_TEXT_START);
@@ -234,11 +239,12 @@ public class FilActuFragFiltre extends Fragment {
                                 layoutPersonnel.addView(prixText);
                                 layoutPersonnel.addView(textnbTelechargement);
 
-
                             }
 
+
                             //Ajout des layout
-                            layoutConteneur.addView(layoutProduit); layoutConteneur.addView(layoutPersonnel);
+                            layoutConteneur.addView(layoutProduit);
+                            layoutConteneur.addView(layoutPersonnel);
 
                             //Mise en place de bordures
                             GradientDrawable border = new GradientDrawable();
@@ -246,6 +252,45 @@ public class FilActuFragFiltre extends Fragment {
                             border.setCornerRadius(20f);
                             layoutConteneur.setBackground(border);layoutConteneur.setBackgroundResource(R.color.white);
                             layout.addView(layoutConteneur);
+
+                            //Creation de la rating bar
+                            Call<List<AvisDTO>> avisDTOCall = filActuService.getAllAvisByPublication(p.getId());
+                            avisDTOCall.enqueue(new Callback<List<AvisDTO>>() {
+                                @SuppressLint("RtlHardcoded")
+                                @RequiresApi(api = Build.VERSION_CODES.Q)
+                                @Override
+                                public void onResponse(@NonNull Call<List<AvisDTO>> call, @NonNull Response<List<AvisDTO>> response) {
+                                    if(response.isSuccessful()){
+                                        List<AvisDTO> les_avis = response.body();
+                                        RatingBar new_rating_bar = new RatingBar(FilActuFragFiltre.this.requireContext());
+                                        int widthInPixels = 850;
+                                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(widthInPixels, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                        assert les_avis != null;
+                                        if(les_avis.size() != 0){
+                                            int note = 0;
+                                            int nb = 0;
+                                            for(AvisDTO avisDTO : les_avis){
+                                                note += avisDTO.getEtoile();
+                                                nb += 1;
+                                            }
+
+                                            new_rating_bar.setNumStars(5);
+                                            new_rating_bar.setStepSize(1);
+                                            new_rating_bar.setScaleX(0.75f);
+                                            new_rating_bar.setScaleY(0.75f);
+                                            float roundedRating = Math.round((float) note/nb);
+                                            new_rating_bar.setRating(roundedRating);
+                                            new_rating_bar.setIsIndicator(true);
+                                            layoutConteneur.addView(new_rating_bar, layoutParams);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
+
+                                }
+                            });
                         }
                     } else {
                         Log.e(TAG, "Error response: " + response.errorBody());
@@ -269,5 +314,11 @@ public class FilActuFragFiltre extends Fragment {
                 Toast.makeText(requireContext(), "Erreur lors de la communication avec le serveur", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public static void loadView(View view, long id, Intent intent){
+        Log.d("ID de la pub", ""+id);
+        intent.putExtra("id", id);
+        view.getContext().startActivity(intent);
     }
 }

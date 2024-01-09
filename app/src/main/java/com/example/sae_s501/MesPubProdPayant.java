@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -109,7 +110,8 @@ public class MesPubProdPayant extends AppCompatActivity {
                                     List<AvisDTO> les_avis = response.body();
                                     LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_payant);
                                     commentaires.setOrientation(LinearLayout.VERTICAL);
-                                    if(les_avis != null) {
+                                    assert les_avis != null;
+                                    if(les_avis.size() != 0) {
                                         int note = 0;
                                         int nb = 0;
                                         for (AvisDTO avis : les_avis) {
@@ -153,6 +155,13 @@ public class MesPubProdPayant extends AppCompatActivity {
                                         Log.d("Notation", "notation : " + note/nb);
                                         etoiles.setRating(Math.round(note/nb));
                                         etoiles.setIsIndicator(true);
+                                    }
+                                    else{
+                                        TextView textView = new TextView(MesPubProdPayant.this.getApplicationContext());
+                                        textView.setText("Cette publication ne possède pas d'avis...");
+                                        textView.setTextColor(Color.parseColor("#FFA500"));
+                                        textView.setTextSize(18);
+                                        commentaires.addView(textView);
                                     }
                                 }
                             }

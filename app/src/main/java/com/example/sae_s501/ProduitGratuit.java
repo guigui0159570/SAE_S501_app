@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -200,7 +201,8 @@ public class ProduitGratuit extends AppCompatActivity {
                                     Log.d("AVIS", "Nombre d'avis récupérés : " + (les_avis != null ? les_avis.size() : 0));
                                     LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_gratuit);
                                     commentaires.setOrientation(LinearLayout.VERTICAL);
-                                    if(les_avis != null){
+                                    assert les_avis != null;
+                                    if(les_avis.size() != 0){
                                         for (AvisDTO avis : les_avis){
                                             LinearLayout linearLayout = new LinearLayout(ProduitGratuit.this.getApplicationContext());
                                             LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
@@ -235,6 +237,12 @@ public class ProduitGratuit extends AppCompatActivity {
                                                 }
                                             });
                                         }
+                                    }else{
+                                        TextView textView = new TextView(ProduitGratuit.this.getApplicationContext());
+                                        textView.setText("Cette publication ne possède pas d'avis...");
+                                        textView.setTextColor(Color.parseColor("#FFA500"));
+                                        textView.setTextSize(18);
+                                        commentaires.addView(textView);
                                     }
                                 }
                             }
