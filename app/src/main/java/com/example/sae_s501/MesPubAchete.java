@@ -1,6 +1,5 @@
 package com.example.sae_s501;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,36 +9,32 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.PictureDrawable;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
-import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
+import com.example.sae_s501.retrofit.UserService;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -48,10 +43,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MesPublicationsFrag extends Fragment {
+public class MesPubAchete extends Fragment {
 
     private static final String TAG = "MesPublicationsFrag";
     private static final String BASE_URL = Dictionnaire.getIpAddress();
@@ -84,7 +77,7 @@ public class MesPublicationsFrag extends Fragment {
                 if (response.isSuccessful()) {
                     Long userId = response.body();
                     if (userId != null) {
-                        Call<List<Publication>> callPublications = filActuService.getPublicationByUtilisateurId(userId);
+                        Call<List<Publication>> callPublications = filActuService.getPubAcheteById(userId);
                         callPublications.enqueue(new Callback<List<Publication>>() {
 
                             @Override
@@ -98,7 +91,9 @@ public class MesPublicationsFrag extends Fragment {
                                             layout.removeAllViews();
 
                                             for (Publication p : publications) {
+
                                                 //Layout qui va contenir les autres layout
+                                                Log.d(TAG, "requireContext: "+requireContext().toString());
                                                 LinearLayout layoutConteneur = new LinearLayout(requireContext());
                                                 //Layout qui contient l'image du produit ainsi le titre et la description
                                                 LinearLayout layoutProduit = new LinearLayout(getContext());
@@ -247,7 +242,7 @@ public class MesPublicationsFrag extends Fragment {
                                                 }
                                                 ImageView supp = new ImageView(requireContext());
                                                 supp.setId(View.generateViewId());
-                                                supp.setImageResource(R.drawable.poubelle);
+                                                supp.setImageResource(R.drawable.download);
 
                                                 RelativeLayout.LayoutParams clickableImageParams = new RelativeLayout.LayoutParams(
                                                         dpToPx(32),
@@ -255,11 +250,38 @@ public class MesPublicationsFrag extends Fragment {
                                                 );
                                                 clickableImageParams.setMargins(0, 0, dpToPx(20), dpToPx(20));
                                                 supp.setLayoutParams(clickableImageParams);
-
                                                 supp.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View view) {
-                                                        DeleteConfirmation(p.getId());
+
+                                                        UserService userService1 = retrofitService.getRetrofit().create(UserService.class);
+
+                                                        // Effectuer la requête de téléchargement
+                                                        Call<ResponseBody> call = userService1.downloadFile(p.getFichier());
+
+                                                        call.enqueue(new Callback<ResponseBody>() {
+                                                            @Override
+                                                            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    // Traitement réussi, enregistrez le fichier localement
+                                                                    Log.d("FICHIER", "dans cal");
+
+                                                                    saveFileLocally(response.body(),p.getFichier());
+                                                                } else {
+                                                                    // Traitement en cas d'échec
+                                                                    showToast("Échec du téléchargement. Code : " + response.code());
+                                                                    Log.d("FICHIER", "dans cal echec");
+
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                                                                // Traitement en cas d'échec de la requête
+                                                                showToast("Erreur lors de la requête : " + t.getMessage());
+
+                                                            }
+                                                        });
                                                     }
                                                 });
                                                 layoutPersonnel.addView(supp);
@@ -274,45 +296,6 @@ public class MesPublicationsFrag extends Fragment {
                                                 border.setCornerRadius(20f);
                                                 layoutConteneur.setBackground(border);layoutConteneur.setBackgroundResource(R.color.white);
                                                 layout.addView(layoutConteneur);
-
-                                                //Creation de la rating bar
-                                                Call<List<AvisDTO>> avisDTOCall = filActuService.getAllAvisByPublication(p.getId());
-                                                avisDTOCall.enqueue(new Callback<List<AvisDTO>>() {
-                                                    @SuppressLint("RtlHardcoded")
-                                                    @RequiresApi(api = Build.VERSION_CODES.Q)
-                                                    @Override
-                                                    public void onResponse(@NonNull Call<List<AvisDTO>> call, @NonNull Response<List<AvisDTO>> response) {
-                                                        if(response.isSuccessful()){
-                                                            List<AvisDTO> les_avis = response.body();
-                                                            RatingBar new_rating_bar = new RatingBar(MesPublicationsFrag.this.requireContext());
-                                                            int widthInPixels = 850;
-                                                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(widthInPixels, LinearLayout.LayoutParams.WRAP_CONTENT);
-                                                            assert les_avis != null;
-                                                            if(les_avis.size() != 0){
-                                                                int note = 0;
-                                                                int nb = 0;
-                                                                for(AvisDTO avisDTO : les_avis){
-                                                                    note += avisDTO.getEtoile();
-                                                                    nb += 1;
-                                                                }
-
-                                                                new_rating_bar.setNumStars(5);
-                                                                new_rating_bar.setStepSize(1);
-                                                                new_rating_bar.setScaleX(0.75f);
-                                                                new_rating_bar.setScaleY(0.75f);
-                                                                float roundedRating = Math.round((float) note/nb);
-                                                                new_rating_bar.setRating(roundedRating);
-                                                                new_rating_bar.setIsIndicator(true);
-                                                                layoutConteneur.addView(new_rating_bar, layoutParams);
-                                                            }
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
-
-                                                    }
-                                                });
                                             }
                                         } else {
                                             Log.e(TAG, "Error response: " + response.errorBody());
@@ -359,25 +342,47 @@ public class MesPublicationsFrag extends Fragment {
     private void showToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
-    private void DeleteConfirmation(long publicationId) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Confirmation")
-                .setMessage("Voulez-vous vraiment supprimer cette publication?")
-                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        deletePublication(publicationId);
-                    }
-                })
-                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-    }
 
+
+    private void saveFileLocally(ResponseBody body,String fichier) {
+        try {
+            // Vérifier si le stockage externe est disponible
+            if (isExternalStorageWritable()) {
+                // Obtenez le répertoire de téléchargement externe
+                File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+                // Créez le fichier local dans le répertoire de téléchargement
+                String fileName = fichier;
+                File file = new File(downloadFolder, fileName);
+
+                // Vérifiez si le fichier existe déjà
+                if (file.exists()) {
+                    showToast("Le fichier est déjà enregistré localement : " + file.getAbsolutePath());
+                    return;
+                }
+
+
+                // Créez le flux de sortie pour écrire dans le fichier local
+                FileOutputStream outputStream = new FileOutputStream(file);
+                outputStream.write(body.bytes());
+                outputStream.close();
+
+                // Le fichier a été enregistré localement avec succès
+                showToast("Fichier enregistré localement : " + file.getAbsolutePath());
+            } else {
+                // Le stockage externe n'est pas disponible
+                showToast("Le stockage externe n'est pas disponible.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Une exception s'est produite lors de l'enregistrement du fichier
+            showToast("Erreur lors de l'enregistrement du fichier localement.");
+        }
+    }
+    private boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
     private void deletePublication(long publicationId) {
         retrofitService = new RetrofitService(getContext());
         FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);

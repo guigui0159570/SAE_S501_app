@@ -19,12 +19,14 @@ public class MesPublications extends AppCompatActivity {
     private EditText editTextFiltre;
     private ImageView imageButtonFiltre;
     private Boolean filtreActif = false;
+    private ImageView coeur;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mes_publications);
         editTextFiltre = findViewById(R.id.edit_filtre);
         imageButtonFiltre = findViewById(R.id.imageButton);
+        coeur = findViewById(R.id.pubAchat);
         imageButtonFiltre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +73,16 @@ public class MesPublications extends AppCompatActivity {
 
 
             });
+        coeur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MesPublications.this, MesAchats.class);
+                startActivity(intent);
+            }
+
+
+        });
+
 
     }
 }

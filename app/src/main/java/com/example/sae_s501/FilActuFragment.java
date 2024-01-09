@@ -37,6 +37,7 @@ import com.caverock.androidsvg.SVGParseException;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
+import com.example.sae_s501.retrofit.SessionManager;
 import com.google.gson.JsonElement;
 
 
@@ -71,6 +72,7 @@ public class FilActuFragment extends Fragment {
         loadData(view);
         Log.d(TAG, "onCreateFragment : loaded datas");
         return view;
+
     }
 
     // Ajoutez cette méthode pour effectuer l'appel réseau depuis votre fragment
@@ -98,7 +100,6 @@ public class FilActuFragment extends Fragment {
                         layout.removeAllViews();
 
                         for (Publication p : publications) {
-                            Log.d(TAG, "Fils de pute: "+p.getId());
                             //Layout qui va contenir les autres layout
                             LinearLayout layoutConteneur = new LinearLayout(getContext());
                             //Layout qui contient l'image du produit ainsi le titre et la description
@@ -134,12 +135,10 @@ public class FilActuFragment extends Fragment {
 
                             if(p.getGratuit()){
                                 layoutConteneur.setOnClickListener(view -> {
-                                    Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
                                     loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuit.class));
                                 });
                             }else {
                                 layoutConteneur.setOnClickListener(view -> {
-                                    Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
                                     loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayant.class));
                                 });
                             }
@@ -281,14 +280,6 @@ public class FilActuFragment extends Fragment {
                                 layoutPersonnel.addView(prixText);
                                 layoutPersonnel.addView(textnbTelechargement);
 
-                                pseudoText.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getContext(), CompteUtilisateur.class);
-                                        intent.putExtra("userId",p.getProprietaire().getId());
-                                        startActivity(intent);
-                                    }
-                                });
                             }
 
                             //Ajout des layout

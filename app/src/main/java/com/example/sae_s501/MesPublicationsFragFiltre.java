@@ -147,10 +147,12 @@ public class MesPublicationsFragFiltre extends Fragment {
                                             }
 
 
+
                                             //Param layoutProduit
                                             layoutProduit.setOrientation(LinearLayout.HORIZONTAL);
                                             layoutProduit.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
                                             layoutProduit.setId(View.generateViewId());
+
 
                                             //Param layoutTitreDes
                                             layoutTitreDes.setOrientation(LinearLayout.VERTICAL);
@@ -408,9 +410,11 @@ public class MesPublicationsFragFiltre extends Fragment {
         });
     }
 
+
     public static void loadView(View view, long id, Intent intent){
         Log.d("ID de la pub", ""+id);
         intent.putExtra("id", id);
         view.getContext().startActivity(intent);
     }
+
 }

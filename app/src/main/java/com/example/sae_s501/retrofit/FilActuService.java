@@ -24,6 +24,9 @@ public interface FilActuService {
     @GET("/publication/getByFiltre")
     Call<List<Publication>> getAllPublicationByFiltre(@Query("filtre") String filtre);
 
+    @GET("/publication/getPubAchete/{id}")
+    Call<List<Publication>> getPubAcheteById(@Path(("id")) Long id);
+
     @GET("/publication/avis/get/pub/{id}")
     Call<List<AvisDTO>> getAllAvisByPublication(@Path(("id")) Long publication);
 
