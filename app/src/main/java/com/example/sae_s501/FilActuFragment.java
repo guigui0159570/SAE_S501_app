@@ -1,5 +1,6 @@
 package com.example.sae_s501;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,11 +8,14 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.PictureDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +23,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -141,12 +147,10 @@ public class FilActuFragment extends Fragment {
 
                             //Param layoutProduit
                             layoutProduit.setOrientation(LinearLayout.HORIZONTAL);
-                            layoutProduit.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
                             layoutProduit.setId(View.generateViewId());
 
                             //Param layoutTitreDes
                             layoutTitreDes.setOrientation(LinearLayout.VERTICAL);
-                            layoutTitreDes.setGravity(LinearLayout.TEXT_ALIGNMENT_CENTER);
                             layoutTitreDes.setId(View.generateViewId());
                             //mettre l'element image produit
                             ImageView img_produit = new ImageView(getContext());
@@ -204,6 +208,45 @@ public class FilActuFragment extends Fragment {
 
                             layoutTitreDes.addView(titreText);
                             layoutTitreDes.addView(desText);
+
+                            Call<List<AvisDTO>> avisDTOCall = filActuService.getAllAvisByPublication(p.getId());
+                            avisDTOCall.enqueue(new Callback<List<AvisDTO>>() {
+                                @SuppressLint("RtlHardcoded")
+                                @RequiresApi(api = Build.VERSION_CODES.Q)
+                                @Override
+                                public void onResponse(@NonNull Call<List<AvisDTO>> call, @NonNull Response<List<AvisDTO>> response) {
+                                    if(response.isSuccessful()){
+                                        List<AvisDTO> les_avis = response.body();
+                                        RatingBar new_rating_bar = new RatingBar(FilActuFragment.this.requireContext());
+                                        int widthInPixels = 850;
+                                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(widthInPixels, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                        assert les_avis != null;
+                                        if(les_avis.size() != 0){
+                                            int note = 0;
+                                            int nb = 0;
+                                            for(AvisDTO avisDTO : les_avis){
+                                                note += avisDTO.getEtoile();
+                                                nb += 1;
+                                            }
+
+                                            new_rating_bar.setNumStars(5);
+                                            new_rating_bar.setStepSize(1);
+                                            new_rating_bar.setScaleX(0.75f);
+                                            new_rating_bar.setScaleY(0.75f);
+                                            float roundedRating = Math.round((float) note/nb);
+                                            new_rating_bar.setRating(roundedRating);
+                                            new_rating_bar.setIsIndicator(true);
+                                            layoutParams.gravity = Gravity.RIGHT;
+                                            layoutConteneur.addView(new_rating_bar, layoutParams);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
+
+                                }
+                            });
 
                             Boolean gratuit = p.getGratuit();
                             String prix = String.valueOf(p.getPrix());

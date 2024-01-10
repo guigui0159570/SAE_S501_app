@@ -117,7 +117,7 @@
                 <TextView
                     android:id="@+id/charger_img"
                     android:layout_width="wrap_content"
-                    android:layout_height="35sp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:clickable="true"
                     android:textColor="@color/white"

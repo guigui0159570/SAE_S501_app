@@ -1,5 +1,6 @@
 package com.example.sae_s501;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.PictureDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -20,11 +22,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -94,9 +98,7 @@ public class MesPublicationsFrag extends Fragment {
                                             layout.removeAllViews();
 
                                             for (Publication p : publications) {
-
                                                 //Layout qui va contenir les autres layout
-                                                Log.d(TAG, "requireContext: "+requireContext().toString());
                                                 LinearLayout layoutConteneur = new LinearLayout(requireContext());
                                                 //Layout qui contient l'image du produit ainsi le titre et la description
                                                 LinearLayout layoutProduit = new LinearLayout(getContext());
@@ -272,6 +274,45 @@ public class MesPublicationsFrag extends Fragment {
                                                 border.setCornerRadius(20f);
                                                 layoutConteneur.setBackground(border);layoutConteneur.setBackgroundResource(R.color.white);
                                                 layout.addView(layoutConteneur);
+
+                                                //Creation de la rating bar
+                                                Call<List<AvisDTO>> avisDTOCall = filActuService.getAllAvisByPublication(p.getId());
+                                                avisDTOCall.enqueue(new Callback<List<AvisDTO>>() {
+                                                    @SuppressLint("RtlHardcoded")
+                                                    @RequiresApi(api = Build.VERSION_CODES.Q)
+                                                    @Override
+                                                    public void onResponse(@NonNull Call<List<AvisDTO>> call, @NonNull Response<List<AvisDTO>> response) {
+                                                        if(response.isSuccessful()){
+                                                            List<AvisDTO> les_avis = response.body();
+                                                            RatingBar new_rating_bar = new RatingBar(MesPublicationsFrag.this.requireContext());
+                                                            int widthInPixels = 850;
+                                                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(widthInPixels, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                                            assert les_avis != null;
+                                                            if(les_avis.size() != 0){
+                                                                int note = 0;
+                                                                int nb = 0;
+                                                                for(AvisDTO avisDTO : les_avis){
+                                                                    note += avisDTO.getEtoile();
+                                                                    nb += 1;
+                                                                }
+
+                                                                new_rating_bar.setNumStars(5);
+                                                                new_rating_bar.setStepSize(1);
+                                                                new_rating_bar.setScaleX(0.75f);
+                                                                new_rating_bar.setScaleY(0.75f);
+                                                                float roundedRating = Math.round((float) note/nb);
+                                                                new_rating_bar.setRating(roundedRating);
+                                                                new_rating_bar.setIsIndicator(true);
+                                                                layoutConteneur.addView(new_rating_bar, layoutParams);
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
+
+                                                    }
+                                                });
                                             }
                                         } else {
                                             Log.e(TAG, "Error response: " + response.errorBody());
