@@ -7,40 +7,11 @@
     android:background="#17282D"
     tools:context=".model.MonCompte.ParamertreCompteFragment">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/gradient_background" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
-
-        <!-- Bouton "Fermer Paramètre" -->
-        <Button
-            android:id="@+id/closeParametre"
-            android:layout_width="200dp"
-            android:layout_height="12dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:layout_marginLeft="25sp"
-        android:layout_marginTop="25sp"
-        android:layout_marginRight="25sp"
-        android:layout_marginBottom="0dp"
-        android:background="#FFF"
-        />
-
+    
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -50,6 +21,13 @@
             android:orientation="vertical"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp">
+
+            <Button
+                android:id="@+id/closeParametre"
+                android:layout_width="200dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"/>
 
             <!-- Bouton "Déconnexion" -->
             <LinearLayout
@@ -227,7 +205,6 @@
 
             </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

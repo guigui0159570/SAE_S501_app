@@ -102,4 +102,5 @@
     <string name="retour">Retour</string>
     <string name="aide">Aide</string>
     <string name="achats">Mes Achats</string>
+    <string name="mon_compte">Mon compte</string>
 </resources>
