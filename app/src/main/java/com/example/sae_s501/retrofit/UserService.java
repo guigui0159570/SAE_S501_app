@@ -54,6 +54,9 @@ public interface UserService {
     @FormUrlEncoded
     @POST("/aide/mailAide")
     Call<Void> envoieAide(@Field("email") String email,@Field("aide") String aide);
+    @FormUrlEncoded
+    @POST("/aide/signalPublication")
+    Call<Void> signalement(@Field("email") String email,@Field("id") long id);
 
     @GET("/abonneUser/{id}")
     Call<List<Map>> getAbonneUtilisateur(@Path("id") long id);

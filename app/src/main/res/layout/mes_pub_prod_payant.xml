@@ -91,17 +91,20 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="@string/pseudo_pub_gratuit"
+                        android:textColor="#FFA500"
+
                         android:layout_marginBottom="15dp"/>
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/description_payant"
                     android:layout_width="wrap_content"
-                    android:layout_height="35sp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:clickable="true"
                     android:layout_gravity="left"
                     android:text="@string/description_pub_gratuit"
+                    android:textColor="@color/white"
                     android:textSize="17sp"
                     tools:ignore="RtlHardcoded" />
             </LinearLayout>
@@ -136,7 +139,7 @@
                     android:layout_height="35sp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:textColor="#0000FF"
+                    android:textColor="#FFA500"
                     android:text="@string/visualiser_img_gratuit"
                     android:textSize="17sp" />
 

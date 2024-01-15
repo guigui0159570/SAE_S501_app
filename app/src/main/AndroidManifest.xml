@@ -66,6 +66,10 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".MesAchats"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".Inscription"
             android:exported="true">
         </activity>
