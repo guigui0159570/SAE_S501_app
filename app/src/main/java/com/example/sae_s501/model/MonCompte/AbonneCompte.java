@@ -71,7 +71,7 @@ public class AbonneCompte extends AppCompatActivity {
                             JsonElement jsonElement = JsonParser.parseString(resultat);
                             JsonArray jsonArray = jsonElement.getAsJsonArray();
                             LinearLayout layoutPrincipal = findViewById(R.id.comptenuAbonne);
-
+                            Log.d("7777777", "zzzzzz");
                             for (int i = 0 ; i< jsonArray.size() ; i ++){
 
                                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
@@ -160,7 +160,7 @@ public class AbonneCompte extends AppCompatActivity {
                                                             200,
                                                             1)); // Poids 1
                                                     if (resultat) {
-                                                        imageView2.setImageResource(R.drawable.coeurnoir);
+                                                        imageView2.setImageResource(R.drawable.coeurrouge);
                                                         isCoeurBlanc[0] = false;
                                                     }else {
                                                         imageView2.setImageResource(R.drawable.coeurblanc);
@@ -170,7 +170,7 @@ public class AbonneCompte extends AppCompatActivity {
                                                         @Override
                                                         public void onClick(View view) {
                                                             if (isCoeurBlanc[0]){
-                                                                imageView2.setImageResource(R.drawable.coeurnoir);
+                                                                imageView2.setImageResource(R.drawable.coeurrouge);
                                                                 FAAVM.sabonner(idElement.getAsLong());
                                                                 isCoeurBlanc[0] = false;
 
@@ -218,7 +218,6 @@ public class AbonneCompte extends AppCompatActivity {
         eltClicable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("99999999999", "onClick: ");
                 Intent intent = new Intent(getBaseContext(), CompteUtilisateur.class);
                 intent.putExtra("userId", idUtilisateur.getAsLong());
                 startActivity(intent);

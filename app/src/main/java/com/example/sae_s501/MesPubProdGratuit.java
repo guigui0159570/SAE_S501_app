@@ -3,8 +3,10 @@ package com.example.sae_s501;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -40,6 +42,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MesPubProdGratuit extends AppCompatActivity {
+    private ImageView retour;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +52,14 @@ public class MesPubProdGratuit extends AppCompatActivity {
         long publicationId = getIntent().getLongExtra("id", 0);
         View rootView = findViewById(android.R.id.content);
         loadPublication(rootView, publicationId);
+        retour = findViewById(R.id.close);
+        retour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MesPubProdGratuit.this, MesPublications.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadPublication(View view, long publicationId) {
@@ -74,9 +86,6 @@ public class MesPubProdGratuit extends AppCompatActivity {
                         RatingBar etoiles = view.findViewById(R.id.notation_gratuit);
                         Log.d(TAG, "loadPublication: fin recuperation des objets");
 
-                        Log.d("Notation", ""+publication.notation_publication());
-                        etoiles.setNumStars(publication.notation_publication());
-
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
@@ -94,8 +103,13 @@ public class MesPubProdGratuit extends AppCompatActivity {
                                     List<AvisDTO> les_avis = response.body();
                                     LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_gratuit);
                                     commentaires.setOrientation(LinearLayout.VERTICAL);
-                                    if(les_avis != null){
+                                    assert les_avis != null;
+                                    if(les_avis.size() != 0){
+                                        int note = 0;
+                                        int nb = 0;
                                         for (AvisDTO avis : les_avis){
+                                            note += avis.getEtoile();
+                                            nb += 1;
                                             LinearLayout linearLayout = new LinearLayout(MesPubProdGratuit.this.getApplicationContext());
                                             LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
                                                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -128,6 +142,15 @@ public class MesPubProdGratuit extends AppCompatActivity {
                                                 }
                                             });
                                         }
+                                        Log.d("Notation", "notation : " + note/nb);
+                                        etoiles.setRating(Math.round(note/nb));
+                                        etoiles.setIsIndicator(true);
+                                    }else{
+                                        TextView textView = new TextView(MesPubProdGratuit.this.getApplicationContext());
+                                        textView.setText("Cette publication ne possède pas d'avis...");
+                                        textView.setTextColor(Color.parseColor("#FFA500"));
+                                        textView.setTextSize(18);
+                                        commentaires.addView(textView);
                                     }
                                 }
                             }

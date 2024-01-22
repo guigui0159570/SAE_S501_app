@@ -15,23 +15,20 @@ import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.RetrofitServiceRegister;
 import com.example.sae_s501.retrofit.UserService;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Inscription extends AppCompatActivity {
-
-
     private EditText editTextPseudo;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private EditText editTextConfirmationPassword;
     private Button buttonEnvoyer;
-
     private UserService userService;
     private RetrofitServiceRegister retrofitService;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +82,6 @@ public class Inscription extends AppCompatActivity {
 
 
 
-                /*Utilisateur user = new Utilisateur(pseudo, email, password);
-                Call<Utilisateur> call = userService.registerUser(user);*/
-
                 /* envoie requete */
                 Call<Utilisateur> call = userService.registerUser(pseudo, email, password);
                 call.enqueue(new Callback<Utilisateur>() {
@@ -109,17 +103,22 @@ public class Inscription extends AppCompatActivity {
                                 showToast("Erreur de requête : Vérifiez les données saisies.");
                             } else if (response.code() == 401) {
                                 showToast("Erreur d'authentification : Accès non autorisé.");
-                            } else if (response.code() == 403) {
-                                showToast("Erreur d'autorisation : Accès interdit.");
-                                showToast("Erreur " +response.message());
-                            } else if (response.code() == 404) {
+                            }else if (response.code() == 404) {
                                 showToast("Erreur : Cette adresse mail est déjà utilisée !");
                             } else if (response.code() == 409) {
                                 showToast("Conflit : L'utilisateur existe déjà.");
                             } else if (response.code() == 500) {
                                 showToast("Erreur interne du serveur : Réessayez plus tard.");
                             } else {
-                                showToast("Erreur inattendue : " + response.message());
+                                try {
+                                    // Extract the error response body
+                                    String errorBody = response.errorBody().string();
+                                    showToast("Erreur inattendue : " + errorBody);
+                                    Log.d("ERREUR INSCRIPTION", errorBody);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    showToast("Erreur inattendue : Impossible de lire la réponse d'erreur.");
+                                }
                             }
                         }
                     }

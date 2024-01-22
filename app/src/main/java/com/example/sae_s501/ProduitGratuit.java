@@ -3,12 +3,16 @@ package com.example.sae_s501;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.util.proto.ProtoOutputStream;
 import android.view.View;
@@ -27,12 +31,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;
+import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
+import com.example.sae_s501.retrofit.UserService;
 import com.example.sae_s501.visualisation.Visualiser;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -44,6 +54,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProduitGratuit extends AppCompatActivity {
 
     private ImageView retour;
+    private ImageView signaler;
+    private UserService userService;
+    private RetrofitService retrofitService;
+
+    private long id;
+    private String jwtEmail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +69,11 @@ public class ProduitGratuit extends AppCompatActivity {
         View rootView = findViewById(android.R.id.content);
         loadPublication(rootView, publicationId);
         retour = findViewById(R.id.close);
+        retrofitService = new RetrofitService(this);
+        signaler = findViewById(R.id.signaler);
+
+
+        jwtEmail = SessionManager.getUserEmail(this);
 
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,8 +82,57 @@ public class ProduitGratuit extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        signaler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SignalerConfirmation(jwtEmail,id);
+            }
+        });
     }
 
+
+    private void SignalerConfirmation(String jwt,Long id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation")
+                .setMessage("Voulez-vous vraiment signaler cette publication ?")
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        userService = retrofitService.getRetrofit().create(UserService.class);
+
+                        Call<Void> aideMail = userService.signalement(jwt,id);
+
+                        aideMail.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    showToast("Cette publication a été signalé auprès d'un admin.");
+                                }
+                                else{
+                                    Log.d("ERREUR REQUETE", "ERREUR REQUETE" + response);
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                showToast("Erreur lors de la communication avec le serveur");
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
     private void loadPublication(View view, long publicationId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Dictionnaire.getIpAddress())
@@ -83,7 +153,7 @@ public class ProduitGratuit extends AppCompatActivity {
                         TextView titre = view.findViewById(R.id.ajout_pub_titre);titre.setText(publication.getTitre());
                         TextView description = view.findViewById(R.id.charger_img); description.setText(publication.getDescription());
                         TextView pseudo = view.findViewById(R.id.pseudo_pub_gratuit);
-
+                        id =  publication.getId();
 
                         View visulaiser = findViewById(R.id.visualiser_img);
                         visulaiser.setOnClickListener(view -> {
@@ -92,6 +162,20 @@ public class ProduitGratuit extends AppCompatActivity {
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
+                            if(!Objects.equals(publication.getProprietaire().getEmail(), jwtEmail)) {
+                                pseudo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getApplicationContext(), CompteUtilisateur.class);
+                                        intent.putExtra("userId", publication.getProprietaire().getId());
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                            else {
+                                Intent intent = new Intent(getApplicationContext(), MyCompteActivity.class);
+                                startActivity(intent);
+                            }
                         }else{
                             pseudo.setText("Propriétaire non répertorié...");
                         }
@@ -107,7 +191,8 @@ public class ProduitGratuit extends AppCompatActivity {
                                     Log.d("AVIS", "Nombre d'avis récupérés : " + (les_avis != null ? les_avis.size() : 0));
                                     LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_gratuit);
                                     commentaires.setOrientation(LinearLayout.VERTICAL);
-                                    if(les_avis != null){
+                                    assert les_avis != null;
+                                    if(les_avis.size() != 0){
                                         for (AvisDTO avis : les_avis){
                                             LinearLayout linearLayout = new LinearLayout(ProduitGratuit.this.getApplicationContext());
                                             LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
@@ -142,6 +227,12 @@ public class ProduitGratuit extends AppCompatActivity {
                                                 }
                                             });
                                         }
+                                    }else{
+                                        TextView textView = new TextView(ProduitGratuit.this.getApplicationContext());
+                                        textView.setText("Cette publication ne possède pas d'avis...");
+                                        textView.setTextColor(Color.parseColor("#FFA500"));
+                                        textView.setTextSize(18);
+                                        commentaires.addView(textView);
                                     }
                                 }
                             }

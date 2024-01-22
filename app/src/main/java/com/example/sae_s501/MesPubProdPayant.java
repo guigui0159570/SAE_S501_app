@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -45,14 +46,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MesPubProdPayant extends AppCompatActivity {
     private RetrofitService retrofitService;
     private PanierService panierService;
-
+    private ImageView retour;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mes_pub_prod_payant);
         String jwtEmail = SessionManager.getUserEmail(this);
-
+        retour = findViewById(R.id.close);
+        retour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MesPubProdPayant.this, MesPublications.class);
+                startActivity(intent);
+            }
+        });
 
         long publicationId = getIntent().getLongExtra("id", 0);
         Log.d("publicationId", String.valueOf(publicationId));
@@ -86,9 +94,6 @@ public class MesPubProdPayant extends AppCompatActivity {
                         TextView pseudo = view.findViewById(R.id.pseudo_pub_payant);
                         RatingBar etoiles = view.findViewById(R.id.notation_payant);
 
-                        etoiles.setRating(publication.notation_publication());
-                        etoiles.setEnabled(true);
-
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
                         }else{
@@ -105,8 +110,15 @@ public class MesPubProdPayant extends AppCompatActivity {
                                     List<AvisDTO> les_avis = response.body();
                                     LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_payant);
                                     commentaires.setOrientation(LinearLayout.VERTICAL);
-                                    if(les_avis != null){
-                                        for (AvisDTO avis : les_avis){
+                                    assert les_avis != null;
+                                    if(les_avis.size() != 0) {
+                                        int note = 0;
+                                        int nb = 0;
+                                        for (AvisDTO avis : les_avis) {
+                                            note += avis.getEtoile();
+                                            nb += 1;
+                                            //finir la fonction
+
                                             LinearLayout linearLayout = new LinearLayout(MesPubProdPayant.this.getApplicationContext());
                                             LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
                                                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -123,12 +135,13 @@ public class MesPubProdPayant extends AppCompatActivity {
                                                 @SuppressLint("SetTextI18n")
                                                 @Override
                                                 public void onResponse(@NonNull Call<Utilisateur> call, @NonNull Response<Utilisateur> response) {
-                                                    if(response.isSuccessful()){
+                                                    if (response.isSuccessful()) {
                                                         Utilisateur utilisateur = response.body();
                                                         assert utilisateur != null;
-                                                        pseudo_avis.setText(utilisateur.getPseudo()+" : ");
+                                                        pseudo_avis.setText(utilisateur.getPseudo() + " : ");
                                                         commentaire.setText(avis.getCommentaire());
-                                                        linearLayout.addView(pseudo_avis);linearLayout.addView(commentaire);
+                                                        linearLayout.addView(pseudo_avis);
+                                                        linearLayout.addView(commentaire);
                                                         commentaires.addView(linearLayout);
                                                     }
                                                 }
@@ -139,6 +152,16 @@ public class MesPubProdPayant extends AppCompatActivity {
                                                 }
                                             });
                                         }
+                                        Log.d("Notation", "notation : " + note/nb);
+                                        etoiles.setRating(Math.round(note/nb));
+                                        etoiles.setIsIndicator(true);
+                                    }
+                                    else{
+                                        TextView textView = new TextView(MesPubProdPayant.this.getApplicationContext());
+                                        textView.setText("Cette publication ne possède pas d'avis...");
+                                        textView.setTextColor(Color.parseColor("#FFA500"));
+                                        textView.setTextSize(18);
+                                        commentaires.addView(textView);
                                     }
                                 }
                             }

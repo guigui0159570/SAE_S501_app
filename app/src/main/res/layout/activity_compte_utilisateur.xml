@@ -21,11 +21,11 @@
             android:gravity="center_horizontal">
 
             <ImageButton
-                android:id="@+id/troispoints"
+                android:id="@+id/back"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:src="@drawable/troispoints"
+                android:src="@drawable/croix_cercle_new"
                 android:background="@color/transparent"
                 />
 
@@ -72,12 +72,43 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/layoutSuivis"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/coeurAbonnement"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/clochNotif"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/descriptionUti"
                     android:layout_width="match_parent"
+                    android:textColor="#FFA500"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:layout_margin="15dp"
                     android:textSize="20dp"/>
             </LinearLayout>
@@ -105,12 +136,14 @@
                             android:id="@+id/countAbonneUti"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:textSize="20dp"/>
                         <TextView
                             android:id="@+id/AbonneView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/abonne_text"
+                            android:textColor="#FFA500"
                             android:textSize="20dp"/>
                     </LinearLayout>
 
@@ -129,11 +162,13 @@
                             android:id="@+id/countAbonnementUti"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:textSize="20dp"/>
                         <TextView
                             android:id="@+id/AbonnementView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="#FFA500"
                             android:text="@string/abonnement_text"
                             android:textSize="20dp"/>
                     </LinearLayout>
@@ -154,6 +189,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/LayoutAbo"
+                app:layout_constraintBottom_toTopOf="@+id/bottomFragment">
+
+                <FrameLayout
+                    android:id="@+id/fragment_autrecompte_pub"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </ScrollView>
 
 
         </LinearLayout>

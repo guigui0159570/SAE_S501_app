@@ -1,6 +1,5 @@
 package com.example.sae_s501;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.PictureDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -22,13 +20,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -51,11 +47,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MesPublicationsFrag extends Fragment {
+public class PubCompteUti extends Fragment {
 
     private static final String TAG = "MesPublicationsFrag";
     private static final String BASE_URL = Dictionnaire.getIpAddress();
     private RetrofitService retrofitService;
+    private Long userId;
+    public void setFilterValue(Long value) {
+        this.userId = value;
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,15 +76,7 @@ public class MesPublicationsFrag extends Fragment {
 
         FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
 
-        String jwtEmail = SessionManager.getUserEmail(requireActivity());
 
-        Call<Long> callUserId = filActuService.getUtilisateurIdByEmail(jwtEmail);
-        callUserId.enqueue(new Callback<Long>() {
-            @Override
-            public void onResponse(Call<Long> call, Response<Long> response) {
-                if (response.isSuccessful()) {
-                    Long userId = response.body();
-                    if (userId != null) {
                         Call<List<Publication>> callPublications = filActuService.getPublicationByUtilisateurId(userId);
                         callPublications.enqueue(new Callback<List<Publication>>() {
 
@@ -98,7 +91,9 @@ public class MesPublicationsFrag extends Fragment {
                                             layout.removeAllViews();
 
                                             for (Publication p : publications) {
+
                                                 //Layout qui va contenir les autres layout
+                                                Log.d(TAG, "requireContext: "+requireContext().toString());
                                                 LinearLayout layoutConteneur = new LinearLayout(requireContext());
                                                 //Layout qui contient l'image du produit ainsi le titre et la description
                                                 LinearLayout layoutProduit = new LinearLayout(getContext());
@@ -132,10 +127,12 @@ public class MesPublicationsFrag extends Fragment {
 
                                                 if(p.getGratuit()){
                                                     layoutConteneur.setOnClickListener(view -> {
+                                                        Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
                                                         loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdGratuit.class));
                                                     });
                                                 }else {
                                                     layoutConteneur.setOnClickListener(view -> {
+                                                        Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
                                                         loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdPayant.class));
                                                     });
                                                 }
@@ -245,24 +242,7 @@ public class MesPublicationsFrag extends Fragment {
 
 
                                                 }
-                                                ImageView supp = new ImageView(requireContext());
-                                                supp.setId(View.generateViewId());
-                                                supp.setImageResource(R.drawable.poubelle);
 
-                                                RelativeLayout.LayoutParams clickableImageParams = new RelativeLayout.LayoutParams(
-                                                        dpToPx(32),
-                                                        dpToPx(32)
-                                                );
-                                                clickableImageParams.setMargins(0, 0, dpToPx(20), dpToPx(20));
-                                                supp.setLayoutParams(clickableImageParams);
-
-                                                supp.setOnClickListener(new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View view) {
-                                                        DeleteConfirmation(p.getId());
-                                                    }
-                                                });
-                                                layoutPersonnel.addView(supp);
 
                                                 //Ajout des layout
                                                 layoutConteneur.addView(layoutProduit);
@@ -274,45 +254,6 @@ public class MesPublicationsFrag extends Fragment {
                                                 border.setCornerRadius(20f);
                                                 layoutConteneur.setBackground(border);layoutConteneur.setBackgroundResource(R.color.white);
                                                 layout.addView(layoutConteneur);
-
-                                                //Creation de la rating bar
-                                                Call<List<AvisDTO>> avisDTOCall = filActuService.getAllAvisByPublication(p.getId());
-                                                avisDTOCall.enqueue(new Callback<List<AvisDTO>>() {
-                                                    @SuppressLint("RtlHardcoded")
-                                                    @RequiresApi(api = Build.VERSION_CODES.Q)
-                                                    @Override
-                                                    public void onResponse(@NonNull Call<List<AvisDTO>> call, @NonNull Response<List<AvisDTO>> response) {
-                                                        if(response.isSuccessful()){
-                                                            List<AvisDTO> les_avis = response.body();
-                                                            RatingBar new_rating_bar = new RatingBar(MesPublicationsFrag.this.requireContext());
-                                                            int widthInPixels = 850;
-                                                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(widthInPixels, LinearLayout.LayoutParams.WRAP_CONTENT);
-                                                            assert les_avis != null;
-                                                            if(les_avis.size() != 0){
-                                                                int note = 0;
-                                                                int nb = 0;
-                                                                for(AvisDTO avisDTO : les_avis){
-                                                                    note += avisDTO.getEtoile();
-                                                                    nb += 1;
-                                                                }
-
-                                                                new_rating_bar.setNumStars(5);
-                                                                new_rating_bar.setStepSize(1);
-                                                                new_rating_bar.setScaleX(0.75f);
-                                                                new_rating_bar.setScaleY(0.75f);
-                                                                float roundedRating = Math.round((float) note/nb);
-                                                                new_rating_bar.setRating(roundedRating);
-                                                                new_rating_bar.setIsIndicator(true);
-                                                                layoutConteneur.addView(new_rating_bar, layoutParams);
-                                                            }
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
-
-                                                    }
-                                                });
                                             }
                                         } else {
                                             Log.e(TAG, "Error response: " + response.errorBody());
@@ -338,20 +279,8 @@ public class MesPublicationsFrag extends Fragment {
                                 Toast.makeText(requireContext(), "Erreur lors de la communication avec le serveur", Toast.LENGTH_SHORT).show();
                             }
                         });
-                    } else {
-                        Log.e(TAG, "Error: User ID is null");
                     }
-                } else {
-                    Log.e(TAG, "Error response: " + response.errorBody());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Long> call, Throwable t) {
-                Log.e(TAG, "Failure: " + t.getMessage());
-            }
-        });
-    }
     private int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
         return Math.round(dp * density);

@@ -23,6 +23,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sae_s501.authentification.Authentification;
+import com.example.sae_s501.model.MonCompte.ConfigSpring;
+import com.example.sae_s501.model.MonCompte.FonctionNotificationViewModel;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
@@ -52,9 +54,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AjoutPublication extends AppCompatActivity {
+
+    private FonctionNotificationViewModel FNVM = new FonctionNotificationViewModel(this);
     private static final int PICK_IMAGE_REQUEST =1 ;
     private static final int PICK_FILE_REQUEST =2 ;
 
+    private ConfigSpring configSpring = new ConfigSpring();
     private EditText editTextTitle;
     private CheckBox editCheckbox;
     private CheckBox editCheckboxPrive;
@@ -300,6 +305,8 @@ public class AjoutPublication extends AppCompatActivity {
                         startActivity(intent);
                         // Réinitialiser les champs après une publication réussie
                         resetFields();
+
+                        FNVM.allsendNotification(configSpring.userEnCour(AjoutPublication.this.getBaseContext()));
                     } else {
                         showToast("Échec de la publication !");
                     }

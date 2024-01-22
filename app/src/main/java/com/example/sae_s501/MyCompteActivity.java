@@ -79,7 +79,10 @@ public class MyCompteActivity extends AppCompatActivity {
 
         retrofitService = new RetrofitService(this);
         FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
-
+        //Frag publication mon compte
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_moncompte_pub, new MesPublicationsFrag())
+                .commit();
         //Partie information
         CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this, jwtId);
         informationUser(stringCompletableFuture, root);
@@ -321,11 +324,13 @@ public class MyCompteActivity extends AppCompatActivity {
                                 ImageView imageViewPhoto = root.findViewById(R.id.photoProfil);
                                 JsonElement photoElement = jsonObject.get("photo");
 
-                                if (photoElement != null && !photoElement.isJsonNull()) {
+                                if (!photoElement.isJsonNull()) {
+                                    Log.d("gggggggggggg", "777 ");
                                     String photoElementAsString = photoElement.getAsString();
                                     MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
                                     monCompteViewModel.Imageprofil(getBaseContext(),imageViewPhoto, photoElementAsString);
                                 } else {
+                                    Log.d("fffffffffffffff", "777 ");
                                     // Création image random
                                     String initials = String.valueOf(pseudo.charAt(0));
                                     int width = 200;
