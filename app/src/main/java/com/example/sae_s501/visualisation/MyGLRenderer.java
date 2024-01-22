@@ -9,6 +9,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -22,15 +23,21 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final float[] vPMatrix = new float[16];
     private final float[] projectionMatrix = new float[16];
     private final float[] viewMatrix = new float[16];
+    private Mesh file;
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         // initialize a triangle
-        mTriangle = new Triangle();
+        try {
+            mTriangle = new Triangle(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public MyGLRenderer(InputStream inputStream) {
         try {
-            this.mesh = ObjLoader.load(inputStream);
+            //this.mesh = ObjLoader.load(inputStream);
+            this.file = ObjLoader.load(inputStream);
             // Now you can use the 'mesh' object in your rendering logic
         } catch (Exception e) {
             Log.e("MODEL", "Error loading 3D model: " + e.getMessage());
@@ -60,7 +67,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // Calculate the projection and view transformation
         Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
         mTriangle.draw(vPMatrix);
-        mesh.draw(vPMatrix);
+        // mesh.draw(vPMatrix);
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class ObjLoader {
     public static Mesh load(InputStream inputStream) throws IOException {
+        Log.d("ObjLoader", "CREATION");
         List<float[]> vertices = new ArrayList<>();
         List<float[]> normals = new ArrayList<>();
         List<int[]> faces = new ArrayList<>();
@@ -35,10 +36,12 @@ public class ObjLoader {
                 } else if (line.startsWith("f ")) {
                     // Parse face indices
                     String[] parts = line.split("\\s+");
-                    int v1 = Integer.parseInt(parts[1].split("/")[0]) - 1;
-                    int v2 = Integer.parseInt(parts[2].split("/")[0]) - 1;
-                    int v3 = Integer.parseInt(parts[3].split("/")[0]) - 1;
+                    int v1 = Integer.parseInt(parts[1].split("//")[0]) - 1;
+                    int v2 = Integer.parseInt(parts[2].split("//")[0]) - 1;
+                    int v3 = Integer.parseInt(parts[3].split("//")[0]) - 1;
+                    int v4 = Integer.parseInt(parts[4].split("//")[0]) - 1;
                     faces.add(new int[]{v1, v2, v3});
+                    faces.add(new int[]{v1, v3, v4});
                 }
             }
         }
@@ -48,17 +51,22 @@ public class ObjLoader {
         float[] normalsArray = convertListToArray(normals);
         int[] facesArray = convertFaceListToArray(faces);
 
+        Log.d("VERTICES", String.valueOf(verticesArray.length));
+
         return new Mesh(verticesArray, facesArray, normalsArray);
     }
 
     private static float[] convertListToArray(List<float[]> list) {
-        float[] array = new float[list.size() * 3];
+        int size = list.size();
+        float[] array = new float[size * 3];
         int index = 0;
-        for (float[] element : list) {
+        for (int i = 0; i < size; i++) {
+            float[] element = list.get(i);
             array[index++] = element[0];
             array[index++] = element[1];
             array[index++] = element[2];
         }
+        Log.d("VERTICES ARRAY", String.valueOf(array.length));
         return array;
     }
 

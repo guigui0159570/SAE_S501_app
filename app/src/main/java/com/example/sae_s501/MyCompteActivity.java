@@ -81,7 +81,7 @@ public class MyCompteActivity extends AppCompatActivity {
         FilActuService filActuService = retrofitService.getRetrofit().create(FilActuService.class);
 
         //Partie information
-        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this,jwtId);
+        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this, jwtId);
         informationUser(stringCompletableFuture, root);
 
         //Partie fragment parametre
