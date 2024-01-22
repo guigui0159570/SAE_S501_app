@@ -100,77 +100,8 @@ public class MesPubProdPayant extends AppCompatActivity {
                             pseudo.setText("Propriétaire non répertorié...");
                         }
                         Log.d("Id pub", ""+publicationId);
-                        Call<List<AvisDTO>> callAvis = filActuService.getAllAvisByPublication(publicationId);
-                        callAvis.enqueue(new Callback<List<AvisDTO>>() {
-                            @Override
-                            public void onResponse(@NonNull Call<List<AvisDTO>> call, @NonNull Response<List<AvisDTO>> response) {
-                                Log.d("CallAvis", "codeResponse: "+response.code());
-                                if (response.isSuccessful()){
-                                    Log.d("CallAvis", "dans le call des avis : "+response.body());
-                                    List<AvisDTO> les_avis = response.body();
-                                    LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_payant);
-                                    commentaires.setOrientation(LinearLayout.VERTICAL);
-                                    assert les_avis != null;
-                                    if(les_avis.size() != 0) {
-                                        int note = 0;
-                                        int nb = 0;
-                                        for (AvisDTO avis : les_avis) {
-                                            note += avis.getEtoile();
-                                            nb += 1;
-                                            //finir la fonction
-
-                                            LinearLayout linearLayout = new LinearLayout(MesPubProdPayant.this.getApplicationContext());
-                                            LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
-                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                    LinearLayout.LayoutParams.WRAP_CONTENT
-                                            );
-                                            params_elt.setMargins(0, 0, 0, 25);
-                                            linearLayout.setLayoutParams(params_elt);
-                                            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                                            TextView pseudo_avis = new TextView(MesPubProdPayant.this.getApplicationContext());
-                                            TextView commentaire = new TextView(MesPubProdPayant.this.getApplicationContext());
-
-                                            Call<Utilisateur> utilisateurCall = filActuService.getUtilisateurById(avis.getUtilisateur());
-                                            utilisateurCall.enqueue(new Callback<Utilisateur>() {
-                                                @SuppressLint("SetTextI18n")
-                                                @Override
-                                                public void onResponse(@NonNull Call<Utilisateur> call, @NonNull Response<Utilisateur> response) {
-                                                    if (response.isSuccessful()) {
-                                                        Utilisateur utilisateur = response.body();
-                                                        assert utilisateur != null;
-                                                        pseudo_avis.setText(utilisateur.getPseudo() + " : ");
-                                                        commentaire.setText(avis.getCommentaire());
-                                                        linearLayout.addView(pseudo_avis);
-                                                        linearLayout.addView(commentaire);
-                                                        commentaires.addView(linearLayout);
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onFailure(@NonNull Call<Utilisateur> call, @NonNull Throwable t) {
-
-                                                }
-                                            });
-                                        }
-                                        Log.d("Notation", "notation : " + note/nb);
-                                        etoiles.setRating(Math.round(note/nb));
-                                        etoiles.setIsIndicator(true);
-                                    }
-                                    else{
-                                        TextView textView = new TextView(MesPubProdPayant.this.getApplicationContext());
-                                        textView.setText("Cette publication ne possède pas d'avis...");
-                                        textView.setTextColor(Color.parseColor("#FFA500"));
-                                        textView.setTextSize(18);
-                                        commentaires.addView(textView);
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
-                                Toast.makeText(MesPubProdPayant.this.getApplicationContext(), "pas d'avis récupérés !", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        GlobalFunctionsPublication.callAvisProdMesPub(filActuService,publicationId,
+                                view,etoiles,false);
 
                         Call<ResponseBody> callImage = filActuService.getImage(publication.getImage());
                         Log.d("IMAGE", publication.getImage());

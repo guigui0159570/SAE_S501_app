@@ -1,6 +1,7 @@
 package com.example.sae_s501;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -83,51 +84,7 @@ public class Inscription extends AppCompatActivity {
 
 
                 /* envoie requete */
-                Call<Utilisateur> call = userService.registerUser(pseudo, email, password);
-                call.enqueue(new Callback<Utilisateur>() {
-                    /* resultat de la requete */
-                    @Override
-                    public void onResponse(Call<Utilisateur> call, Response<Utilisateur> response) {
-                        if (response.isSuccessful()) {
-                            showToast("Inscription réussie !");
-                            Intent intent = new Intent(Inscription.this, Connexion.class);
-                            startActivity(intent);
-                            // Réinitialiser les champs, que l'inscription soit réussie ou non
-                            editTextPseudo.setText("");
-                            editTextEmail.setText("");
-                            editTextPassword.setText("");
-                            editTextConfirmationPassword.setText("");
-                        } else {
-                            // Handle different HTTP error codes with appropriate error messages
-                            if (response.code() == 400) {
-                                showToast("Erreur de requête : Vérifiez les données saisies.");
-                            } else if (response.code() == 401) {
-                                showToast("Erreur d'authentification : Accès non autorisé.");
-                            }else if (response.code() == 404) {
-                                showToast("Erreur : Cette adresse mail est déjà utilisée !");
-                            } else if (response.code() == 409) {
-                                showToast("Conflit : L'utilisateur existe déjà.");
-                            } else if (response.code() == 500) {
-                                showToast("Erreur interne du serveur : Réessayez plus tard.");
-                            } else {
-                                try {
-                                    // Extract the error response body
-                                    String errorBody = response.errorBody().string();
-                                    showToast("Erreur inattendue : " + errorBody);
-                                    Log.d("ERREUR INSCRIPTION", errorBody);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    showToast("Erreur inattendue : Impossible de lire la réponse d'erreur.");
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Utilisateur> call, Throwable t) {
-                        showToast("Erreur : " + t.getMessage());
-                    }
-                });
+                registerUser(pseudo,email,password);
             }
         });
     }
@@ -164,5 +121,53 @@ public class Inscription extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private void registerUser(String pseudo, String email, String password){
+        Call<Utilisateur> call = userService.registerUser(pseudo, email, password);
+        call.enqueue(new Callback<Utilisateur>() {
+            /* resultat de la requete */
+            @Override
+            public void onResponse(@NonNull Call<Utilisateur> call, @NonNull Response<Utilisateur> response) {
+                if (response.isSuccessful()) {
+                    showToast("Inscription réussie !");
+                    Intent intent = new Intent(Inscription.this, Connexion.class);
+                    startActivity(intent);
+                    // Réinitialiser les champs, que l'inscription soit réussie ou non
+                    editTextPseudo.setText("");
+                    editTextEmail.setText("");
+                    editTextPassword.setText("");
+                    editTextConfirmationPassword.setText("");
+                } else {
+                    // Handle different HTTP error codes with appropriate error messages
+                    if (response.code() == 400) {
+                        showToast("Erreur de requête : Vérifiez les données saisies.");
+                    } else if (response.code() == 401) {
+                        showToast("Erreur d'authentification : Accès non autorisé.");
+                    }else if (response.code() == 404) {
+                        showToast("Erreur : Cette adresse mail est déjà utilisée !");
+                    } else if (response.code() == 409) {
+                        showToast("Conflit : L'utilisateur existe déjà.");
+                    } else if (response.code() == 500) {
+                        showToast("Erreur interne du serveur : Réessayez plus tard.");
+                    } else {
+                        try {
+                            // Extract the error response body
+                            String errorBody = response.errorBody().string();
+                            showToast("Erreur inattendue : " + errorBody);
+                            Log.d("ERREUR INSCRIPTION", errorBody);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            showToast("Erreur inattendue : Impossible de lire la réponse d'erreur.");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Utilisateur> call, @NonNull Throwable t) {
+                showToast("Erreur : " + t.getMessage());
+            }
+        });
     }
 }

@@ -206,108 +206,14 @@ public class ProduitPayant extends AppCompatActivity {
                             else {
                                 Intent intent = new Intent(getApplicationContext(), MyCompteActivity.class);
                                 startActivity(intent);
-
                             }
 
                         }else{
                             pseudo.setText("Propriétaire non répertorié...");
                         }
                         Log.d("Id pub", ""+publicationId);
-                        Call<List<AvisDTO>> callAvis = filActuService.getAllAvisByPublication(publicationId);
-                        callAvis.enqueue(new Callback<List<AvisDTO>>() {
-                            @Override
-                            public void onResponse(@NonNull Call<List<AvisDTO>> call, @NonNull Response<List<AvisDTO>> response) {
-                                Log.d("CallAvis", "codeResponse: "+response.code());
-                                if (response.isSuccessful()){
-                                    Log.d("CallAvis", "dans le call des avis : "+response.body());
-                                    List<AvisDTO> les_avis = response.body();
-                                    LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_payant);
-                                    commentaires.setOrientation(LinearLayout.VERTICAL);
-                                    assert les_avis != null;
-                                    if(les_avis.size() != 0){
-                                        for (AvisDTO avis : les_avis){
-                                            LinearLayout linearLayout = new LinearLayout(ProduitPayant.this.getApplicationContext());
-                                            LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
-                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                    LinearLayout.LayoutParams.WRAP_CONTENT
-                                            );
-                                            params_elt.setMargins(0, 0, 0, 25);
-                                            linearLayout.setLayoutParams(params_elt);
-                                            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                                            TextView pseudo_avis = new TextView(ProduitPayant.this.getApplicationContext());
-                                            TextView commentaire = new TextView(ProduitPayant.this.getApplicationContext());
-
-                                            Call<Utilisateur> utilisateurCall = filActuService.getUtilisateurById(avis.getUtilisateur());
-                                            utilisateurCall.enqueue(new Callback<Utilisateur>() {
-                                                @SuppressLint("SetTextI18n")
-                                                @Override
-                                                public void onResponse(@NonNull Call<Utilisateur> call, @NonNull Response<Utilisateur> response) {
-                                                    if(response.isSuccessful()){
-                                                        Utilisateur utilisateur = response.body();
-                                                        assert utilisateur != null;
-                                                        pseudo_avis.setText(utilisateur.getPseudo()+" : ");
-                                                        commentaire.setText(avis.getCommentaire());
-                                                        linearLayout.addView(pseudo_avis);linearLayout.addView(commentaire);
-                                                        commentaires.addView(linearLayout);
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onFailure(@NonNull Call<Utilisateur> call, @NonNull Throwable t) {
-                                                    Toast.makeText(ProduitPayant.this.getApplicationContext(), "onFailure", Toast.LENGTH_SHORT).show();
-
-                                                }
-                                            });
-                                        }
-                                    }else{
-                                        TextView textView = new TextView(ProduitPayant.this.getApplicationContext());
-                                        textView.setText("Cette publication ne possède pas d'avis...");
-                                        textView.setTextColor(Color.parseColor("#FFA500"));
-                                        textView.setTextSize(18);
-                                        commentaires.addView(textView);
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
-                                Toast.makeText(ProduitPayant.this.getApplicationContext(), "pas d'avis récupérés !", Toast.LENGTH_SHORT).show();
-                                Log.e("DEBUG", "Failed to get comments: " + t.getMessage());
-                            }
-                        });
-
-                        Call<ResponseBody> callImage = filActuService.getImage(publication.getImage());
-                        Log.d("IMAGE", publication.getImage());
-
-                        ImageView img_produit = view.findViewById(R.id.imageViewPub);
-
-                        //Call pour l'ajout de l'image produit
-                        callImage.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                                if (response.isSuccessful()) {
-                                    ResponseBody body = response.body();
-                                    Log.d("IMAGE", String.valueOf(body));
-                                    if (body != null) {
-                                        InputStream inputStream = body.byteStream();
-                                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                                        int desiredWidth = img_produit.getWidth();
-                                        int desiredHeight = img_produit.getHeight();
-                                        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
-                                        Drawable drawable = new BitmapDrawable(ProduitPayant.this.getResources(), resizedBitmap);
-                                        img_produit.setImageDrawable(drawable);
-                                    }
-                                } else {
-                                    Log.e("IMAGE", "Erreur lors de la récupération de l'image. Code de réponse : " + response.code());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                                // Gestion des erreurs
-                                Log.e("IMAGE", "Échec de la requête pour récupérer l'image : " + t.getMessage());
-                            }
-                        });
+                        GlobalFunctionsPublication.callAvisProd(filActuService,publicationId,view,false);
+                        GlobalFunctionsPublication.callImageProd(filActuService,publication,view);
                     }
                 }
             }
@@ -327,57 +233,7 @@ public class ProduitPayant extends AppCompatActivity {
 
         String jwtEmail = SessionManager.getUserEmail(ProduitPayant.this.getApplicationContext());
 
-        Call<Long> callUserId = filActuService.getUtilisateurIdByEmail(jwtEmail);
-        callUserId.enqueue(new Callback<Long>() {
-            @Override
-            public void onResponse(@NonNull Call<Long> call, @NonNull Response<Long> response) {
-                if (response.isSuccessful()) {
-
-                    Log.d(TAG, "user id : "+response.body());
-                    Long userId = response.body();
-                    if (userId != null) {
-                        ajout_commentaire.setOnClickListener(view1 -> {
-                            if(commentaire.getText() != null){
-                                FilActuService.AvisRequestBody requestBody = new FilActuService.AvisRequestBody(
-                                        commentaire.getText().toString(),
-                                        etoiles.getNumStars(),
-                                        publicationId,
-                                        userId
-                                );
-                                Log.d("RequestBody", ""+requestBody.getCommentaire());
-                                Log.d("RequestBody", ""+requestBody.getEtoile());
-                                Log.d("RequestBody", ""+requestBody.getPublication());
-                                Log.d("RequestBody", ""+requestBody.getUtilisateur());
-                                Call<Void> voidCall = filActuService.saveAvis(commentaire.getText().toString(), (int) etoiles.getRating(), publicationId, userId);
-                                voidCall.enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                                        Log.d(TAG, "onResponse: "+response.code());
-                                        if (response.isSuccessful()){
-                                            Toast.makeText(ProduitPayant.this.getApplicationContext(), "Commentaire ajouté", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-
-                                    }
-                                });
-                                commentaire.setText("");
-                                etoiles.setRating(0);
-                                recreate();
-                            }else{
-                                Toast.makeText(ProduitPayant.this.getApplicationContext(), "Commentaire manquant", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                        });
-                    }
-                }
-            }
-            @Override
-            public void onFailure(@NonNull Call<Long> call, @NonNull Throwable t) {
-
-            }
-        });
+        GlobalFunctionsPublication.callUserIdProd(filActuService,jwtEmail,ajout_commentaire,commentaire,
+                etoiles,publicationId,this);
     }
 }

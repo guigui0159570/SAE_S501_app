@@ -183,6 +183,7 @@ public class MesPubAchete extends Fragment {
                                                 });
                                                 layoutProduit.addView(img_produit);
                                                 layoutProduit.addView(layoutTitreDes);
+                                                GlobalFunctionsPublication.callAvis(filActuService,p,layoutConteneur);
 
 
                                                 String titre = p.getTitre();
@@ -289,6 +290,7 @@ public class MesPubAchete extends Fragment {
                                                 //Ajout des layout
                                                 layoutConteneur.addView(layoutProduit);
                                                 layoutConteneur.addView(layoutPersonnel);
+
 
                                                 //Mise en place de bordures
                                                 GradientDrawable border = new GradientDrawable();

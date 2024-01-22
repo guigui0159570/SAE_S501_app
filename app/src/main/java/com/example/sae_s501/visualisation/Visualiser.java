@@ -59,28 +59,6 @@ public class Visualiser extends AppCompatActivity {
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                                 ));
                         layout.addView(gLView);
-
-                        Button buttonZoomIn = findViewById(R.id.buttonplus);
-                        Button buttonZoomOut = findViewById(R.id.buttonmoins);
-
-                        // Ajoutez des écouteurs d'événements pour les boutons de zoom
-                        buttonZoomIn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                zoomFactor *= 1.2f; // Augmentez le facteur de zoom
-                                gLView.setZoomFactor(zoomFactor);
-                                gLView.requestRender();
-                            }
-                        });
-
-                        buttonZoomOut.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                zoomFactor /= 1.2f; // Diminuez le facteur de zoom
-                                gLView.setZoomFactor(zoomFactor);
-                                gLView.requestRender();
-                            }
-                        });
                     }
                 } else {
                     Log.e("MODEL", "Erreur lors de la récupération du modèle 3D. Code de réponse : " + response.code());

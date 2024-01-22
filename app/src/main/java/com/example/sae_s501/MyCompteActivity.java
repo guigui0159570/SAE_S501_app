@@ -84,7 +84,7 @@ public class MyCompteActivity extends AppCompatActivity {
                 .replace(R.id.fragment_moncompte_pub, new MesPublicationsFrag())
                 .commit();
         //Partie information
-        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this,jwtId);
+        CompletableFuture<String> stringCompletableFuture = monCompteViewModel.requestInformation(this, jwtId);
         informationUser(stringCompletableFuture, root);
 
         //Partie fragment parametre
