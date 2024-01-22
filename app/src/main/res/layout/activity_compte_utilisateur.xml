@@ -20,14 +20,16 @@
             android:orientation="horizontal"
             android:gravity="center_horizontal">
 
-            <ImageButton
-                android:id="@+id/back"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:src="@drawable/croix_cercle_new"
-                android:background="@color/transparent"
-                />
+            <ImageView
+                android:id="@+id/closeCompteUti"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/custom_button_return"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:clickable="true"/>
 
             <TextView
                 android:id="@+id/compteutilisateur"

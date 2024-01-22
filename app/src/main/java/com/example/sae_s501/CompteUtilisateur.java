@@ -64,6 +64,13 @@ public class CompteUtilisateur extends AppCompatActivity {
                 informationUser(monCompteViewModel.requestInformation(this,userId), binding.getRoot());
             }
         }
+        findViewById(R.id.closeCompteUti).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), FilActu.class);
+                startActivity(intent);
+            }
+        });
     }
     public void informationUser(CompletableFuture<String> integerCompletableFuture, View root) {
         integerCompletableFuture.thenAccept(resultat -> {
