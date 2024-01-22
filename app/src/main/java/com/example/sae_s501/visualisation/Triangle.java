@@ -1,14 +1,18 @@
 package com.example.sae_s501.visualisation;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
 
 public class Triangle {
 
-    private FloatBuffer vertexBuffer;
+    private final FloatBuffer vertexBuffer;
+    private final ShortBuffer drawListBuffer;
     private final int mProgram;
     private int positionHandle;
     private int colorHandle;
@@ -34,6 +38,10 @@ public class Triangle {
             0.5f, -0.311004243f, 0.0f  // bottom right
     };
 
+    private short drawOrderShort[] /*= {
+    *        0, 1, 2
+    }*/;
+
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 1.0f };
 
@@ -44,7 +52,11 @@ public class Triangle {
                     "  gl_FragColor = vColor;" +
                     "}";
 
-    public Triangle() {
+    public Triangle(Mesh file) throws IOException {
+        triangleCoords = file.getVertices();
+
+        int[] drawOrder = file.getFaces();
+        Log.d("VERTEXTRIANGLES", String.valueOf(file.getNumVertices()));Log.d("FACESTRIANGLES", String.valueOf(file.getNumFaces()));
         // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 // (number of coordinate values * 4 bytes per float)
@@ -59,6 +71,18 @@ public class Triangle {
         // set the buffer to read the first coordinate
         vertexBuffer.position(0);
 
+        drawOrderShort = new short[drawOrder.length];
+        for (int i = 0; i < drawOrder.length; i++) {
+            drawOrderShort[i] = (short) ((int) drawOrder[i]);
+        }
+
+        ByteBuffer dlb = ByteBuffer.allocateDirect(drawOrderShort.length * 2);
+        dlb.order(ByteOrder.nativeOrder());
+
+        drawListBuffer = dlb.asShortBuffer();
+        drawListBuffer.put(drawOrderShort);
+        drawListBuffer.position(0);
+
         int vertexShader = MyGLRenderer.loadShader(GLES20.GL_VERTEX_SHADER,
                 vertexShaderCode);
         int fragmentShader = MyGLRenderer.loadShader(GLES20.GL_FRAGMENT_SHADER,
@@ -69,51 +93,105 @@ public class Triangle {
 
         // add the vertex shader to program
         GLES20.glAttachShader(mProgram, vertexShader);
+        int error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
         // add the fragment shader to program
         GLES20.glAttachShader(mProgram, fragmentShader);
+        error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
-        // creates OpenGL ES program executables
         GLES20.glLinkProgram(mProgram);
+        // creates OpenGL ES program executables
+        int[] linkStatus = new int[1];
+        GLES20.glGetProgramiv(mProgram, GLES20.GL_LINK_STATUS, linkStatus, 0);
+
+        if (linkStatus[0] != GLES20.GL_TRUE) {
+            Log.e("OpenGL Error", "Program link failed: " + GLES20.glGetProgramInfoLog(mProgram));
+        }
     }
 
     public void draw(float[] mvpMatrix) {
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram);
+        int error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
         // get handle to vertex shader's vPosition member
         positionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
+        error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
         // Enable a handle to the triangle vertices
         GLES20.glEnableVertexAttribArray(positionHandle);
+        error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
         // Prepare the triangle coordinate data
         GLES20.glVertexAttribPointer(positionHandle, COORDS_PER_VERTEX,
                 GLES20.GL_FLOAT, false,
                 vertexStride, vertexBuffer);
+        error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
         // get handle to fragment shader's vColor member
         colorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
+        error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
         // Set color for drawing the triangle
         GLES20.glUniform4fv(colorHandle, 1, color, 0);
-
-        // Draw the triangle
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
-
-        // Disable vertex array
-        GLES20.glDisableVertexAttribArray(positionHandle);
+        error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
         // get handle to shape's transformation matrix
         vPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
+        error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
         // Pass the projection and view transformation to the shader
         GLES20.glUniformMatrix4fv(vPMatrixHandle, 1, false, mvpMatrix, 0);
+        error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
-        // Draw the triangle
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
+        // Use drawListBuffer for indices
+        if (drawListBuffer != null) {
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, drawOrderShort.length,
+                    GLES20.GL_UNSIGNED_SHORT, drawListBuffer);
+        } else {
+            Log.e("Triangle", "drawListBuffer is null");
+        }
+        error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(positionHandle);
+        error = GLES20.glGetError();
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.e("OpenGL Error", "Error: " + error);
+        }
     }
+
 }

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#17282D"
-    tools:context=".AjoutPublication"
-    >
+    tools:context=".VisuNotification">
 
 
     <View
@@ -41,143 +40,24 @@
             android:text="Notifications"
             android:textAppearance="@style/se_connecte" />
 
-        <!--Contient attributs (avant description) -->
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="225sp"
-            android:orientation="horizontal" />
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/notificationsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="98dp"
-            android:layout_height="67dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="50sp"
-            tools:layout_editor_absoluteX="70dp"
-            tools:layout_editor_absoluteY="247dp">
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="98dp"
-            android:layout_height="67dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="10sp"
-            tools:layout_editor_absoluteX="70dp"
-            tools:layout_editor_absoluteY="247dp">
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="98dp"
-            android:layout_height="67dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="10sp"
-            tools:layout_editor_absoluteX="70dp"
-            tools:layout_editor_absoluteY="247dp">
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="98dp"
-            android:layout_height="67dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="10sp"
-            tools:layout_editor_absoluteX="70dp"
-            tools:layout_editor_absoluteY="247dp">
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/nomutilisateur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="-290sp"
-            android:hint="@string/nomutilisateur"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="179dp"
-            tools:layout_editor_absoluteY="256dp" />
-
-        <TextView
-            android:id="@+id/notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="132dp"
-            android:layout_marginTop="15sp"
-            android:hint="Notification"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="179dp"
-            tools:layout_editor_absoluteY="256dp" />
-
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="260dp"
-            android:layout_marginTop="-55sp"
-            android:hint="Date"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="179dp"
-            tools:layout_editor_absoluteY="256dp" />
-
-        <TextView
-            android:id="@+id/nomutilisateur1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="60sp"
-            android:hint="@string/nomutilisateur"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="179dp"
-            tools:layout_editor_absoluteY="256dp" />
-
-        <TextView
-            android:id="@+id/notification1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="131dp"
-            android:layout_marginTop="15sp"
-            android:hint="Notification"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="179dp"
-            tools:layout_editor_absoluteY="256dp" />
-
-        <TextView
-            android:id="@+id/date1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="260dp"
-            android:layout_marginTop="-55sp"
-            android:hint="Date"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="179dp"
-            tools:layout_editor_absoluteY="256dp" />
-
-        <TextView
-            android:id="@+id/nomutilisateur2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="60sp"
-            android:hint="@string/nomutilisateur"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="179dp"
-            tools:layout_editor_absoluteY="256dp" />
-
-        <TextView
-            android:id="@+id/notification2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="131dp"
-            android:layout_marginTop="0sp"
-            android:hint="Notification"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="179dp"
-            tools:layout_editor_absoluteY="256dp" />
-
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
     </LinearLayout>
 

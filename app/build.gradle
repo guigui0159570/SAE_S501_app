@@ -51,5 +51,5 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.firebase:firebase-auth:22.3.0'
     implementation 'commons-io:commons-io:2.11.0'
-
+    implementation 'org.rajawali3d:rajawali:1.2.1970'
 }

@@ -73,8 +73,17 @@ public interface UserService {
     @GET ("/abonnenement/{user}/{id}")
     Call<Void> abonnement (@Path("user") long user, @Path("id") long id);
 
+    @GET ("/sedenotifie/{user}/{id}")
+    Call<Void> sedenotifie (@Path("user") long user, @Path("id") long id);
+
+    @GET ("/senotifie/{user}/{id}")
+    Call<Void> senotifie (@Path("user") long user, @Path("id") long id);
+
     @GET ("/presenceAbonne/{userId}/{abonneid}")
     Call<Boolean> presenceAbonne (@Path("userId") long userId, @Path("abonneid") long abonneid);
+
+    @GET ("/presenceUserNotifie/{userId}/{abonnementid}")
+    Call<Boolean> presenceUserNotifie (@Path("userId") long userId, @Path("abonnementid") long abonnementid);
 
     @POST("/updateStringProfil/{user}")
     Call<Void> envoyerString(@Path("user") Long user, @Body Map<String, String> requestBody);
@@ -86,7 +95,11 @@ public interface UserService {
     @GET("/imageProfil/{nomFichier}")
     Call<ResponseBody> getImageProfil(@Path("nomFichier") String nomFichier);
 
+    @GET("/allsendnotification/{user}")
+    Call<Void> allsendnotification(@Path("user") Long user);
 
+    @GET ("/notificationUtilisateur/{user}")
+    Call<List<Map>> notificationUtilisateur(@Path("user") Long user);
 
 }
 
