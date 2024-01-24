@@ -14,29 +14,4 @@
 
     </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:layout_weight="1">
-        <!-- Ajouter un bouton -->
-        <Button
-            android:id="@+id/buttonmoins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-" />
-
-        <!-- Ajouter un autre bouton -->
-        <Button
-            android:id="@+id/buttonplus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+"
-            />
-    </LinearLayout>
-
 </LinearLayout>

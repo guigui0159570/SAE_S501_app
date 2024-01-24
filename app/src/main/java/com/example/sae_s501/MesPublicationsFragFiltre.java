@@ -1,17 +1,10 @@
 package com.example.sae_s501;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.PictureDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -19,37 +12,24 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
-import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class MesPublicationsFragFiltre extends Fragment {
 
@@ -136,17 +116,13 @@ public class MesPublicationsFragFiltre extends Fragment {
 
                                             if(p.getGratuit()){
                                                 layoutConteneur.setOnClickListener(view -> {
-                                                    Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
                                                     loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdGratuit.class));
                                                 });
                                             }else {
                                                 layoutConteneur.setOnClickListener(view -> {
-                                                    Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
                                                     loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdPayant.class));
                                                 });
                                             }
-
-
 
                                             //Param layoutProduit
                                             layoutProduit.setOrientation(LinearLayout.HORIZONTAL);
@@ -162,38 +138,7 @@ public class MesPublicationsFragFiltre extends Fragment {
                                             //mettre l'element image produit
                                             ImageView img_produit = new ImageView(requireContext());
 
-                                            Call<ResponseBody> callImage = filActuService.getImage(p.getImage());
-                                            Log.d("IMAGE", p.getImage());
-
-                                            callImage.enqueue(new Callback<ResponseBody>() {
-                                                @Override
-                                                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                                                    if (getActivity() != null && getContext() != null){
-                                                        if (response.isSuccessful()) {
-                                                            ResponseBody body = response.body();
-                                                            Log.d("IMAGE", String.valueOf(body));
-                                                            if (body != null) {
-                                                                InputStream inputStream = body.byteStream();
-                                                                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                                                                int desiredWidth = 400;
-                                                                int desiredHeight = 400;
-                                                                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
-                                                                Drawable drawable = new BitmapDrawable(getResources(), resizedBitmap);
-                                                                img_produit.setImageDrawable(drawable);
-
-                                                            }
-                                                        } else {
-                                                            Log.e("IMAGE", "Erreur lors de la récupération de l'image. Code de réponse : " + response.code());
-                                                        }
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                                                    // Gestion des erreurs
-                                                    Log.e("IMAGE", "Échec de la requête pour récupérer l'image : " + t.getMessage());
-                                                }
-                                            });
+                                            GlobalFunctionsPublication.callImage(filActuService,p,img_produit);
                                             layoutProduit.addView(img_produit);
                                             layoutProduit.addView(layoutTitreDes);
 
@@ -283,44 +228,7 @@ public class MesPublicationsFragFiltre extends Fragment {
                                             layoutConteneur.setBackground(border);layoutConteneur.setBackgroundResource(R.color.white);
                                             layout.addView(layoutConteneur);
 
-                                            //Creation de la rating bar
-                                            Call<List<AvisDTO>> avisDTOCall = filActuService.getAllAvisByPublication(p.getId());
-                                            avisDTOCall.enqueue(new Callback<List<AvisDTO>>() {
-                                                @SuppressLint("RtlHardcoded")
-                                                @RequiresApi(api = Build.VERSION_CODES.Q)
-                                                @Override
-                                                public void onResponse(@NonNull Call<List<AvisDTO>> call, @NonNull Response<List<AvisDTO>> response) {
-                                                    if(response.isSuccessful()){
-                                                        List<AvisDTO> les_avis = response.body();
-                                                        RatingBar new_rating_bar = new RatingBar(MesPublicationsFragFiltre.this.requireContext());
-                                                        int widthInPixels = 850;
-                                                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(widthInPixels, LinearLayout.LayoutParams.WRAP_CONTENT);
-                                                        assert les_avis != null;
-                                                        if(les_avis.size() != 0){
-                                                            int note = 0;
-                                                            int nb = 0;
-                                                            for(AvisDTO avisDTO : les_avis){
-                                                                note += avisDTO.getEtoile();
-                                                                nb += 1;
-                                                            }
-
-                                                            new_rating_bar.setNumStars(5);
-                                                            new_rating_bar.setStepSize(1);
-                                                            new_rating_bar.setScaleX(0.75f);
-                                                            new_rating_bar.setScaleY(0.75f);
-                                                            float roundedRating = Math.round((float) note/nb);
-                                                            new_rating_bar.setRating(roundedRating);
-                                                            new_rating_bar.setIsIndicator(true);
-                                                            layoutConteneur.addView(new_rating_bar, layoutParams);
-                                                        }
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
-
-                                                }
-                                            });
+                                            GlobalFunctionsPublication.callAvis(filActuService,p,layoutConteneur);
                                         }
                                     } else {
                                         Log.e(TAG, "Error response: " + response.errorBody());
@@ -410,11 +318,9 @@ public class MesPublicationsFragFiltre extends Fragment {
         });
     }
 
-
     public static void loadView(View view, long id, Intent intent){
         Log.d("ID de la pub", ""+id);
         intent.putExtra("id", id);
         view.getContext().startActivity(intent);
     }
-
 }

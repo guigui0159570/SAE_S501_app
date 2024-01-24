@@ -15,10 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.sae_s501.model.MonCompte.FonctionAbonneAbonnementViewModel;
-import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
 import com.example.sae_s501.databinding.ActivityCompteUtilisateurBinding;
-import com.example.sae_s501.databinding.MoncompterespBinding;
+import com.example.sae_s501.model.MonCompte.FonctionAbonneAbonnementViewModel;
+import com.example.sae_s501.model.MonCompte.FonctionNotificationViewModel;
+import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
+
 import com.example.sae_s501.model.MonCompte.ConfigSpring;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -34,7 +35,8 @@ public class CompteUtilisateur extends AppCompatActivity {
     private ActivityCompteUtilisateurBinding binding;
     private MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
     private FonctionAbonneAbonnementViewModel FAAVM = new FonctionAbonneAbonnementViewModel(this);
-    private ImageView back;
+    private FonctionNotificationViewModel FNVM = new FonctionNotificationViewModel(this);
+
 
 
     public CompteUtilisateur() throws ExecutionException, InterruptedException {
@@ -46,15 +48,7 @@ public class CompteUtilisateur extends AppCompatActivity {
         binding = ActivityCompteUtilisateurBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        back = findViewById(R.id.back);
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CompteUtilisateur.this, MesPublications.class);
-                startActivity(intent);
-            }
-        });
         Intent intent = getIntent();
         if (intent != null) {
             long userId = intent.getLongExtra("userId", 0);
@@ -70,6 +64,13 @@ public class CompteUtilisateur extends AppCompatActivity {
                 informationUser(monCompteViewModel.requestInformation(this,userId), binding.getRoot());
             }
         }
+        findViewById(R.id.closeCompteUti).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), FilActu.class);
+                startActivity(intent);
+            }
+        });
     }
     public void informationUser(CompletableFuture<String> integerCompletableFuture, View root) {
         integerCompletableFuture.thenAccept(resultat -> {
@@ -166,12 +167,8 @@ public class CompteUtilisateur extends AppCompatActivity {
 
                                                     // Créez le deuxième ImageView
                                                     ImageView imageView2 = new ImageView(getBaseContext());
-//                                                    imageView2.setLayoutParams(new LinearLayout.LayoutParams(
-//                                                            200,
-//                                                            200,
-//                                                            1)); // Poids 1
                                                     if (resultat) {
-                                                        imageView2.setImageResource(R.drawable.coeurnoir);
+                                                        imageView2.setImageResource(R.drawable.coeurrouge);
                                                         isCoeurBlanc[0] = false;
                                                     }else {
                                                         imageView2.setImageResource(R.drawable.coeurblanc);
@@ -181,7 +178,7 @@ public class CompteUtilisateur extends AppCompatActivity {
                                                         @Override
                                                         public void onClick(View view) {
                                                             if (isCoeurBlanc[0]){
-                                                                imageView2.setImageResource(R.drawable.coeurnoir);
+                                                                imageView2.setImageResource(R.drawable.coeurrouge);
                                                                 FAAVM.sabonner(idElement.getAsLong());
                                                                 isCoeurBlanc[0] = false;
 

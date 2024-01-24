@@ -93,73 +93,9 @@ public class MesPubProdGratuit extends AppCompatActivity {
                             pseudo.setText("Propriétaire non répertorié...");
                         }
                         Log.d("Id pub", ""+publicationId);
-                        Call<List<AvisDTO>> callAvis = filActuService.getAllAvisByPublication(publicationId);
-                        callAvis.enqueue(new Callback<List<AvisDTO>>() {
-                            @Override
-                            public void onResponse(@NonNull Call<List<AvisDTO>> call, @NonNull Response<List<AvisDTO>> response) {
-                                Log.d("CallAvis", "codeResponse: "+response.code());
-                                if (response.isSuccessful()){
-                                    Log.d("CallAvis", "dans le call des avis : "+response.body());
-                                    List<AvisDTO> les_avis = response.body();
-                                    LinearLayout commentaires = view.findViewById(R.id.layout_to_commentaire_gratuit);
-                                    commentaires.setOrientation(LinearLayout.VERTICAL);
-                                    assert les_avis != null;
-                                    if(les_avis.size() != 0){
-                                        int note = 0;
-                                        int nb = 0;
-                                        for (AvisDTO avis : les_avis){
-                                            note += avis.getEtoile();
-                                            nb += 1;
-                                            LinearLayout linearLayout = new LinearLayout(MesPubProdGratuit.this.getApplicationContext());
-                                            LinearLayout.LayoutParams params_elt = new LinearLayout.LayoutParams(
-                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                    LinearLayout.LayoutParams.WRAP_CONTENT
-                                            );
-                                            params_elt.setMargins(0, 0, 0, 25);
-                                            linearLayout.setLayoutParams(params_elt);
-                                            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                                            TextView pseudo_avis = new TextView(MesPubProdGratuit.this.getApplicationContext());
-                                            TextView commentaire = new TextView(MesPubProdGratuit.this.getApplicationContext());
-
-                                            Call<Utilisateur> utilisateurCall = filActuService.getUtilisateurById(avis.getUtilisateur());
-                                            utilisateurCall.enqueue(new Callback<Utilisateur>() {
-                                                @SuppressLint("SetTextI18n")
-                                                @Override
-                                                public void onResponse(@NonNull Call<Utilisateur> call, @NonNull Response<Utilisateur> response) {
-                                                    if(response.isSuccessful()){
-                                                        Utilisateur utilisateur = response.body();
-                                                        assert utilisateur != null;
-                                                        pseudo_avis.setText(utilisateur.getPseudo()+" : ");
-                                                        commentaire.setText(avis.getCommentaire());
-                                                        linearLayout.addView(pseudo_avis);linearLayout.addView(commentaire);
-                                                        commentaires.addView(linearLayout);
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onFailure(@NonNull Call<Utilisateur> call, @NonNull Throwable t) {
-
-                                                }
-                                            });
-                                        }
-                                        Log.d("Notation", "notation : " + note/nb);
-                                        etoiles.setRating(Math.round(note/nb));
-                                        etoiles.setIsIndicator(true);
-                                    }else{
-                                        TextView textView = new TextView(MesPubProdGratuit.this.getApplicationContext());
-                                        textView.setText("Cette publication ne possède pas d'avis...");
-                                        textView.setTextColor(Color.parseColor("#FFA500"));
-                                        textView.setTextSize(18);
-                                        commentaires.addView(textView);
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(@NonNull Call<List<AvisDTO>> call, @NonNull Throwable t) {
-                                Toast.makeText(MesPubProdGratuit.this.getApplicationContext(), "pas d'avis récupérés !", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        //récupération des avis de notre publication
+                        GlobalFunctionsPublication.callAvisProdMesPub(filActuService,publicationId,
+                                view,etoiles,true);
 
                         Call<ResponseBody> callImage = filActuService.getImage(publication.getImage());
                         Log.d("IMAGE", publication.getImage());
@@ -167,32 +103,7 @@ public class MesPubProdGratuit extends AppCompatActivity {
                         ImageView img_produit = view.findViewById(R.id.imageViewPub);
 
                         //Call pour l'ajout de l'image produit
-                        callImage.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                                if (response.isSuccessful()) {
-                                    ResponseBody body = response.body();
-                                    Log.d("IMAGE", String.valueOf(body));
-                                    if (body != null) {
-                                        InputStream inputStream = body.byteStream();
-                                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                                        int desiredWidth = img_produit.getWidth();
-                                        int desiredHeight = img_produit.getHeight();
-                                        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
-                                        Drawable drawable = new BitmapDrawable(MesPubProdGratuit.this.getResources(), resizedBitmap);
-                                        img_produit.setImageDrawable(drawable);
-                                    }
-                                } else {
-                                    Log.e("IMAGE", "Erreur lors de la récupération de l'image. Code de réponse : " + response.code());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                                // Gestion des erreurs
-                                Log.e("IMAGE", "Échec de la requête pour récupérer l'image : " + t.getMessage());
-                            }
-                        });
+                        GlobalFunctionsPublication.callImageProd(filActuService,publication,view);
                     }
                 }
             }

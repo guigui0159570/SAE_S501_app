@@ -151,15 +151,6 @@
                     android:textSize="17sp" />
 
             </LinearLayout>
-            
-            <RatingBar
-                android:id="@+id/notation_gratuit"
-
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:stepSize="1"
-                android:layout_marginStart="25dp"/>
 
             <TextView
                 android:id="@+id/commentaires_pers"

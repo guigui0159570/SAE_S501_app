@@ -147,16 +147,6 @@
 
             <!-- Layout qui contient le téléchargement de l'image -->
 
-            <RatingBar
-                android:id="@+id/notation_payant"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:stepSize="1"
-                android:layout_marginStart="25dp"/>
-
-
-
             <TextView
                 android:id="@+id/commentaires_pers"
                 android:layout_width="wrap_content"
