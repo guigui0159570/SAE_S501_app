@@ -204,8 +204,13 @@ public class ProduitPayant extends AppCompatActivity {
                                 });
                             }
                             else {
-                                Intent intent = new Intent(getApplicationContext(), MyCompteActivity.class);
-                                startActivity(intent);
+                                pseudo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getApplicationContext(), MyCompteActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
 
                             }
 

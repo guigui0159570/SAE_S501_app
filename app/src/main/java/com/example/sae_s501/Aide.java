@@ -40,12 +40,14 @@ public class Aide extends AppCompatActivity {
 
         String jwtEmail = SessionManager.getUserEmail(this);
 
+        // Initialisation des services Retrofit pour les requêtes réseau
         retrofitService = new RetrofitService(this);
         userService = retrofitService.getRetrofit().create(UserService.class);
 
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Redirection
                 Intent intent = new Intent(Aide.this, MyCompteActivity.class);
                 startActivity(intent);
             }
@@ -65,7 +67,7 @@ public class Aide extends AppCompatActivity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
                             showToast("Un admin a été informé de votre demande.");
-                            texte_aide.setText("");
+                            texte_aide.setText("");// Effacement du texte après envoi
                         }
                         else{
                             Log.d("ERREUR REQUETE", "ERREUR REQUETE" + response);

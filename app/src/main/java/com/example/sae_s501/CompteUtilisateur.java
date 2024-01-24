@@ -34,6 +34,7 @@ public class CompteUtilisateur extends AppCompatActivity {
     private ActivityCompteUtilisateurBinding binding;
     private MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
     private FonctionAbonneAbonnementViewModel FAAVM = new FonctionAbonneAbonnementViewModel(this);
+    private ImageView back;
 
 
     public CompteUtilisateur() throws ExecutionException, InterruptedException {
@@ -45,7 +46,15 @@ public class CompteUtilisateur extends AppCompatActivity {
         binding = ActivityCompteUtilisateurBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        back = findViewById(R.id.back);
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CompteUtilisateur.this, MesPublications.class);
+                startActivity(intent);
+            }
+        });
         Intent intent = getIntent();
         if (intent != null) {
             long userId = intent.getLongExtra("userId", 0);
