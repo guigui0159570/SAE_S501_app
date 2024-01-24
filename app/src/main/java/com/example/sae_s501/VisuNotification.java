@@ -1,5 +1,6 @@
 package com.example.sae_s501;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -51,6 +52,13 @@ public class VisuNotification  extends AppCompatActivity {
         FonctionNotificationViewModel FNVM = new FonctionNotificationViewModel(this);
         CompletableFuture<String> completableFuture= FNVM.requestInformationNotification(this) ;
         informationUserForNotification(completableFuture,root);
+        findViewById(R.id.closeNotification).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), FilActu.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void informationUserForNotification(CompletableFuture<String> integerCompletableFuture, View root){
