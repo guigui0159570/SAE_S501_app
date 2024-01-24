@@ -38,6 +38,10 @@ public class GlobalFunctionsPublication {
 
 
     public static void callAvis(FilActuService filActuService, Publication p, LinearLayout layoutConteneur){
+        /*
+            Cette fonction permet de faire un appel à la BDD en passant par une requête
+            HTTP pour récupérer les avis d'une publication en fonction de son ID
+        */
         Call<List<AvisDTO>> avisDTOCall = filActuService.getAllAvisByPublication(p.getId());
         avisDTOCall.enqueue(new Callback<List<AvisDTO>>() {
             @SuppressLint("RtlHardcoded")
@@ -78,9 +82,11 @@ public class GlobalFunctionsPublication {
     }
 
     public static void callImage(FilActuService filActuService, Publication p, ImageView img_produit){
+        /*
+            Cette fonction permet de faire un appel à la BDD en passant par une requête
+            HTTP pour récupérer l'image d'une publication en fonction de son ID
+        */
         Call<ResponseBody> callImage = filActuService.getImage(p.getImage());
-        Log.d("IMAGE", p.getImage());
-
         callImage.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -114,6 +120,11 @@ public class GlobalFunctionsPublication {
 
     //Partie page produit
     public static void callAvisProd(FilActuService filActuService, Long publicationId, View view, Boolean gratuit){
+        /*
+            Cette fonction permet de faire un appel à la BDD en passant par une requête
+            HTTP pour récupérer les avis d'une publication en fonction de son ID pour les
+            produits payant/gratuit
+        */
         Call<List<AvisDTO>> callAvis = filActuService.getAllAvisByPublication(publicationId);
         callAvis.enqueue(new Callback<List<AvisDTO>>() {
             @Override
@@ -188,6 +199,11 @@ public class GlobalFunctionsPublication {
     }
 
     public static void callImageProd(FilActuService filActuService, Publication publication, View view){
+        /*
+            Cette fonction permet de faire un appel à la BDD en passant par une requête
+            HTTP pour récupérer l'image d'une publication en fonction de son ID pour les
+            produits payant/gratuit
+        */
         Call<ResponseBody> callImage = filActuService.getImage(publication.getImage());
         Log.d("IMAGE", publication.getImage());
 
@@ -224,6 +240,10 @@ public class GlobalFunctionsPublication {
 
     public static void callUserIdProd(FilActuService filActuService, String jwtEmail, Button ajout_commentaire,
                                       EditText commentaire, RatingBar etoiles, Long publicationId, AppCompatActivity appCompatActivity){
+        /*
+            Cette fonction permet de faire un appel à la BDD en passant par une requête
+            HTTP pour récupérer l'ID d'un utilisateur en fonction de son adresse mail
+        */
         Call<Long> callUserId = filActuService.getUtilisateurIdByEmail(jwtEmail);
         callUserId.enqueue(new Callback<Long>() {
             @Override
@@ -283,6 +303,11 @@ public class GlobalFunctionsPublication {
     //Partie page produit de "mes publications"*
     public static void callAvisProdMesPub(FilActuService filActuService, Long publicationId,
                                           View view, RatingBar etoiles, Boolean gratuit){
+        /*
+            Cette fonction permet de faire un appel à la BDD en passant par une requête
+            HTTP pour récupérer les avis d'une publication en fonction de son ID pour les
+            mes produits payant/gratuit
+        */
         Call<List<AvisDTO>> callAvis = filActuService.getAllAvisByPublication(publicationId);
         callAvis.enqueue(new Callback<List<AvisDTO>>() {
             @Override

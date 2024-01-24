@@ -59,6 +59,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FilActuFragment extends Fragment {
 
+    //Définitions des paramètres
     private static final String TAG = "FilActuFragment";
     private static final String BASE_URL = Dictionnaire.getIpAddress();
 
@@ -75,7 +76,6 @@ public class FilActuFragment extends Fragment {
 
     }
 
-    // Ajoutez cette méthode pour effectuer l'appel réseau depuis votre fragment
     private void loadData(View view) {
 
 
@@ -92,7 +92,6 @@ public class FilActuFragment extends Fragment {
 
             @Override
             public void onResponse(@NonNull Call<List<Publication>> call, @NonNull Response<List<Publication>> response) {
-                Log.d(TAG, "HTTP Code: " + response.code());
                 if (response.isSuccessful()) {
                     LinearLayout layout = view.findViewById(R.id.container_pub_fil_actu);
                     List<Publication> publications = response.body();
