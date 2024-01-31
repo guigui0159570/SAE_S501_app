@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 
 import androidx.annotation.NonNull;
@@ -11,8 +11,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.sae_s501.R;
 import com.example.sae_s501.model.Utilisateur;
-import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.RetrofitServiceRegister;
 import com.example.sae_s501.retrofit.UserService;
 
@@ -22,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Inscription extends AppCompatActivity {
+public class InscriptionActivity extends AppCompatActivity {
     private EditText editTextPseudo;
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -131,7 +132,7 @@ public class Inscription extends AppCompatActivity {
             public void onResponse(@NonNull Call<Utilisateur> call, @NonNull Response<Utilisateur> response) {
                 if (response.isSuccessful()) {
                     showToast("Inscription réussie !");
-                    Intent intent = new Intent(Inscription.this, Connexion.class);
+                    Intent intent = new Intent(InscriptionActivity.this, ConnexionActivity.class);
                     startActivity(intent);
                     // Réinitialiser les champs, que l'inscription soit réussie ou non
                     editTextPseudo.setText("");

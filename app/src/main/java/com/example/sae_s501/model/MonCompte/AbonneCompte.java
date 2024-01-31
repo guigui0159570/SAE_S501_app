@@ -2,10 +2,8 @@ package com.example.sae_s501.model.MonCompte;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,36 +14,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sae_s501.AjoutPublication;
-import com.example.sae_s501.CompteUtilisateur;
-import com.example.sae_s501.MesPublications;
+import com.example.sae_s501.activity.CompteUtilisateurActivity;
 import com.example.sae_s501.R;
-import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
-import com.example.sae_s501.model.Utilisateur;
-import com.example.sae_s501.authentification.Authentification;
-import com.example.sae_s501.authentification.JwtResponse;
-import com.example.sae_s501.authentification.LoginRequest;
-import com.example.sae_s501.retrofit.AuthService;
-import com.example.sae_s501.retrofit.RetrofitService;
-import com.example.sae_s501.retrofit.UserService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 public class AbonneCompte extends AppCompatActivity {
     private ConfigSpring configSpring = new ConfigSpring();
@@ -218,7 +194,7 @@ public class AbonneCompte extends AppCompatActivity {
         eltClicable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), CompteUtilisateur.class);
+                Intent intent = new Intent(getBaseContext(), CompteUtilisateurActivity.class);
                 intent.putExtra("userId", idUtilisateur.getAsLong());
                 startActivity(intent);
             }

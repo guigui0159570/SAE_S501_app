@@ -1,25 +1,16 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.proto.ProtoOutputStream;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,75 +19,66 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sae_s501.Dictionnaire;
+import com.example.sae_s501.GlobalFunctionsPublication;
+import com.example.sae_s501.Publication;
+import com.example.sae_s501.R;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;
-import com.example.sae_s501.retrofit.PanierService;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
+import com.example.sae_s501.visualisation.Visualiser;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ProduitPayant extends AppCompatActivity {
-    private TextView panier;
-    private RetrofitService retrofitService;
-    private PanierService panierService;
+public class ProduitGratuitActivity extends AppCompatActivity {
+
     private ImageView retour;
     private ImageView signaler;
     private UserService userService;
+    private RetrofitService retrofitService;
+
     private long id;
     private String jwtEmail;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.produit_payantresp);
-        panier = findViewById(R.id.ajouter_panier);
-        signaler = findViewById(R.id.signaler);
-        retrofitService = new RetrofitService(this);
-        jwtEmail = SessionManager.getUserEmail(this);
-        retour = findViewById(R.id.close);
-
+        setContentView(R.layout.produit_gratuitresp);
         long publicationId = getIntent().getLongExtra("id", 0);
-        Log.d("publicationId", String.valueOf(publicationId));
         View rootView = findViewById(android.R.id.content);
-        if(rootView != null){
-            loadPublication(rootView, publicationId);
-        }else{
-            Toast.makeText(getApplicationContext(), "La view est null !!!", Toast.LENGTH_SHORT).show();
-        }
+        loadPublication(rootView, publicationId);
+        retour = findViewById(R.id.close);
+        retrofitService = new RetrofitService(this);
+        signaler = findViewById(R.id.signaler);
+
+
+        jwtEmail = SessionManager.getUserEmail(this);
+
+        retour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProduitGratuitActivity.this, FilActuActivity.class);
+                startActivity(intent);
+            }
+        });
+
         signaler.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SignalerConfirmation(jwtEmail,id);
             }
         });
-        retour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProduitPayant.this, FilActu.class);
-                startActivity(intent);
-            }
-        });
-        panier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    ajoutPanier(jwtEmail,publicationId);
-            }
-        });
-
     }
+
+
     private void SignalerConfirmation(String jwt,Long id) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirmation")
@@ -134,46 +116,15 @@ public class ProduitPayant extends AppCompatActivity {
                 })
                 .show();
     }
-    private void ajoutPanier(String email, Long idPub) {
-        retrofitService = new RetrofitService(this);
-        panierService = retrofitService.getRetrofit().create(PanierService.class);
-
-        Call<Void> call = panierService.ajoutPublicationPanier(email, idPub);
-
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    showToast("Ce produit a été ajouté au panier");
-                } else {
-                    if (response.code() == 404) {
-                        showToast("Utilisateur non trouvé");
-                    } else if (response.code() == 400) {
-                        showToast("La publication est déjà dans le panier ou vous êtes le propriétaire");
-                    } else {
-                        showToast("Erreur de requête: " + response.code());
-                        Log.d("PANIER", String.valueOf(response.code()));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                showToast("Erreur de réseau: " + t.getMessage());
-                Log.d("PANIER", t.getMessage());
-            }
-        });
-    }
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
     private void loadPublication(View view, long publicationId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Dictionnaire.getIpAddress())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(Authentification.createAuthenticatedClient(ProduitPayant.this.getApplicationContext()))
+                .client(Authentification.createAuthenticatedClient(ProduitGratuitActivity.this.getApplicationContext()))
                 .build();
 
         FilActuService filActuService = retrofit.create(FilActuService.class);
@@ -186,10 +137,15 @@ public class ProduitPayant extends AppCompatActivity {
                     // Traitement des données de la publication ici
                     Publication publication = response.body();
                     if (publication != null) {
-                        TextView titre = view.findViewById(R.id.ajout_pub_titre_payant);titre.setText(publication.getTitre());
-                        TextView description = view.findViewById(R.id.description_payant); description.setText(publication.getDescription());
-                        TextView pseudo = view.findViewById(R.id.pseudo_pub_payant);
+                        TextView titre = view.findViewById(R.id.ajout_pub_titre);titre.setText(publication.getTitre());
+                        TextView description = view.findViewById(R.id.charger_img); description.setText(publication.getDescription());
+                        TextView pseudo = view.findViewById(R.id.pseudo_pub_gratuit);
                         id =  publication.getId();
+
+                        View visulaiser = findViewById(R.id.visualiser_img);
+                        visulaiser.setOnClickListener(view -> {
+                            loadView(view, publication.getFichier(), new Intent(ProduitGratuitActivity.this, Visualiser.class));
+                        });
 
                         if(publication.getProprietaire() != null){
                             pseudo.setText(publication.getProprietaire().getPseudo());
@@ -197,22 +153,29 @@ public class ProduitPayant extends AppCompatActivity {
                                 pseudo.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent intent = new Intent(getApplicationContext(), CompteUtilisateur.class);
+                                        Intent intent = new Intent(getApplicationContext(), CompteUtilisateurActivity.class);
                                         intent.putExtra("userId", publication.getProprietaire().getId());
                                         startActivity(intent);
                                     }
                                 });
                             }
                             else {
-                                Intent intent = new Intent(getApplicationContext(), MyCompteActivity.class);
-                                startActivity(intent);
-                            }
+                                pseudo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getApplicationContext(), MyCompteActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
 
+                            }
                         }else{
                             pseudo.setText("Propriétaire non répertorié...");
                         }
                         Log.d("Id pub", ""+publicationId);
-                        GlobalFunctionsPublication.callAvisProd(filActuService,publicationId,view,false);
+                        //Récupération des avis
+                        GlobalFunctionsPublication.callAvisProd(filActuService,publicationId,view,true);
+                        //Récupération de l'image
                         GlobalFunctionsPublication.callImageProd(filActuService,publication,view);
                     }
                 }
@@ -226,14 +189,19 @@ public class ProduitPayant extends AppCompatActivity {
         });
 
         Log.d(TAG, "loadPublication: debut recuperation des objets");
-        EditText commentaire = view.findViewById(R.id.editText_commentaire_payant);
-        RatingBar etoiles = view.findViewById(R.id.notation_payant);
-        Button ajout_commentaire = view.findViewById(R.id.button_commentaire_payant);
+        EditText commentaire = view.findViewById(R.id.editTextCommentaire);
+        RatingBar etoiles = view.findViewById(R.id.notation_gratuit);
+        Button ajout_commentaire = view.findViewById(R.id.button2);
         Log.d(TAG, "loadPublication: fin recuperation des objets");
 
-        String jwtEmail = SessionManager.getUserEmail(ProduitPayant.this.getApplicationContext());
+        String jwtEmail = SessionManager.getUserEmail(ProduitGratuitActivity.this.getApplicationContext());
 
-        GlobalFunctionsPublication.callUserIdProd(filActuService,jwtEmail,ajout_commentaire,commentaire,
-                etoiles,publicationId,this);
+        GlobalFunctionsPublication.callUserIdProd(filActuService,jwtEmail,ajout_commentaire,
+                commentaire,etoiles,publicationId,this);
+    }
+    public static void loadView(View view, String fichier, Intent intent){
+        Log.d("Fichier", ""+fichier);
+        intent.putExtra("fichier", fichier);
+        view.getContext().startActivity(intent);
     }
 }

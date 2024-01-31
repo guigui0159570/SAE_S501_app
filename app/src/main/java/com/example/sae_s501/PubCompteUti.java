@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -17,10 +16,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -28,15 +25,13 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
-import com.example.sae_s501.authentification.Authentification;
+import com.example.sae_s501.activity.MesPubProdGratuitActivity;
+import com.example.sae_s501.activity.MesPubProdPayantActivity;
+import com.example.sae_s501.activity.MesPublicationsActivity;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.RetrofitService;
-import com.example.sae_s501.retrofit.SessionManager;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -44,8 +39,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PubCompteUti extends Fragment {
 
@@ -128,12 +121,12 @@ public class PubCompteUti extends Fragment {
                                                 if(p.getGratuit()){
                                                     layoutConteneur.setOnClickListener(view -> {
                                                         Toast.makeText(requireContext(), "je suis dans le onclick gratuit", Toast.LENGTH_SHORT).show();
-                                                        loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdGratuit.class));
+                                                        loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdGratuitActivity.class));
                                                     });
                                                 }else {
                                                     layoutConteneur.setOnClickListener(view -> {
                                                         Toast.makeText(requireContext(), "je suis dans le onclick payant", Toast.LENGTH_SHORT).show();
-                                                        loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdPayant.class));
+                                                        loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdPayantActivity.class));
                                                     });
                                                 }
 
@@ -317,7 +310,7 @@ public class PubCompteUti extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d("REQUETE_SUPPRESSION", "Publication supprimée avec succès");
                     showToast("Publication supprimée avec succès");
-                    Intent intent = new Intent(getActivity(), MesPublications.class);
+                    Intent intent = new Intent(getActivity(), MesPublicationsActivity.class);
                     startActivity(intent);
                 } else {
                     Log.e("REQUETE_SUPPRESSION", "Échec de la suppression de la publication. Code de réponse : " + response.code());

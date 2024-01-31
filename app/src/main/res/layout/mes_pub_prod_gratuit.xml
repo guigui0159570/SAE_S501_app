@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#17282D"
-    tools:context=".AjoutPublication">
+    tools:context=".activity.AjoutPublicationActivity">
 
     <!-- Gradient Background View -->
     <View

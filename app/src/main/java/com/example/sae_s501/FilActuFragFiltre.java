@@ -26,6 +26,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import com.example.sae_s501.activity.ProduitGratuitActivity;
+import com.example.sae_s501.activity.ProduitPayantActivity;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
@@ -116,11 +119,11 @@ public class FilActuFragFiltre extends Fragment {
 
                             if(p.getGratuit()){
                                 layoutConteneur.setOnClickListener(view -> {
-                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuit.class));
+                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuitActivity.class));
                                 });
                             }else {
                                 layoutConteneur.setOnClickListener(view -> {
-                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayant.class));
+                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayantActivity.class));
                                 });
                             }
 

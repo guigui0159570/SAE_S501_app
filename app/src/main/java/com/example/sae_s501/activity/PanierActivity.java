@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import static android.content.ContentValues.TAG;
 
@@ -16,16 +16,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sae_s501.PublicationPanier;
+import com.example.sae_s501.R;
 import com.example.sae_s501.retrofit.PanierService;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
-import com.example.sae_s501.retrofit.UserService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Panier extends AppCompatActivity {
+public class PanierActivity extends AppCompatActivity {
     private PanierService panierService;
     private RetrofitService retrofitService;
     private Button button_achat;
@@ -50,7 +51,7 @@ public class Panier extends AppCompatActivity {
 
         retour_panier.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(Panier.this, MyCompteActivity.class);
+                Intent intent = new Intent(PanierActivity.this, MyCompteActivity.class);
                 startActivity(intent);
             }
         });
@@ -125,7 +126,7 @@ public class Panier extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     showToast("Achat validé ! ");
-                    Intent intent = new Intent(Panier.this, MyCompteActivity.class);
+                    Intent intent = new Intent(PanierActivity.this, MyCompteActivity.class);
                     startActivity(intent);
                 } else {
                     showToast("Erreur: Achat refusé");                }

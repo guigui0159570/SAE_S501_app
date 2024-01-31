@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import android.content.Intent;
@@ -11,6 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sae_s501.Dictionnaire;
+import com.example.sae_s501.GlobalFunctionsPublication;
+import com.example.sae_s501.Publication;
+import com.example.sae_s501.R;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;
 import okhttp3.ResponseBody;
@@ -20,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MesPubProdGratuit extends AppCompatActivity {
+public class MesPubProdGratuitActivity extends AppCompatActivity {
     private ImageView retour;
 
 
@@ -35,7 +40,7 @@ public class MesPubProdGratuit extends AppCompatActivity {
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MesPubProdGratuit.this, MesPublications.class);
+                Intent intent = new Intent(MesPubProdGratuitActivity.this, MesPublicationsActivity.class);
                 startActivity(intent);
             }
         });
@@ -45,7 +50,7 @@ public class MesPubProdGratuit extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Dictionnaire.getIpAddress())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(Authentification.createAuthenticatedClient(MesPubProdGratuit.this.getApplicationContext()))
+                .client(Authentification.createAuthenticatedClient(MesPubProdGratuitActivity.this.getApplicationContext()))
                 .build();
 
         FilActuService filActuService = retrofit.create(FilActuService.class);

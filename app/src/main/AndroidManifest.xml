@@ -29,7 +29,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".CompteUtilisateur"
+            android:name=".activity.CompteUtilisateurActivity"
             android:exported="false" />
         <activity
             android:name=".model.MonCompte.AbonneCompte"
@@ -38,19 +38,19 @@
             android:name=".model.MonCompte.AbonnementCompte"
             android:exported="false" />
         <activity
-            android:name=".MyCompteActivity"
+            android:name=".activity.MyCompteActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".MyUpdateCompteActivity"
+            android:name=".activity.MyUpdateCompteActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".VisuNotification"
+            android:name=".activity.VisuNotificationActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
@@ -60,49 +60,49 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Connexion" />
+        <activity android:name=".activity.ConnexionActivity" />
         <activity
-            android:name=".Panier"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name=".MesAchats"
+            android:name=".activity.PanierActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".Inscription"
+            android:name=".activity.MesAchatsActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".AjoutPublication"
+        <activity
+            android:name=".activity.InscriptionActivity"
             android:exported="true">
-
         </activity>
-        <activity android:name=".MesPublications"
-            android:exported="true">
-
-        </activity>
-        <activity android:name=".FilActu"
+        <activity android:name=".activity.AjoutPublicationActivity"
             android:exported="true">
 
         </activity>
-        <activity android:name=".MdpOublie"
+        <activity android:name=".activity.MesPublicationsActivity"
+            android:exported="true">
+
+        </activity>
+        <activity android:name=".activity.FilActuActivity"
+            android:exported="true">
+
+        </activity>
+        <activity android:name=".activity.MdpOublieActivity"
             android:exported="true">
 
         </activity>
 
-        <activity android:name=".ProduitGratuit" android:exported="true"
+        <activity android:name=".activity.ProduitGratuitActivity" android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"> </activity>
-        <activity android:name=".ProduitPayant" android:exported="true"
+        <activity android:name=".activity.ProduitPayantActivity" android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"> </activity>
-        <activity android:name=".Aide"
+        <activity android:name=".activity.AideActivity"
             android:exported="true">
 
         </activity>
 
-        <activity android:name=".MesPubProdGratuit" android:exported="true"
+        <activity android:name=".activity.MesPubProdGratuitActivity" android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"> </activity>
 
-        <activity android:name=".MesPubProdPayant" android:exported="true"
+        <activity android:name=".activity.MesPubProdPayantActivity" android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"> </activity>
     </application>
 

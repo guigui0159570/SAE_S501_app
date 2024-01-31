@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,13 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sae_s501.R;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.SessionManager;
 
 import java.util.Locale;
 
 
-public class Connexion extends AppCompatActivity {
+public class ConnexionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,7 @@ public class Connexion extends AppCompatActivity {
         mdpOublie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), MdpOublie.class);
+                Intent intent = new Intent(getBaseContext(), MdpOublieActivity.class);
                 startActivity(intent);
             }
         });
@@ -66,17 +68,17 @@ public class Connexion extends AppCompatActivity {
                           new Authentification.AuthCallback() {
                               @Override
                               public void onAuthSuccess() {
-                                  SessionManager.retrieveUserId(Connexion.this);
+                                  SessionManager.retrieveUserId(ConnexionActivity.this);
 
                                   // L'authentification a réussi, vous pouvez effectuer des actions ici
-                                  Intent intent = new Intent(getBaseContext(), MesPublications.class);
+                                  Intent intent = new Intent(getBaseContext(), MesPublicationsActivity.class);
                                   startActivity(intent);
                               }
 
                               @Override
                               public void onAuthError(String errorMessage) {
                                   // Gérer les erreurs d'authentification ici
-                                  Toast.makeText(Connexion.this, "Erreur d'authentification: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                  Toast.makeText(ConnexionActivity.this, "Erreur d'authentification: " + errorMessage, Toast.LENGTH_SHORT).show();
                               }
                           }
                   );
@@ -95,7 +97,7 @@ public class Connexion extends AppCompatActivity {
     }
 
     public void onNouveauInscriptionClick(View view) {
-        Intent intent = new Intent(this, Inscription.class);
+        Intent intent = new Intent(this, InscriptionActivity.class);
         startActivity(intent);
     }
 }

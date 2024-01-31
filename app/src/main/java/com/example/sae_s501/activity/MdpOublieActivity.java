@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,15 +11,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sae_s501.R;
 import com.example.sae_s501.retrofit.AuthService;
 import com.example.sae_s501.retrofit.RetrofitServiceRegister;
-import com.example.sae_s501.retrofit.UserService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MdpOublie  extends AppCompatActivity {
+public class MdpOublieActivity extends AppCompatActivity {
     private RetrofitServiceRegister retrofitService;
     private AuthService authService;
 
@@ -35,7 +35,7 @@ public class MdpOublie  extends AppCompatActivity {
         retourLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), Connexion.class);
+                Intent intent = new Intent(getBaseContext(), ConnexionActivity.class);
                 startActivity(intent);
             }
         });
@@ -70,7 +70,7 @@ public class MdpOublie  extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     showToast("Réinitialisation réussie. Vérifiez votre e-mail pour les instructions.");
-                    Intent intent = new Intent(getBaseContext(), Connexion.class);
+                    Intent intent = new Intent(getBaseContext(), ConnexionActivity.class);
                     startActivity(intent);
                 } else {
                     if (response.code() == 404) {

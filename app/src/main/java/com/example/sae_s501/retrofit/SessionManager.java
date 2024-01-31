@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.view.View;
 
-import com.example.sae_s501.Connexion;
-import com.example.sae_s501.MesPublications;
-import com.example.sae_s501.MyCompteActivity;
+import com.example.sae_s501.activity.ConnexionActivity;
+import com.example.sae_s501.activity.MesPublicationsActivity;
 import com.example.sae_s501.authentification.Authentification;
 
 import retrofit2.Call;
@@ -35,10 +33,10 @@ public class SessionManager {
                         // Le token est valide
                         // Faites ce que vous devez faire ici
                         retrieveUserId(context);
-                        Intent intent = new Intent(context, MesPublications.class);
+                        Intent intent = new Intent(context, MesPublicationsActivity.class);
                         context.startActivity(intent);
                     } else {
-                        Intent intent = new Intent(context, Connexion.class);
+                        Intent intent = new Intent(context, ConnexionActivity.class);
                         context.startActivity(intent);
                     }
                 }
@@ -46,7 +44,7 @@ public class SessionManager {
         } else {
             // Aucun token JWT n'est présent
             Log.e("JWT Token", "Non présent");
-            Intent intent = new Intent(context, Connexion.class);
+            Intent intent = new Intent(context, ConnexionActivity.class);
             context.startActivity(intent);
         }
     }

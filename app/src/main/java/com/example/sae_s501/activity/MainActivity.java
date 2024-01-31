@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,13 +6,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 
+import com.example.sae_s501.R;
 import com.example.sae_s501.retrofit.SessionManager;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void redirectToLoginScreen() {
-        Intent intent = new Intent(this, Connexion.class);
+        Intent intent = new Intent(this, ConnexionActivity.class);
         startActivity(intent);
     }
 
     public void OnClickConnexion(View view) {
-        Intent intent = new Intent(this, AjoutPublication.class);
+        Intent intent = new Intent(this, AjoutPublicationActivity.class);
         startActivity(intent);
     }
 

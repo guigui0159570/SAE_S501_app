@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,36 +8,25 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.TooltipCompat;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.sae_s501.databinding.MoncompterespBinding;
+import com.example.sae_s501.R;
 import com.example.sae_s501.databinding.NotificationsrespBinding;
-import com.example.sae_s501.databinding.UpdatemoncompteBinding;
 import com.example.sae_s501.model.MonCompte.ConfigSpring;
 import com.example.sae_s501.model.MonCompte.FonctionNotificationViewModel;
 import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
-import com.example.sae_s501.retrofit.FilActuService;
-import com.example.sae_s501.retrofit.PanierService;
-import com.example.sae_s501.retrofit.RetrofitService;
-import com.example.sae_s501.retrofit.SessionManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
-public class VisuNotification  extends AppCompatActivity {
+public class VisuNotificationActivity extends AppCompatActivity {
 
     private ConfigSpring configSpring = new ConfigSpring();
     private NotificationsrespBinding binding;
@@ -55,7 +44,7 @@ public class VisuNotification  extends AppCompatActivity {
         findViewById(R.id.closeNotification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), FilActu.class);
+                Intent intent = new Intent(getBaseContext(), FilActuActivity.class);
                 startActivity(intent);
             }
         });

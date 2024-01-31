@@ -8,19 +8,14 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.PictureDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -32,24 +27,16 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
+import com.example.sae_s501.activity.ProduitGratuitActivity;
+import com.example.sae_s501.activity.ProduitPayantActivity;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
-import com.example.sae_s501.retrofit.SessionManager;
-import com.google.gson.JsonElement;
 
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.zip.Inflater;
 
-import okhttp3.Credentials;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -134,11 +121,11 @@ public class FilActuFragment extends Fragment {
 
                             if(p.getGratuit()){
                                 layoutConteneur.setOnClickListener(view -> {
-                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuit.class));
+                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitGratuitActivity.class));
                                 });
                             }else {
                                 layoutConteneur.setOnClickListener(view -> {
-                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayant.class));
+                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), ProduitPayantActivity.class));
                                 });
                             }
 

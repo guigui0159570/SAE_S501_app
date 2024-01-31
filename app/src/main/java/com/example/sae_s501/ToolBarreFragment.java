@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 
-import com.example.sae_s501.databinding.UpdatemoncompteBinding;
+import com.example.sae_s501.activity.FilActuActivity;
+import com.example.sae_s501.activity.MesPublicationsActivity;
+import com.example.sae_s501.activity.MyCompteActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,14 +73,14 @@ public class ToolBarreFragment extends Fragment {
         myPublication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mespub = new Intent(view.getContext(), MesPublications.class);
+                Intent mespub = new Intent(view.getContext(), MesPublicationsActivity.class);
                 startActivity(mespub);
             }
         });
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent homeview = new Intent(view.getContext(), FilActu.class);
+                Intent homeview = new Intent(view.getContext(), FilActuActivity.class);
                 startActivity(homeview);
             }
         });

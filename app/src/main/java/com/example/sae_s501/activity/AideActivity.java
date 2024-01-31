@@ -1,6 +1,5 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.sae_s501.retrofit.FilActuService;
+import com.example.sae_s501.R;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
@@ -21,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Aide extends AppCompatActivity {
+public class AideActivity extends AppCompatActivity {
     private TextView retour;
     private Button valideAide;
     private EditText texte_aide;
@@ -48,7 +47,7 @@ public class Aide extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Redirection
-                Intent intent = new Intent(Aide.this, MyCompteActivity.class);
+                Intent intent = new Intent(AideActivity.this, MyCompteActivity.class);
                 startActivity(intent);
             }
         });

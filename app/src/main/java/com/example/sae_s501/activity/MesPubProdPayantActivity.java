@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import android.content.Intent;
@@ -16,6 +16,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sae_s501.Dictionnaire;
+import com.example.sae_s501.GlobalFunctionsPublication;
+import com.example.sae_s501.Publication;
+import com.example.sae_s501.R;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.SessionManager;
@@ -27,7 +32,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MesPubProdPayant extends AppCompatActivity {
+public class MesPubProdPayantActivity extends AppCompatActivity {
     private ImageView retour;
 
     @Override
@@ -39,7 +44,7 @@ public class MesPubProdPayant extends AppCompatActivity {
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MesPubProdPayant.this, MesPublications.class);
+                Intent intent = new Intent(MesPubProdPayantActivity.this, MesPublicationsActivity.class);
                 startActivity(intent);
             }
         });
@@ -58,7 +63,7 @@ public class MesPubProdPayant extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Dictionnaire.getIpAddress())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(Authentification.createAuthenticatedClient(MesPubProdPayant.this.getApplicationContext()))
+                .client(Authentification.createAuthenticatedClient(MesPubProdPayantActivity.this.getApplicationContext()))
                 .build();
 
         FilActuService filActuService = retrofit.create(FilActuService.class);
@@ -103,7 +108,7 @@ public class MesPubProdPayant extends AppCompatActivity {
                                         int desiredWidth = img_produit.getWidth();
                                         int desiredHeight = img_produit.getHeight();
                                         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
-                                        Drawable drawable = new BitmapDrawable(MesPubProdPayant.this.getResources(), resizedBitmap);
+                                        Drawable drawable = new BitmapDrawable(MesPubProdPayantActivity.this.getResources(), resizedBitmap);
                                         img_produit.setImageDrawable(drawable);
                                     }
                                 } else {

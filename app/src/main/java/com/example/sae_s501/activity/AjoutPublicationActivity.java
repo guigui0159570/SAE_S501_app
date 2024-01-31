@@ -1,14 +1,11 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -22,30 +19,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.sae_s501.authentification.Authentification;
+import com.example.sae_s501.R;
 import com.example.sae_s501.model.MonCompte.ConfigSpring;
 import com.example.sae_s501.model.MonCompte.FonctionNotificationViewModel;
 import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import kotlinx.coroutines.channels.ActorKt;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -53,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AjoutPublication extends AppCompatActivity {
+public class AjoutPublicationActivity extends AppCompatActivity {
 
     private FonctionNotificationViewModel FNVM = new FonctionNotificationViewModel(this);
     private static final int PICK_IMAGE_REQUEST =1 ;
@@ -109,7 +98,7 @@ public class AjoutPublication extends AppCompatActivity {
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AjoutPublication.this, MesPublications.class);
+                Intent intent = new Intent(AjoutPublicationActivity.this, MesPublicationsActivity.class);
                 startActivity(intent);
             }
         });
@@ -301,12 +290,12 @@ public class AjoutPublication extends AppCompatActivity {
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
                         showToast("Publication réussie !");
-                        Intent intent = new Intent(AjoutPublication.this, MesPublications.class);
+                        Intent intent = new Intent(AjoutPublicationActivity.this, MesPublicationsActivity.class);
                         startActivity(intent);
                         // Réinitialiser les champs après une publication réussie
                         resetFields();
 
-                        FNVM.allsendNotification(configSpring.userEnCour(AjoutPublication.this.getBaseContext()));
+                        FNVM.allsendNotification(configSpring.userEnCour(AjoutPublicationActivity.this.getBaseContext()));
                     } else {
                         showToast("Échec de la publication !");
                     }

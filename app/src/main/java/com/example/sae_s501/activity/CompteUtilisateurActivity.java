@@ -1,11 +1,9 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.sae_s501.PubCompteUti;
+import com.example.sae_s501.R;
 import com.example.sae_s501.databinding.ActivityCompteUtilisateurBinding;
 import com.example.sae_s501.model.MonCompte.FonctionAbonneAbonnementViewModel;
 import com.example.sae_s501.model.MonCompte.FonctionNotificationViewModel;
@@ -30,7 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class CompteUtilisateur extends AppCompatActivity {
+public class CompteUtilisateurActivity extends AppCompatActivity {
 
     private ActivityCompteUtilisateurBinding binding;
     private MonCompteViewModel monCompteViewModel = new MonCompteViewModel();
@@ -39,7 +39,7 @@ public class CompteUtilisateur extends AppCompatActivity {
 
 
 
-    public CompteUtilisateur() throws ExecutionException, InterruptedException {
+    public CompteUtilisateurActivity() throws ExecutionException, InterruptedException {
     }
 
     @Override
@@ -67,7 +67,7 @@ public class CompteUtilisateur extends AppCompatActivity {
         findViewById(R.id.closeCompteUti).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), FilActu.class);
+                Intent intent = new Intent(getBaseContext(), FilActuActivity.class);
                 startActivity(intent);
             }
         });

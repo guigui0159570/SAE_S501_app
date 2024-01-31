@@ -1,32 +1,33 @@
-package com.example.sae_s501;
-
-
-import static android.content.ContentValues.TAG;
+package com.example.sae_s501.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MesPublications extends AppCompatActivity {
+import com.example.sae_s501.FilActuFragFiltre;
+import com.example.sae_s501.FilActuFragment;
+import com.example.sae_s501.R;
 
-    private ImageView ajout;
+public class FilActuActivity extends AppCompatActivity {
+
+    private static final String TAG = "FilActu";
     private EditText editTextFiltre;
     private ImageView imageButtonFiltre;
     private Boolean filtreActif = false;
-    private ImageView coeur;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mes_publications);
-        editTextFiltre = findViewById(R.id.edit_filtre);
-        imageButtonFiltre = findViewById(R.id.imageButton);
-        coeur = findViewById(R.id.pubAchat);
+        setContentView(R.layout.fil_actualiteresp);
+
+        editTextFiltre = findViewById(R.id.edit_rechercher_actu);
+        imageButtonFiltre = findViewById(R.id.filtre_fil_actu);
+
         imageButtonFiltre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,17 +37,17 @@ public class MesPublications extends AppCompatActivity {
                 if (!editTextFiltre.getText().toString().equals("")) {
 
                     // Ajoutez le fragment filtre à l'activité
-                    MesPublicationsFragFiltre fragmentFiltre = new MesPublicationsFragFiltre();
+                    FilActuFragFiltre fragmentFiltre = new FilActuFragFiltre();
                     fragmentFiltre.setFilterValue(editTextFiltre.getText().toString());
 
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container_pub, fragmentFiltre)
+                            .replace(R.id.fragment_container, fragmentFiltre)
                             .commit();
-                    Log.d(TAG, "Filtre fragment Mes publications");
+                    Log.d(TAG, "Filtre fragment fil Actu");
                 } else {
                     // Si le filtre n'est pas actif ou le texte est vide, affichez le fragment FilActuFragment
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container_pub, new MesPublicationsFrag())
+                            .replace(R.id.fragment_container, new FilActuFragment())
                             .commit();
                     Log.d(TAG, "FilActuFragment");
                 }
@@ -56,34 +57,17 @@ public class MesPublications extends AppCompatActivity {
         // Si le filtre n'est pas actif, affichez le fragment FilActuFragment
         if (!filtreActif || editTextFiltre.getText().toString().equals("")) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_pub, new MesPublicationsFrag())
+                    .replace(R.id.fragment_container, new FilActuFragment())
                     .commit();
             Log.d(TAG, "FilActuFragment");
         }
-
-
-        ajout = findViewById(R.id.ajout_pub);
-
-        ajout.setOnClickListener(new View.OnClickListener() {
+        ImageView imageButton = findViewById(R.id.cloche_actu);
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MesPublications.this, AjoutPublication.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), VisuNotificationActivity.class);
                 startActivity(intent);
             }
-
-
-            });
-        coeur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MesPublications.this, MesAchats.class);
-                startActivity(intent);
-            }
-
-
         });
-
-
     }
 }
-

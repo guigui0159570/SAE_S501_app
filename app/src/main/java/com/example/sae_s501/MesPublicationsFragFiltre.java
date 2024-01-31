@@ -21,6 +21,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import com.example.sae_s501.activity.MesPubProdGratuitActivity;
+import com.example.sae_s501.activity.MesPubProdPayantActivity;
+import com.example.sae_s501.activity.MesPublicationsActivity;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.RetrofitService;
@@ -116,11 +120,11 @@ public class MesPublicationsFragFiltre extends Fragment {
 
                                             if(p.getGratuit()){
                                                 layoutConteneur.setOnClickListener(view -> {
-                                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdGratuit.class));
+                                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdGratuitActivity.class));
                                                 });
                                             }else {
                                                 layoutConteneur.setOnClickListener(view -> {
-                                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdPayant.class));
+                                                    loadView(view, layoutConteneur.getId(), new Intent(requireContext(), MesPubProdPayantActivity.class));
                                                 });
                                             }
 
@@ -302,7 +306,7 @@ public class MesPublicationsFragFiltre extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d("REQUETE_SUPPRESSION", "Publication supprimée avec succès");
                     showToast("Publication supprimée avec succès");
-                    Intent intent = new Intent(getActivity(), MesPublications.class);
+                    Intent intent = new Intent(getActivity(), MesPublicationsActivity.class);
                     startActivity(intent);
                 } else {
                     Log.e("REQUETE_SUPPRESSION", "Échec de la suppression de la publication. Code de réponse : " + response.code());

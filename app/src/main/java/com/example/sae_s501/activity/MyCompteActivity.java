@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,10 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sae_s501.MesPublicationsFrag;
+import com.example.sae_s501.R;
 import com.example.sae_s501.model.MonCompte.AbonneCompte;
 import com.example.sae_s501.model.MonCompte.AbonnementCompte;
 import com.example.sae_s501.model.MonCompte.ConfigSpring;
@@ -35,8 +34,6 @@ import com.example.sae_s501.retrofit.RetrofitService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.UserService;
 import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -45,10 +42,7 @@ import com.example.sae_s501.databinding.MoncompterespBinding;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.Locale;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Call;
@@ -133,7 +127,7 @@ public class MyCompteActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
-                            Intent intent = new Intent(view.getContext(), Panier.class);
+                            Intent intent = new Intent(view.getContext(), PanierActivity.class);
                             startActivity(intent);
                         } else {
                             showToast("Erreur requete");
@@ -183,7 +177,7 @@ public class MyCompteActivity extends AppCompatActivity {
                 SessionManager.deleteToken(getApplicationContext());
                 Toast.makeText(MyCompteActivity.this, "Vous êtes déconnecté !", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(view.getContext(), Connexion.class);
+                Intent intent = new Intent(view.getContext(), ConnexionActivity.class);
                 startActivity(intent);
 
             }
@@ -214,7 +208,7 @@ public class MyCompteActivity extends AppCompatActivity {
         aide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Aide.class);
+                Intent intent = new Intent(view.getContext(), AideActivity.class);
                 startActivity(intent);
 
             }
@@ -396,7 +390,7 @@ public class MyCompteActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d("REQUETE_SUPPRESSION", "Votre compte a été supprimé avec succès");
                     showToast("Votre compte a été supprimé !");
-                    Intent intent = new Intent(MyCompteActivity.this, Connexion.class);
+                    Intent intent = new Intent(MyCompteActivity.this, ConnexionActivity.class);
                     startActivity(intent);
                 } else {
                     Log.e("REQUETE_SUPPRESSION", "Échec de la suppression du compte. Code de réponse : " + response.code());
