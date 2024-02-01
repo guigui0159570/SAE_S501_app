@@ -1,8 +1,5 @@
 package com.example.sae_s501.retrofit;
 
-import android.graphics.Bitmap;
-
-import com.example.sae_s501.Publication;
 import com.example.sae_s501.model.Utilisateur;
 
 import java.util.List;
@@ -21,7 +18,6 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface UserService {
 

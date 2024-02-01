@@ -17,9 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.sae_s501.Dictionnaire;
-import com.example.sae_s501.GlobalFunctionsPublication;
-import com.example.sae_s501.Publication;
+import com.example.sae_s501.model.Dictionnaire;
+import com.example.sae_s501.model.GlobalFunctionsPublication;
+import com.example.sae_s501.model.User.Publication;
 import com.example.sae_s501.R;
 import com.example.sae_s501.authentification.Authentification;
 import com.example.sae_s501.retrofit.FilActuService;

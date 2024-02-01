@@ -1,9 +1,9 @@
-package com.example.sae_s501.model.MonCompte;
+package com.example.sae_s501.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,28 +14,42 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sae_s501.activity.CompteUtilisateurActivity;
+import com.example.sae_s501.model.MonCompte.ConfigSpring;
+import com.example.sae_s501.model.MonCompte.FonctionAbonneAbonnementViewModel;
+import com.example.sae_s501.model.MonCompte.MonCompteViewModel;
+
 import com.example.sae_s501.R;
+import com.example.sae_s501.databinding.ActivityAbonnementCompteBinding;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.concurrent.CompletableFuture;
 
-public class AbonneCompte extends AppCompatActivity {
-    private ConfigSpring configSpring = new ConfigSpring();
+
+
+public class AbonnementCompte extends AppCompatActivity {
+
+    private ActivityAbonnementCompteBinding binding;
     private FonctionAbonneAbonnementViewModel FAAVM = new FonctionAbonneAbonnementViewModel(this);
+
+    private ConfigSpring configSpring =  new ConfigSpring();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_abonne_compte);
-        CompletableFuture<String> completableFuture = FAAVM.RequestInformationAbonne();
-        Create_Layout_Abonne(completableFuture);
+        binding = ActivityAbonnementCompteBinding.inflate(getLayoutInflater());
+        View root = binding.getRoot();
+        setContentView(root);
+
+        CompletableFuture<String> completableFuture = FAAVM.RequestInformationAbonnement();
+        Create_Layout_Abonnement(completableFuture);
 
     }
 
-    public void Create_Layout_Abonne(CompletableFuture<String> integerCompletableFuture){
+    public void Create_Layout_Abonnement(CompletableFuture<String> integerCompletableFuture){
 
         integerCompletableFuture.thenAccept(resultat -> {
             try {
@@ -46,8 +60,9 @@ public class AbonneCompte extends AppCompatActivity {
 
                             JsonElement jsonElement = JsonParser.parseString(resultat);
                             JsonArray jsonArray = jsonElement.getAsJsonArray();
-                            LinearLayout layoutPrincipal = findViewById(R.id.comptenuAbonne);
-                            Log.d("7777777", "zzzzzz");
+                            LinearLayout layoutPrincipal = findViewById(R.id.comptenuAbonnement);
+
+                            Log.d("123123123", String.valueOf(jsonArray.size()));
                             for (int i = 0 ; i< jsonArray.size() ; i ++){
 
                                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
@@ -58,8 +73,10 @@ public class AbonneCompte extends AppCompatActivity {
 
                                 //Partie pseudo
                                 JsonElement pseudoElement = jsonObject.get("pseudo");
-                                Log.d("456456", String.valueOf(pseudoElement));
+                                TextView textViewPseudo = new TextView(getBaseContext());
                                 String pseudo = String.valueOf(pseudoElement).replaceAll("^\"|\"$", "");
+                                textViewPseudo.setText(pseudo);
+
 
 
 
@@ -76,11 +93,10 @@ public class AbonneCompte extends AppCompatActivity {
                                 layoutEnfant.setGravity(Gravity.CENTER);
                                 layoutEnfant.setWeightSum(4);
 
-                                ImageView imageView = new ImageView(getBaseContext());
 
-                                // Partie photo
+                                //Partie photo
+                                ImageView imageView = new ImageView(getBaseContext());
                                 try {
-                                    //Partie photo
 
                                     JsonElement photoElement = jsonObject.get("photo");
                                     imageView.setLayoutParams(new LinearLayout.LayoutParams(
@@ -103,12 +119,11 @@ public class AbonneCompte extends AppCompatActivity {
                                         Bitmap generatedImage = monCompteViewModel.generateInitialsImage(initials, width, height, backgroundColor, textColor);
                                         imageView.setImageBitmap(generatedImage);
                                     }
-
                                 } catch (Exception e) {
                                     Log.e("Exception", "Erreur lors de la lecture de la photo", e);
                                 }
 
-                                redirectionProfilUti(imageView, idElement);
+
 
                                 // Créez le premier TextView
                                 TextView textView = new TextView(getBaseContext());
@@ -120,64 +135,40 @@ public class AbonneCompte extends AppCompatActivity {
                                 textView.setTextSize(20);
                                 textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 
-                                redirectionProfilUti(textView, idElement);
-                                final boolean[] isCoeurBlanc = {true};
-                                FAAVM.requestPresenceAbonnement(idElement.getAsLong()).thenAccept(resultat -> {
-                                    try {
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                try {
+                                final boolean[] isCoeurNoir = {true};
+                                // Créez le deuxième ImageView
+                                ImageView imageView2 = new ImageView(getBaseContext());
+                                imageView2.setLayoutParams(new LinearLayout.LayoutParams(
+                                        200,
+                                        200,
+                                        1)); // Poids 1
+                                imageView2.setImageResource(R.drawable.coeurrouge);
 
-                                                    // Créez le deuxième ImageView
-                                                    ImageView imageView2 = new ImageView(getBaseContext());
-                                                    imageView2.setLayoutParams(new LinearLayout.LayoutParams(
-                                                            200,
-                                                            200,
-                                                            1)); // Poids 1
-                                                    if (resultat) {
-                                                        imageView2.setImageResource(R.drawable.coeurrouge);
-                                                        isCoeurBlanc[0] = false;
-                                                    }else {
-                                                        imageView2.setImageResource(R.drawable.coeurblanc);
-                                                        isCoeurBlanc[0] = true;
-                                                    }
-                                                    imageView2.setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View view) {
-                                                            if (isCoeurBlanc[0]){
-                                                                imageView2.setImageResource(R.drawable.coeurrouge);
-                                                                FAAVM.sabonner(idElement.getAsLong());
-                                                                isCoeurBlanc[0] = false;
-
-                                                            }else {
-                                                                imageView2.setImageResource(R.drawable.coeurblanc);
-                                                                FAAVM.deleteAbonneOrAbonnement(idElement.getAsLong());
-                                                                isCoeurBlanc[0] = true;
-                                                            }
-                                                        }
-                                                    });
-
-                                                    // Ajoutez les éléments au LinearLayout enfant
-                                                    layoutEnfant.addView(imageView);
-                                                    layoutEnfant.addView(textView);
-                                                    layoutEnfant.addView(imageView2);
-
-                                                    // Ajoutez le LinearLayout enfant au LinearLayout principal
-                                                    layoutPrincipal.addView(layoutEnfant);
-                                                } catch (Exception e) {
-                                                    throw new RuntimeException(e);
-                                                }
-                                            }
-                                        });
-                                    } catch (Exception e) {
-                                        throw new RuntimeException(e);
+                                imageView2.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (isCoeurNoir[0]){
+                                            imageView2.setImageResource(R.drawable.coeurblanc);
+                                            FAAVM.deleteAbonneOrAbonnement(idElement.getAsLong());
+                                            isCoeurNoir[0] = false;
+                                        }else {
+                                            imageView2.setImageResource(R.drawable.coeurrouge);
+                                            FAAVM.sabonner(idElement.getAsLong());
+                                            isCoeurNoir[0] = true;
+                                        }
                                     }
                                 });
 
+                                // Ajoutez les éléments au LinearLayout enfant
+                                layoutEnfant.addView(imageView);
+                                layoutEnfant.addView(textView);
+                                layoutEnfant.addView(imageView2);
 
-
+                                // Ajoutez le LinearLayout enfant au LinearLayout principal
+                                layoutPrincipal.addView(layoutEnfant);
                             }
+
+
 
                         } catch (Exception e) {
                             throw new RuntimeException(e);
@@ -190,14 +181,5 @@ public class AbonneCompte extends AppCompatActivity {
         });
     }
 
-    public void redirectionProfilUti(View eltClicable, JsonElement idUtilisateur){
-        eltClicable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), CompteUtilisateurActivity.class);
-                intent.putExtra("userId", idUtilisateur.getAsLong());
-                startActivity(intent);
-            }
-        });
-    }
+
 }

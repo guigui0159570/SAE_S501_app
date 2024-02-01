@@ -1,4 +1,7 @@
-package com.example.sae_s501;
+package com.example.sae_s501.model;
+
+import com.example.sae_s501.model.User.Avis;
+import com.example.sae_s501.model.User.Publication;
 
 import java.util.List;
 

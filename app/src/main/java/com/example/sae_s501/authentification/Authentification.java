@@ -1,8 +1,7 @@
 package com.example.sae_s501.authentification;
 
 
-import com.example.sae_s501.Dictionnaire;
-import com.example.sae_s501.model.UserEmailResponse;
+import com.example.sae_s501.model.Dictionnaire;
 import com.example.sae_s501.retrofit.AuthService;
 import com.example.sae_s501.retrofit.SessionManager;
 import com.example.sae_s501.retrofit.TokenValidationCallback;

@@ -24,8 +24,6 @@ import android.widget.Toast;
 
 import com.example.sae_s501.MesPublicationsFrag;
 import com.example.sae_s501.R;
-import com.example.sae_s501.model.MonCompte.AbonneCompte;
-import com.example.sae_s501.model.MonCompte.AbonnementCompte;
 import com.example.sae_s501.model.MonCompte.ConfigSpring;
 import com.example.sae_s501.databinding.UpdatemoncompteBinding;
 import com.example.sae_s501.retrofit.FilActuService;

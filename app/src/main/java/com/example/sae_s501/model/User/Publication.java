@@ -1,15 +1,13 @@
-package com.example.sae_s501;
+package com.example.sae_s501.model.User;
 
 import android.app.Notification;
 
-import com.example.sae_s501.Avis;
+import com.example.sae_s501.model.User.Avis;
 import com.example.sae_s501.model.Utilisateur;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.MultipartBody;
 
 public class Publication {
     private Long id;
@@ -27,10 +25,10 @@ public class Publication {
     private int nb_telechargement;
     private List<Object> paniers;
     private Notification notification;
-    private Utilisateur proprietaire;
+    private com.example.sae_s501.model.Utilisateur proprietaire;
     private List<Avis> avis = new ArrayList<>();
 
-    public Publication(Long id, String titre, String description, Boolean gratuit, Boolean publique, Float prix, String image, String fichier, int nb_telechargement, List<Object> paniers, Notification notification, Utilisateur proprietaire, List<Avis> avis) {
+    public Publication(Long id, String titre, String description, Boolean gratuit, Boolean publique, Float prix, String image, String fichier, int nb_telechargement, List<Object> paniers, Notification notification, com.example.sae_s501.model.Utilisateur proprietaire, List<Avis> avis) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -129,7 +127,7 @@ public class Publication {
         this.notification = notification;
     }
 
-    public Utilisateur getProprietaire() {
+    public com.example.sae_s501.model.Utilisateur getProprietaire() {
         return proprietaire;
     }
 

@@ -1,15 +1,15 @@
-package com.example.sae_s501.model;
+package com.example.sae_s501.model.User;
 
-import com.example.sae_s501.Utilisateur;
+import com.example.sae_s501.model.User.Utilisateur;
 
 public class Profil {
 
     private Long id;
     private String description;
     private String photo;
-    private com.example.sae_s501.Utilisateur utilisateur;
+    private Utilisateur utilisateur;
 
-    public Profil(String description, String photo, com.example.sae_s501.Utilisateur utilisateur) {
+    public Profil(String description, String photo, Utilisateur utilisateur) {
         this.description = description;
         this.photo = photo;
         this.utilisateur = utilisateur;
@@ -43,7 +43,7 @@ public class Profil {
         this.photo = photo;
     }
 
-    public com.example.sae_s501.Utilisateur getUtilisateur() {
+    public Utilisateur getUtilisateur() {
         return utilisateur;
     }
 

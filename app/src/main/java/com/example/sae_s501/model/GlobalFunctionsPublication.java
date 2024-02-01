@@ -1,9 +1,8 @@
-package com.example.sae_s501;
+package com.example.sae_s501.model;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -24,6 +23,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sae_s501.R;
+import com.example.sae_s501.model.User.AvisDTO;
+import com.example.sae_s501.model.User.Publication;
+import com.example.sae_s501.model.User.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
 
 import java.io.InputStream;

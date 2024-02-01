@@ -32,10 +32,10 @@
             android:name=".activity.CompteUtilisateurActivity"
             android:exported="false" />
         <activity
-            android:name=".model.MonCompte.AbonneCompte"
+            android:name=".activity.AbonneCompte"
             android:exported="false" />
         <activity
-            android:name=".model.MonCompte.AbonnementCompte"
+            android:name=".activity.AbonnementCompte"
             android:exported="false" />
         <activity
             android:name=".activity.MyCompteActivity"

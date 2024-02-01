@@ -28,6 +28,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.sae_s501.activity.PanierActivity;
+import com.example.sae_s501.model.Dictionnaire;
+import com.example.sae_s501.model.User.Publication;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.PanierService;

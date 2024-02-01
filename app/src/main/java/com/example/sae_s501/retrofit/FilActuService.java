@@ -1,15 +1,13 @@
 package com.example.sae_s501.retrofit;
 
-import com.example.sae_s501.Avis;
-import com.example.sae_s501.AvisDTO;
-import com.example.sae_s501.Publication;
-import com.example.sae_s501.Utilisateur;
+import com.example.sae_s501.model.User.AvisDTO;
+import com.example.sae_s501.model.User.Publication;
+import com.example.sae_s501.model.User.Utilisateur;
 
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;

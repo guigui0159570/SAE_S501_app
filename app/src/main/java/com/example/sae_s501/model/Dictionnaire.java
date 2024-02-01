@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.model;
 
 public class Dictionnaire {
     public static String getIpAddress(){

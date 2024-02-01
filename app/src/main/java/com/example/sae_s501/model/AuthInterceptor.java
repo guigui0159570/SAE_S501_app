@@ -1,4 +1,4 @@
-package com.example.sae_s501;
+package com.example.sae_s501.model;
 
 import java.io.IOException;
 

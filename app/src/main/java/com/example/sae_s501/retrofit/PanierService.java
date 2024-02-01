@@ -1,6 +1,6 @@
 package com.example.sae_s501.retrofit;
 
-import com.example.sae_s501.Publication;
+import com.example.sae_s501.model.User.Publication;
 
 import java.util.List;
 

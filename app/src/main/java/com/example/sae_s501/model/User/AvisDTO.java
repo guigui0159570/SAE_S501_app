@@ -1,22 +1,20 @@
-package com.example.sae_s501;
+package com.example.sae_s501.model.User;
 
-
-public class Avis {
-
+public class AvisDTO {
     private Long id;
     private String commentaire;
     private int etoile;
 
-    private Publication publication;
+    private long publication_id;
 
-    private com.example.sae_s501.Utilisateur utilisateur;
+    private long utilisateur_id;
 
-    public com.example.sae_s501.Utilisateur getUtilisateur() {
-        return utilisateur;
+    public long getUtilisateur() {
+        return utilisateur_id;
     }
 
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
+    public void setUtilisateur(Long utilisateur) {
+        this.utilisateur_id = utilisateur;
     }
 
     public Long getId() {
@@ -43,13 +41,11 @@ public class Avis {
         this.etoile = etoile;
     }
 
-    public Publication getPublication() {
-        return publication;
+    public long getPublication() {
+        return publication_id;
     }
 
-    public void setPublication(Publication publication) {
-        this.publication = publication;
+    public void setPublication(Long publication) {
+        this.publication_id = publication;
     }
-
 }
-

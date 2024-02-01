@@ -25,6 +25,8 @@ import androidx.fragment.app.Fragment;
 import com.example.sae_s501.activity.MesPubProdGratuitActivity;
 import com.example.sae_s501.activity.MesPubProdPayantActivity;
 import com.example.sae_s501.activity.MesPublicationsActivity;
+import com.example.sae_s501.model.GlobalFunctionsPublication;
+import com.example.sae_s501.model.User.Publication;
 import com.example.sae_s501.model.Utilisateur;
 import com.example.sae_s501.retrofit.FilActuService;
 import com.example.sae_s501.retrofit.RetrofitService;

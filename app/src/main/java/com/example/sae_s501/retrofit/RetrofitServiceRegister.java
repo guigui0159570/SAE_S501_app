@@ -1,9 +1,6 @@
 package com.example.sae_s501.retrofit;
 
-import android.content.Context;
-
-import com.example.sae_s501.Dictionnaire;
-import com.example.sae_s501.authentification.Authentification;
+import com.example.sae_s501.model.Dictionnaire;
 import com.google.gson.Gson;
 
 import okhttp3.OkHttpClient;

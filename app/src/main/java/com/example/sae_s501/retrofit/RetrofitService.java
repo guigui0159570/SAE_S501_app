@@ -1,20 +1,12 @@
 package com.example.sae_s501.retrofit;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.example.sae_s501.Dictionnaire;
+import com.example.sae_s501.model.Dictionnaire;
 import com.example.sae_s501.authentification.Authentification;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.util.Objects;
 
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
