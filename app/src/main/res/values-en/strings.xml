@@ -98,4 +98,7 @@
     <string name="abonnement_text">Subscriptions</string>
 
 
+    <string name="nav_home">Home</string>
+    <string name="nav_profile">My Profile</string>
+    <string name="nav_publication">My publications</string>
 </resources>

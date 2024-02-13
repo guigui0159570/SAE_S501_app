@@ -86,11 +86,6 @@ public class MyCompteActivity extends AppCompatActivity {
         LinearLayout floutage = root.findViewById(R.id.floutage);
         floutage.setVisibility(View.INVISIBLE);
 
-        //Style tool barre
-        LinearLayout layoutProfil = root.findViewById(R.id.profilLayout);
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#bdbdbd" ));
-        layoutProfil.setBackground(colorDrawable);
-
         // ouverture animé du parametre
         ImageButton troisPoints = root.findViewById(R.id.troispoints);
         troisPoints.setOnClickListener(new View.OnClickListener() {
