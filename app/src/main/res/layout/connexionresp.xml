@@ -55,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60sp"
+            android:textSize="20sp"
             android:text="@string/connectez_v"
             android:textAppearance="@style/connectez_v"
             tools:ignore="MissingConstraints" />
@@ -72,6 +73,7 @@
             android:layout_width="250sp"
             android:layout_height="25sp"
             android:text="@string/text_connexion_mail"
+            android:textSize="18dp"
             android:textAppearance="@style/adresse_mai"/>
 
         <EditText
@@ -90,6 +92,7 @@
             android:layout_width="250sp"
             android:layout_height="25sp"
             android:text="@string/text_connexion_mdp"
+            android:textSize="18dp"
             android:textAppearance="@style/adresse_mai"/>
 
         <EditText
@@ -144,6 +147,7 @@
                 android:layout_height="25sp"
                 android:layout_marginLeft="100sp"
                 android:gravity="center"
+                android:textSize="14sp"
                 android:text="@string/text_nouveau_venu"
                 android:textColor="@color/white" />
 
@@ -152,6 +156,7 @@
                 android:layout_width="125sp"
                 android:layout_height="50sp"
                 android:clickable="true"
+                android:textSize="17sp"
                 android:gravity="center_vertical"
                 android:text="@string/text_vers_inscription"
                 android:textColor="#0000FF"
