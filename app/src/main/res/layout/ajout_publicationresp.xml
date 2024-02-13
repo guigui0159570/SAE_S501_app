@@ -60,6 +60,7 @@
                     android:layout_height="150sp"
                     android:layout_marginLeft="25sp"
                     android:layout_marginTop="25sp"
+                    android:src="@drawable/ic_image"
                     android:background="@color/transparent"
 
                     />
@@ -68,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35sp"
                     android:text="@string/charger_img"
-                    android:textSize="17sp"
+                    android:textSize="18sp"
                     android:textColor="#FFA500"
                     android:clickable="true"
                     android:layout_marginLeft="25sp"
@@ -114,6 +115,7 @@
                         android:text="@string/checkbox_gratuit"
                         android:textColor="@color/white"
                         android:paddingRight="5sp"
+                        android:textSize="19dp"
                         android:layout_gravity="center"
                        />
 
@@ -131,7 +133,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:inputType="numberDecimal"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:textColor="#00BA8D"
                         />
                 </LinearLayout>
@@ -142,6 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <EditText
                 android:id="@+id/EditTextMotCle"
                 style="@style/CustomEditTextStyle"
@@ -149,13 +152,13 @@
                 android:layout_height="50sp"
                 android:layout_marginLeft="25sp"
                 android:layout_marginRight="25sp"
+                android:layout_marginBottom="1dp"
                 android:background="@color/white"
                 android:gravity="left"
                 android:hint="@string/motcle_pub"
-                android:textColor="#00BA8D"
                 android:paddingLeft="10dp"
-                android:layout_marginBottom="16dp"
-                />
+                android:textColor="#00BA8D" />
+
             <EditText
                 android:id="@+id/EditTextDescription"
                 style="@style/CustomEditTextStyle"
@@ -166,10 +169,8 @@
                 android:background="@color/white"
                 android:gravity="left"
                 android:hint="@string/description_pub"
-                android:textColor="#00BA8D"
                 android:paddingLeft="10dp"
-                />
-
+                android:textColor="#00BA8D" />
 
 
             <CheckBox
@@ -179,38 +180,39 @@
                 android:layout_marginLeft="20sp"
                 android:paddingRight="5sp"
                 android:text="@string/checkbox_prive"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="19dp" />
 
             <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <!-- TextView Upload -->
-            <TextView
-                android:id="@+id/upload"
                 android:layout_width="wrap_content"
-                android:layout_height="51dp"
-                android:layout_marginLeft="25sp"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/upload"
-                android:textColor="#FFA500"
-                android:textSize="17sp" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <!-- TextView Fichier Ajouté -->
-            <TextView
-                android:id="@+id/fichierajoute"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginLeft="15sp"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/fichier_pas_ajoute"
-                android:textColor="@color/white"
-                android:textSize="10sp" />
+                <!-- TextView Upload -->
+                <TextView
+                    android:id="@+id/upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="51dp"
+                    android:layout_marginLeft="25sp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/upload"
+                    android:textColor="#FFA500"
+                    android:textSize="17sp" />
 
-        </LinearLayout>
+                <!-- TextView Fichier Ajouté -->
+                <TextView
+                    android:id="@+id/fichierajoute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15sp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/fichier_pas_ajoute"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/bouton_publier"

@@ -48,20 +48,23 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_marginLeft="140dp"
                 android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="190dp"
-                    android:layout_margin="15dp"
+                    android:layout_width="155dp"
+                    android:layout_height="250dp"
+
+                    android:src="@drawable/ic_profile"
                     />
                 <Button
                     android:id="@+id/galerie"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
                     android:text="Changer la photo"
-                    android:textColor="@color/blue"
+                    android:textColor="#FFA500"
                     android:background="@color/transparent"/>
             </LinearLayout>
 

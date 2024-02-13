@@ -62,6 +62,7 @@
                     android:layout_gravity="center"
                     android:layout_width="150sp"
                     android:layout_height="150sp"
+                    android:src="@drawable/ic_image"
                     android:layout_marginTop="25sp"
                     android:background="@color/transparent" />
 
@@ -75,14 +76,16 @@
                 android:layout_gravity="center_horizontal">
 
                 <!-- Profile Info -->
+
+                <!-- Description -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="15dp"
-                    android:paddingTop="30dp"
-                    android:layout_marginBottom="15dp">
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="30dp">
 
                     <ImageView
                         android:id="@+id/img_profil_gratuit"
@@ -94,14 +97,13 @@
                         android:id="@+id/pseudo_pub_gratuit"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginBottom="15dp"
                         android:gravity="center"
-                        android:textSize="25sp"
-                        android:textColor="#FFA500"
                         android:text="@string/pseudo_pub_gratuit"
-                        android:layout_marginBottom="15dp" />
+                        android:textColor="#FFA500"
+                        android:textSize="25sp" />
                 </LinearLayout>
 
-                <!-- Description -->
                 <TextView
                     android:id="@+id/charger_img"
                     android:layout_width="wrap_content"
@@ -129,7 +131,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="110dp"
                 android:layout_marginBottom="25dp"
                 android:gravity="center_vertical">
 
@@ -148,7 +150,7 @@
                     android:gravity="center"
                     android:textColor="#FFA500"
                     android:text="@string/visualiser_img_gratuit"
-                    android:textSize="17sp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
