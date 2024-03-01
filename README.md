@@ -14,6 +14,8 @@ Android Studio est requis pour lancer ce projet, ainsi qu'une version de Java JD
 Une fois ces prérequis atteints, vous pouvez lancer le projet.
 
 
-Pour se connecter sur l'application mobile : [images/login.png]()
+Pour se connecter sur l'application mobile : 
+![Page de connexion](images/login.png)
 
-Pour s'inscrire sur l'application mobile : [images/signin.png]()
+Pour s'inscrire sur l'application mobile : 
+![Page d'inscription](images/signin.png)
